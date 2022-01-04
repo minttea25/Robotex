@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class TeamModel {
-    static final int MAX_MEMBERS = 5;
-    static final int NUMBERS_OF_ATTRIBUTES = 7;
+    public static final int MAX_MEMBERS = 5;
+    public static final int NUMBERS_OF_ATTRIBUTES = 7;
 
     String teamNumber;
     String teamName;
