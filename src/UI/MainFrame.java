@@ -115,7 +115,26 @@ public class MainFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            Object obj = e.getSource();
 
+            if (obj == formationPanel.legoSumo1kgBtn) {
+
+            }
+            else if (obj == formationPanel.legoSumo3kgBtn) {
+
+            }
+            else if (obj == formationPanel.lineFollowingEBtn) {
+
+            }
+            else if (obj == formationPanel.lineFollowingJHBtn) {
+
+            }
+            else if (obj == formationPanel.legoFolkraceEBtn) {
+
+            }
+            else if (obj == formationPanel.legoFolkraceJHBtn) {
+
+            }
         }
     }
 
@@ -123,7 +142,26 @@ public class MainFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            Object obj = e.getSource();
 
+            if (obj == ticketPanel.legoSumo1kgBtn) {
+
+            }
+            else if (obj == ticketPanel.legoSumo3kgBtn) {
+
+            }
+            else if (obj == ticketPanel.lineFollowingEBtn) {
+
+            }
+            else if (obj == ticketPanel.lineFollowingJHBtn) {
+
+            }
+            else if (obj == ticketPanel.legoFolkraceEBtn) {
+
+            }
+            else if (obj == ticketPanel.legoFolkraceJHBtn) {
+
+            }
         }
     }
 }

@@ -13,6 +13,10 @@ public class GUIValue {
     public final static int MAIN_TICKET_BUTTON_LEFT_X =  MAIN_WIDTH/2 + MAIN_FORMATION_BUTTON_LEFT_X;
     public final static int MAIN_BUTTON_Y = 820;
 
+    // menu panel
+    public final static int MENU_BUTTON_INTERVAL = 100;
+    public final static int MENU_BUTTON_Y = 520;
+
     // for Card Layout Name - DO NOT EDIT THESE VALUES
     public static final String MAIN_CARD_NAME = "main";
     public static final String FORMATION_CARD_NAME = "formation";

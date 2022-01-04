@@ -116,6 +116,9 @@ public class SetupDialog extends JDialog{
         btnExcelLoad = new JButton(GUIString.LOAD);
         btnOK = new JButton(GUIString.OK);
 
+        btnExcelLoad.setToolTipText(GUIString.SELECT_FILE_FIRST_TOOLTIP);
+        btnOK.setToolTipText(GUIString.LOAD_FIRST_TOOLTIP);
+
         initFilePanel();
         initValuePanel();
         initButtonPanel();
@@ -251,6 +254,9 @@ public class SetupDialog extends JDialog{
                 if (setup.isExcelFileLoaded()) {
                     System.out.println("Load Success!");
                     btnOK.setEnabled(true);
+                    btnOK.setToolTipText(null);
+                    btnExcelLoad.setText(GUIString.LOADED);
+                    btnExcelLoad.setEnabled(false);
                 }
             }
             else if (obj == btnOK) {
@@ -266,6 +272,8 @@ public class SetupDialog extends JDialog{
         String path = chooser.getFilePath();
         if (path != null) {
             setup.setExcelFilePath(path);
+            textFieldFile.setText(path);
+            btnExcelLoad.setToolTipText(null);
         }
     }
 
