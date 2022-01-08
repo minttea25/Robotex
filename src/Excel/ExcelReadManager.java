@@ -74,6 +74,46 @@ public class ExcelReadManager {
         }
     }
 
+    public List<TeamModel> loadSheet(Sections section) {
+        List<TeamModel> list = null;
+
+        try {
+            is = new FileInputStream(filePath);
+            workbook = WorkbookFactory.create(is);
+
+            if (Sections.values().length != workbook.getNumberOfSheets()) {
+                System.out.println("Number of sheets != Sections.length");
+                return null;
+            }
+
+            for (int i=0; i<workbook.getNumberOfSheets(); i++) {
+                String sheetName = workbook.getSheetAt(i).getSheetName();
+
+                try {
+                    if (section == Sections.valueOf(sheetName)) {
+                        SheetReadManager s = new SheetReadManager(workbook.getSheetAt(i));
+                        list = s.singleCall();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return list;
+    }
+
     private void loadAllSheet() {
         fullFileLoaded  = true;
 

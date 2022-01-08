@@ -1,7 +1,7 @@
 package Model;
 
-import java.util.HashMap;
-import java.util.Map;
+import ConstantValues.Sections;
+
 
 public class SetupDataModel {
     int LegoSumo1kg;
@@ -10,6 +10,17 @@ public class SetupDataModel {
     int LineFollowingJH;
     int LegoFolkraceE;
     int LegoFolkraceJH;
+
+    public int getValueBySection(Sections s) {
+        return switch (s) {
+            case LegoSumo1kg -> this.LegoSumo1kg;
+            case LegoSumo3kg -> this.LegoSumo3kg;
+            case LineFollowingE -> this.LineFollowingE;
+            case LineFollowingJH -> this.LineFollowingJH;
+            case LegoFolkraceE -> this.LegoFolkraceE;
+            case LegoFolkraceJH -> this.LegoFolkraceJH;
+        };
+    }
 
     public void setLegoSumo1kg(int legoSumo1kg) {
         LegoSumo1kg = legoSumo1kg;
@@ -61,20 +72,19 @@ public class SetupDataModel {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[ LegoSumo1kg: ");
-        sb.append(LegoSumo1kg);
-        sb.append(", LegoSumo3kg: ");
-        sb.append(LegoSumo3kg);
-        sb.append(", LineFollowingE: ");
-        sb.append(LineFollowingE);
-        sb.append(", LineFollowingJH: ");
-        sb.append(LineFollowingJH);
-        sb.append(", LegoFolkraceE: ");
-        sb.append(LegoFolkraceE);
-        sb.append(", LegoFolkraceJH: ");
-        sb.append(LegoFolkraceJH);
-        sb.append(" ]");
-        return sb.toString();
+        String sb = "[ LegoSumo1kg: " +
+                LegoSumo1kg +
+                ", LegoSumo3kg: " +
+                LegoSumo3kg +
+                ", LineFollowingE: " +
+                LineFollowingE +
+                ", LineFollowingJH: " +
+                LineFollowingJH +
+                ", LegoFolkraceE: " +
+                LegoFolkraceE +
+                ", LegoFolkraceJH: " +
+                LegoFolkraceJH +
+                " ]";
+        return sb;
     }
 }

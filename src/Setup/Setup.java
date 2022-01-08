@@ -8,6 +8,7 @@ import Model.SetupDataModel;
 import Model.TeamModel;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.*;
 import java.util.List;
@@ -105,6 +106,17 @@ public class Setup {
 
     public void setExcelFilePath(String excelFilePath) {
         this.excelFilePath = excelFilePath;
+    }
+
+    public List<TeamModel> getTeamDataBySection(Sections section) {
+        List<TeamModel> t = teamData.get(section);
+
+        if (t == null ) {
+            return null;
+        }
+        else {
+            return t;
+        }
     }
 
     public SetupDataModel getSetupDataModel() {

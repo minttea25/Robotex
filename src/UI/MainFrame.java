@@ -2,6 +2,7 @@ package UI;
 
 import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
+import ConstantValues.Sections;
 import Model.ProgramFunctions;
 import Setup.Setup;
 import Util.GUIUtil;
@@ -118,22 +119,64 @@ public class MainFrame extends JFrame {
             Object obj = e.getSource();
 
             if (obj == formationPanel.legoSumo1kgBtn) {
+                Sections s = Sections.LegoSumo1kg;
+                FormationFrame frame = new FormationFrame(
+                        s,
+                        formationSetup.getTeamDataBySection(s),
+                        formationSetup.getSetupDataModel().getValueBySection(s)
+                );
 
+                frame.showFrame();
             }
             else if (obj == formationPanel.legoSumo3kgBtn) {
+                Sections s = Sections.LegoSumo3kg;
+                FormationFrame frame = new FormationFrame(
+                        s,
+                        formationSetup.getTeamDataBySection(s),
+                        formationSetup.getSetupDataModel().getValueBySection(s)
+                );
 
+                frame.showFrame();
             }
             else if (obj == formationPanel.lineFollowingEBtn) {
+                Sections s = Sections.LineFollowingE;
+                FormationFrame frame = new FormationFrame(
+                        s,
+                        formationSetup.getTeamDataBySection(s),
+                        formationSetup.getSetupDataModel().getValueBySection(s)
+                );
 
+                frame.showFrame();
             }
             else if (obj == formationPanel.lineFollowingJHBtn) {
+                Sections s = Sections.LineFollowingJH;
+                FormationFrame frame = new FormationFrame(
+                        s,
+                        formationSetup.getTeamDataBySection(s),
+                        formationSetup.getSetupDataModel().getValueBySection(s)
+                );
 
+                frame.showFrame();
             }
             else if (obj == formationPanel.legoFolkraceEBtn) {
+                Sections s = Sections.LegoFolkraceE;
+                FormationFrame frame = new FormationFrame(
+                        s,
+                        formationSetup.getTeamDataBySection(s),
+                        formationSetup.getSetupDataModel().getValueBySection(s)
+                );
 
+                frame.showFrame();
             }
             else if (obj == formationPanel.legoFolkraceJHBtn) {
+                Sections s = Sections.LegoFolkraceJH;
+                FormationFrame frame = new FormationFrame(
+                        s,
+                        formationSetup.getTeamDataBySection(s),
+                        formationSetup.getSetupDataModel().getValueBySection(s)
+                );
 
+                frame.showFrame();
             }
         }
     }

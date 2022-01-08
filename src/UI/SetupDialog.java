@@ -260,8 +260,9 @@ public class SetupDialog extends JDialog{
                 }
             }
             else if (obj == btnOK) {
-                if (saveValues());
+                if (saveValues())
                     dispose();
+
             }
         }
     }
@@ -280,12 +281,28 @@ public class SetupDialog extends JDialog{
     private boolean saveValues() {
 
         try {
-            setup.getSetupDataModel().setLegoSumo1kg(Integer.parseInt(tfLegoSumo1kg.getText()));
-            setup.getSetupDataModel().setLegoSumo3kg(Integer.parseInt(tfLegoSumo3kg.getText()));
-            setup.getSetupDataModel().setLineFollowingE(Integer.parseInt(tfLineFollowingE.getText()));
-            setup.getSetupDataModel().setLineFollowingJH(Integer.parseInt(tfLineFollowingJH.getText()));
-            setup.getSetupDataModel().setLegoFolkraceE(Integer.parseInt(tfFolkraceE.getText()));
-            setup.getSetupDataModel().setLegoFolkraceJH(Integer.parseInt(tfFolkraceJH.getText()));
+            int[] arr = new int[6];
+            arr[0]= Integer.parseInt(tfLegoSumo1kg.getText());
+            arr[1] = Integer.parseInt(tfLegoSumo3kg.getText());
+            arr[2] = Integer.parseInt(tfLineFollowingE.getText());
+            arr[3] = Integer.parseInt(tfLineFollowingJH.getText());
+            arr[4] = Integer.parseInt(tfFolkraceE.getText());
+            arr[5] = Integer.parseInt(tfFolkraceJH.getText());
+
+            for (int v : arr) {
+                if (v <= 0) {
+                    System.out.println(" v <= 0 ");
+                    return false;
+                }
+            }
+
+            setup.getSetupDataModel().setLegoSumo1kg(arr[0]);
+            setup.getSetupDataModel().setLegoSumo3kg(arr[1]);
+            setup.getSetupDataModel().setLineFollowingE(arr[2]);
+            setup.getSetupDataModel().setLineFollowingJH(arr[3]);
+            setup.getSetupDataModel().setLegoFolkraceE(arr[4]);
+            setup.getSetupDataModel().setLegoFolkraceJH(arr[5]);
+
         } catch (NumberFormatException e) {
             System.out.println("Integer.parseInt error");
             return false;

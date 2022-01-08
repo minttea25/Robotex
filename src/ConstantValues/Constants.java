@@ -13,6 +13,7 @@ public class Constants {
     public final static String TICKET_BACKGROUND_PATH = Paths.get("src", "Images", "ticket_panel.png").toString();
     public final static String MAIN_BUTTON_LEFT_PATH = Paths.get("src", "Images", "button_left.png").toString();
     public final static String MAIN_BUTTON_RIGHT_PATH = Paths.get("src", "Images", "button_right.png").toString();
+
     public final static String FORMATION_LEGO_SUMO_1KG_PATH = Paths.get("src", "Images", "LegoSumo1kg.png").toString();
     public final static String FORMATION_LEGO_SUMO_3KG_PATH = Paths.get("src", "Images", "LegoSumo3kg.png").toString();
     public final static String FORMATION_LINE_FOLLOWING_E_PATH = Paths.get("src", "Images", "LineFollowingE.png").toString();
@@ -25,6 +26,10 @@ public class Constants {
     public final static String TICKET_LINE_FOLLOWING_JH_PATH = Paths.get("src", "Images", "LineFollowingJH.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_E_PATH = Paths.get("src", "Images", "LegoFolkraceE.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_JH_PATH = Paths.get("src", "Images", "LegoFolkraceJH.png").toString();
+
+    public final static String LEGO_SUMO_PATH = Paths.get("src", "Images", "LegoSumo.png").toString();
+    public final static String LINE_FOLLOWING_PATH = Paths.get("src", "Images", "LineFollowing.png").toString();
+    public final static String LEGO_FOLKRACE_PATH = Paths.get("src", "Images", "FolkRace.png").toString();
 
     // for writing excel file
     public final static String NO = "No.";

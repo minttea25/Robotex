@@ -3,6 +3,8 @@ package ConstantValues;
 public class GUIString {
     // for frame title
     public static final String MAIN_FRAME_TITLE = "Robotex Korea";
+    public static final String FORMATION_FRAME_TITLE = "Robotex Korea - Formation";
+    public static final String TICKET_FRAME_TITLE = "Robotex Korea - World Ticket";
     public static final String FORMATION_SETUP_TITLE = "Setup - Formation";
     public static final String TICKET_SETUP_TITLE = "Setup - Ticket";
 

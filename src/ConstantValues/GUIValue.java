@@ -29,6 +29,17 @@ public class GUIValue {
     public final static int SETUP_GRID_X_1 = 2;
     public final static int SETUP_GRID_Y = 1;
 
-
+    // formation frame
+    public final static int RESULT_PANEL_HEIGHT = 600;
+    public final static int RESULT_INTERVAL = 10;
+    public final static int RESULT_WIDTH = 200;
+    public final static int RESULT_HEIGHT = 500;
+    public final static int RESULT_PANEL_X = 700;
+    public final static int RESULT_PANEL_Y = 400;
+    public final static int RESULT_SCROLL_WIDTH = 1050;
+    public final static int RESULT_PANEL_ENTRY_BOX_HEIGHT = 50;
+    public final static int RESULT_PANEL_TEAM_NUMBER_WIDTH = 100;
+    public final static int RESULT_PANEL_TEAM_NAME_WIDTH = RESULT_WIDTH - RESULT_PANEL_TEAM_NUMBER_WIDTH;
+    public final static int RESULT_PANEL_TEAM_HEIGHT = 50;
 
 }
