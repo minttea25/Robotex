@@ -27,13 +27,19 @@ public class Constants {
     public final static String TICKET_LEGO_FOLKRACE_E_PATH = Paths.get("src", "Images", "LegoFolkraceE.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_JH_PATH = Paths.get("src", "Images", "LegoFolkraceJH.png").toString();
 
-    public final static String LEGO_SUMO_PATH = Paths.get("src", "Images", "LegoSumo.png").toString();
-    public final static String LINE_FOLLOWING_PATH = Paths.get("src", "Images", "LineFollowing.png").toString();
-    public final static String LEGO_FOLKRACE_PATH = Paths.get("src", "Images", "FolkRace.png").toString();
+    public final static String FORMATION_LEGO_SUMO_PATH = Paths.get("src", "Images", "LegoSumo.png").toString();
+    public final static String FORMATION_LINE_FOLLOWING_PATH = Paths.get("src", "Images", "LineFollowing.png").toString();
+    public final static String FORMATION_LEGO_FOLKRACE_PATH = Paths.get("src", "Images", "FolkRace.png").toString();
+
+    public final static String TICKET_LEGO_SUMO_PATH = Paths.get("src", "Images", "LegoSumo.png").toString();
+    public final static String TICKET_LINE_FOLLOWING_PATH = Paths.get("src", "Images", "LineFollowing.png").toString();
+    public final static String TICKET_LEGO_FOLKRACE_PATH = Paths.get("src", "Images", "FolkRace.png").toString();
 
     // for writing excel file
-    public final static String NO = "No.";
     public final static String ENTRY = "Entry";
+    public final static String EXCEL_SAVE_PATH_FORMATION = Paths.get("src", "CreatedFiles", "Formation").toString();
+    public final static String EXCEL_SAVE_PATH_TICKET = Paths.get("src", "CreatedFiles", "Ticket").toString();
+    public final static String EXCEL_SAVE_PATH = Paths.get("src", "CreatedFiles").toString();
 
     public final static String TEAM_NUMBER = "TeamNumber";
     public final static String TEAM_NAME = "TeamName";
@@ -52,6 +58,7 @@ public class Constants {
     public static final String EXCEL_EXTENSION_XLSX = "xlsx";
     public static final String EXCEL_EXTENSION_XLS = "xls";
 
-    // for images
+    // never edit this value
+    public static final String SAVE_FILE_DATE_FORMAT = "HH-mm-ss";
 
 }

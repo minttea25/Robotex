@@ -24,4 +24,8 @@ public class GUIString {
     public static final String FORMATION_SETUP_TOOLTIP = "formation setup";
     public static final String TICKET_TOOLTIP = "world ticket";
     public static final String TICKET_SETUP_TOOLTIP = "ticket setup";
+
+    // for ticket
+    public static final String TICKET_FINAL_LIST = "World Qualification";
+    public static final String NEXT = "NEXT";
 }

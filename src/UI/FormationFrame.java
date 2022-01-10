@@ -4,6 +4,7 @@ import ConstantValues.Constants;
 import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
 import ConstantValues.Sections;
+import Excel.ExcelWriteManagerFormation;
 import Model.TeamModel;
 import Util.GUIUtil;
 import Util.ImageLoader;
@@ -11,6 +12,9 @@ import Util.ImageLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
@@ -28,6 +32,8 @@ public class FormationFrame extends JFrame {
 
     BufferedImage backgroundImage;
 
+    ExcelWriteManagerFormation ewmf;
+
     public FormationFrame(Sections section, List<TeamModel> data, int numberOfEntries) {
         this.section = section;
         this.data = data;
@@ -38,16 +44,36 @@ public class FormationFrame extends JFrame {
         shuffleData();
         makeEntries();
 
+        saveFile();
+
         initFrame();
         initComponents();
         attachComponents();
     }
 
+    private void saveFile() {
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(Constants.SAVE_FILE_DATE_FORMAT);
+        String fileName = section.toString() + " - " + date + " " + time.format(timeFormatter);
+        ewmf = new ExcelWriteManagerFormation(
+                section,
+                map,
+                fileName
+        );
+
+        ewmf.createExcelFile();
+
+        if (!ewmf.isWritten()) {
+            System.out.println("Failed to create file");
+        }
+    }
+
     private void loadImages() {
         switch (section) {
-            case LegoSumo1kg, LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.LEGO_SUMO_PATH);
-            case LineFollowingE, LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.LINE_FOLLOWING_PATH);
-            case LegoFolkraceE, LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.LEGO_FOLKRACE_PATH);
+            case LegoSumo1kg, LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_PATH);
+            case LineFollowingE, LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_PATH);
+            case LegoFolkraceE, LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_PATH);
         }
     }
 
@@ -84,7 +110,7 @@ public class FormationFrame extends JFrame {
         add(scrollPane);
         scrollPane.setBounds(
                 GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
-                GUIValue.RESULT_SCROLL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
+                GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
         );
 
         add(backgroundLabel);
@@ -92,7 +118,6 @@ public class FormationFrame extends JFrame {
                 0, 0,
                 backgroundImage.getWidth(), backgroundImage.getHeight()
         );
-
     }
 
     private void initFrame() {

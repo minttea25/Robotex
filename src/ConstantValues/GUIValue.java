@@ -22,6 +22,11 @@ public class GUIValue {
     public static final String FORMATION_CARD_NAME = "formation";
     public static final String TICKET_CARD_NAME = "ticket";
 
+    // for ticket card layout name - DO NOT EDIT THESE  VALUES
+    public static final String TICKET_1ST_CARD_NAME = "1st";
+    public static final String TICKET_2nd_CARD_NAME = "2nd";
+    public static final String TICKET_3rd_CARD_NAME = "3rd";
+
     // setup
     public final static int SETUP_MARGIN = 5;
     public final static int SETUP_GRID_PADDING = 3;
@@ -29,17 +34,18 @@ public class GUIValue {
     public final static int SETUP_GRID_X_1 = 2;
     public final static int SETUP_GRID_Y = 1;
 
-    // formation frame
+    // formation / ticket frame
     public final static int RESULT_PANEL_HEIGHT = 600;
     public final static int RESULT_INTERVAL = 10;
     public final static int RESULT_WIDTH = 200;
-    public final static int RESULT_HEIGHT = 500;
-    public final static int RESULT_PANEL_X = 700;
-    public final static int RESULT_PANEL_Y = 400;
-    public final static int RESULT_SCROLL_WIDTH = 1050;
+    public final static int RESULT_PANEL_X = 650;
+    public final static int RESULT_PANEL_Y = 350;
+    public final static int RESULT_PANEL_WIDTH = 1050;
     public final static int RESULT_PANEL_ENTRY_BOX_HEIGHT = 50;
-    public final static int RESULT_PANEL_TEAM_NUMBER_WIDTH = 100;
-    public final static int RESULT_PANEL_TEAM_NAME_WIDTH = RESULT_WIDTH - RESULT_PANEL_TEAM_NUMBER_WIDTH;
-    public final static int RESULT_PANEL_TEAM_HEIGHT = 50;
+    public final static int RESULT_TICKET_WIDTH = 300;
+    public final static int NEXT_BUTTON_WIDTH = 50;
+    public final static int NEXT_BUTTON_HEIGHT = 20;
+
+    // ticket frame
 
 }

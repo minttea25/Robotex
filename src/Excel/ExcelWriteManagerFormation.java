@@ -3,29 +3,45 @@ package Excel;
 import ConstantValues.Constants;
 import ConstantValues.Sections;
 import Model.TeamModel;
+import Util.FileUtil;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Collection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
 public class ExcelWriteManagerFormation extends ExcelWriteManager{
-    Map<String, List<TeamModel>> data;
+    Map<Integer, List<TeamModel>> data;
 
-    public ExcelWriteManagerFormation(Sections section, Map<String, List<TeamModel>> data, String fileName) {
+    public ExcelWriteManagerFormation(Sections section, Map<Integer, List<TeamModel>> data, String fileName) {
+        super();
+
         this.section = section;
         this.data = data;
-        this.fileName = fileName;
+        this.fileName = "." + File.separator + Constants.EXCEL_SAVE_PATH_FORMATION + File.separator + fileName;
+
+        written = false;
+
+        createFolder();
+    }
+
+
+    @Override
+    void createFolder() {
+        if (!FileUtil.createFolder(Paths.get(Constants.EXCEL_SAVE_PATH_FORMATION))) {
+            System.out.println("Failed to create folder: " + Constants.EXCEL_SAVE_PATH_FORMATION);
+        }
     }
 
     @Override
-    void createExcelFile() {
-        if (data.size() == 0) {
+    public void createExcelFile() {
+        if (data == null || data.size() == 0) {
             System.out.println("There is no data to write.");
             return;
         }
@@ -36,7 +52,7 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
             int row = 0;
             int teamStartColumn = 1;
 
-            fos = new FileOutputStream(fileName);
+            fos = new FileOutputStream(fileName  + "."+ Constants.EXCEL_EXTENSION_XLSX);
             workbook = new XSSFWorkbook();
 
             XSSFSheet sheet = workbook.createSheet(section.toString());
@@ -59,35 +75,28 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
 
             row++;
 
-            for (String entryNumber : data.keySet()) {
+            for (int entryNumber : data.keySet()) {
                 curRow = sheet.createRow(row);
-                curRow.createCell(0).setCellValue(entryNumber);
+                curRow.createCell(0).setCellValue(String.valueOf(entryNumber));
 
                 for (var team : data.get(entryNumber)) {
-                    for (int i = teamStartColumn; i < TeamModel.NUMBERS_OF_ATTRIBUTES + teamStartColumn; i++) {
-                        int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES - 1;
-                        switch (i - 1) {
-                            case 0: // teamNumber - String
-                                curRow.createCell(i).setCellValue(team.getTeamNumber());
-                                break;
-                            case 1: // teamName
-                                curRow.createCell(i).setCellValue(team.getTeamName());
-                                break;
-                            case 2: // belong
-                                curRow.createCell(i).setCellValue(team.getBelong());
-                                break;
-                            case 3: // coach
-                                curRow.createCell(i).setCellValue(team.getCoach());
-                                break;
-                            case 4: // coach email
-                                curRow.createCell(i).setCellValue(team.getCoachEmail());
-                                break;
-                            case 5: // coach phone
-                                curRow.createCell(i).setCellValue(team.getCoachPhone());
-                                break;
-                            default: // members
-                                curRow.createCell(i).setCellValue(team.getMembers().get(j));
-                                break;
+                    for (int i = teamStartColumn; i < TeamModel.NUMBERS_OF_ATTRIBUTES + team.getMembers().size() + teamStartColumn - 1; i++) {
+                        int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES;
+                        switch (1 - i) {
+                            case 0 -> // teamNumber - String
+                                    curRow.createCell(i).setCellValue(team.getTeamNumber());
+                            case 1 -> // teamName
+                                    curRow.createCell(i).setCellValue(team.getTeamName());
+                            case 2 -> // belong
+                                    curRow.createCell(i).setCellValue(team.getBelong());
+                            case 3 -> // coach
+                                    curRow.createCell(i).setCellValue(team.getCoach());
+                            case 4 -> // coach email
+                                    curRow.createCell(i).setCellValue(team.getCoachEmail());
+                            case 5 -> // coach phone
+                                    curRow.createCell(i).setCellValue(team.getCoachPhone());
+                            default -> // members
+                                    curRow.createCell(i).setCellValue(team.getMembers().get(j));
                         }
                     }
                     row++;
@@ -108,15 +117,17 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
                 e.printStackTrace();
             }
         }
+
+        written = true;
     }
 
-    @Override
-    void setData(Collection T) {
+    public boolean setData(Map<Integer, List<TeamModel>> T) {
         try {
-            this.data = (Map<String, List<TeamModel>>) T;
+            this.data = T;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-
     }
 }

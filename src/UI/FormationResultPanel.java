@@ -59,13 +59,11 @@ public class FormationResultPanel extends JPanel {
         upPanel.add(entryLabel);
 
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        GUIUtil.setGridBagConstraintsWeight(gbc, 1.0, 1.0);
 
         int i=0;
         for (var team : teams) {
-            gbc.fill = GridBagConstraints.BOTH;
-
-            GUIUtil.setGridBagConstraintsWeight(gbc, 1.0, 1.0);
-
             JLabel teamNumberLabel = new JLabel();
             JLabel teamNameLabel = new JLabel();
 

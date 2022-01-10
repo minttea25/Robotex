@@ -104,7 +104,7 @@ public class SetupDialog extends JDialog{
         labelLineFollowingE = new JLabel(Sections.LineFollowingE.toString());
         labelLineFollowingJH = new JLabel(Sections.LineFollowingJH.toString());
         labelFolkraceE = new JLabel(Sections.LegoFolkraceE.toString());
-        labelFolkraceJH = new JLabel(Sections.LineFollowingJH.toString());
+        labelFolkraceJH = new JLabel(Sections.LegoFolkraceJH.toString());
         tfLegoSumo1kg = new JTextField();
         tfLegoSumo3kg = new JTextField();
         tfLineFollowingE = new JTextField();

@@ -188,22 +188,58 @@ public class MainFrame extends JFrame {
             Object obj = e.getSource();
 
             if (obj == ticketPanel.legoSumo1kgBtn) {
-
+                Sections s = Sections.LegoSumo1kg;
+                TicketFrame frame = new TicketFrame(
+                        s,
+                        ticketSetup.getTeamDataBySection(s),
+                        ticketSetup.getSetupDataModel().getValueBySection(s)
+                );
+                frame.showFrame();
             }
             else if (obj == ticketPanel.legoSumo3kgBtn) {
-
+                Sections s = Sections.LegoSumo3kg;
+                TicketFrame frame = new TicketFrame(
+                        s,
+                        ticketSetup.getTeamDataBySection(s),
+                        ticketSetup.getSetupDataModel().getValueBySection(s)
+                );
+                frame.showFrame();
             }
             else if (obj == ticketPanel.lineFollowingEBtn) {
-
+                Sections s = Sections.LineFollowingE;
+                TicketFrame frame = new TicketFrame(
+                        s,
+                        ticketSetup.getTeamDataBySection(s),
+                        ticketSetup.getSetupDataModel().getValueBySection(s)
+                );
+                frame.showFrame();
             }
             else if (obj == ticketPanel.lineFollowingJHBtn) {
-
+                Sections s = Sections.LineFollowingJH;
+                TicketFrame frame = new TicketFrame(
+                        s,
+                        ticketSetup.getTeamDataBySection(s),
+                        ticketSetup.getSetupDataModel().getValueBySection(s)
+                );
+                frame.showFrame();
             }
             else if (obj == ticketPanel.legoFolkraceEBtn) {
-
+                Sections s = Sections.LineFollowingE;
+                TicketFrame frame = new TicketFrame(
+                        s,
+                        ticketSetup.getTeamDataBySection(s),
+                        ticketSetup.getSetupDataModel().getValueBySection(s)
+                );
+                frame.showFrame();
             }
             else if (obj == ticketPanel.legoFolkraceJHBtn) {
-
+                Sections s = Sections.LineFollowingJH;
+                TicketFrame frame = new TicketFrame(
+                        s,
+                        ticketSetup.getTeamDataBySection(s),
+                        ticketSetup.getSetupDataModel().getValueBySection(s)
+                );
+                frame.showFrame();
             }
         }
     }
