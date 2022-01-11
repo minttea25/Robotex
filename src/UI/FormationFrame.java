@@ -1,9 +1,6 @@
 package UI;
 
-import ConstantValues.Constants;
-import ConstantValues.GUIString;
-import ConstantValues.GUIValue;
-import ConstantValues.Sections;
+import ConstantValues.*;
 import Excel.ExcelWriteManagerFormation;
 import Model.TeamModel;
 import Util.GUIUtil;
@@ -19,6 +16,8 @@ import java.util.*;
 import java.util.List;
 
 public class FormationFrame extends JFrame {
+    boolean stateOk;
+
     Sections section;
     List<TeamModel> data;
     Map<Integer, List<TeamModel>> map = new HashMap<>();
@@ -39,6 +38,11 @@ public class FormationFrame extends JFrame {
         this.data = data;
         this.numberOfEntries = numberOfEntries;
 
+        stateOk = checkNumberOfEntries();
+        if (!stateOk) {
+            return;
+        }
+
         loadImages();
 
         shuffleData();
@@ -49,6 +53,40 @@ public class FormationFrame extends JFrame {
         initFrame();
         initComponents();
         attachComponents();
+    }
+
+
+    private boolean checkNumberOfEntries() {
+        if (data == null) {
+            setVisible(false);
+            GUIUtil.setSize(this,
+                    new Dimension(GUIValue.MAIN_WIDTH, GUIValue.MAIN_HEIGHT));
+            int ok =JOptionPane.showConfirmDialog(
+                    getFormationFrame(),
+                    ErrorMsg.e012Msg + section,
+                    ErrorMsg.error012,
+                    JOptionPane.DEFAULT_OPTION
+            );
+            if (ok == JOptionPane.OK_OPTION) {
+                getFormationFrame().dispose();
+            }
+            return false;
+        }
+        else if (data.size() < numberOfEntries) {
+            GUIUtil.setSize(this,
+                    new Dimension(GUIValue.MAIN_WIDTH, GUIValue.MAIN_HEIGHT));
+            int ok = JOptionPane.showConfirmDialog(
+                    getFormationFrame(),
+                    ErrorMsg.e011Msg,
+                    ErrorMsg.error011,
+                    JOptionPane.DEFAULT_OPTION
+            );
+            if (ok == JOptionPane.OK_OPTION) {
+                getFormationFrame().dispose();
+            }
+            return false;
+        }
+        return data.size() >= numberOfEntries;
     }
 
     private void saveFile() {
@@ -107,11 +145,13 @@ public class FormationFrame extends JFrame {
     }
 
     private void attachComponents() {
-        add(scrollPane);
-        scrollPane.setBounds(
-                GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
-                GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
-        );
+        if (ewmf != null && ewmf.isWritten()) {
+            add(scrollPane);
+            scrollPane.setBounds(
+                    GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
+                    GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
+            );
+        }
 
         add(backgroundLabel);
         backgroundLabel.setBounds(
@@ -131,7 +171,10 @@ public class FormationFrame extends JFrame {
     }
 
     public void showFrame() {
-        setVisible(true);
+        setVisible(stateOk);
+        if (!stateOk) {
+            dispose();
+        }
     }
 
     private void makeEntries() {
@@ -164,4 +207,7 @@ public class FormationFrame extends JFrame {
         Collections.shuffle(data);
     }
 
+    private FormationFrame getFormationFrame() {
+        return this;
+    }
 }

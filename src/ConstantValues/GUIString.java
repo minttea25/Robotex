@@ -8,7 +8,7 @@ public class GUIString {
     public static final String FORMATION_SETUP_TITLE = "Setup - Formation";
     public static final String TICKET_SETUP_TITLE = "Setup - Ticket";
 
-    // for setup frame
+    // for setup dialog
     public static final String LOAD = "Load Data";
     public static final String LOADED = "LOADED";
     public static final String OK = "OK(save)";
@@ -16,6 +16,7 @@ public class GUIString {
     public static final String ENTRY_NUMBER = "Number of Entries";
     public static final String TICKETS_NUMBER = "Number of Tickets";
     public static final String FILE_LABEL = "Selected file: ";
+    public static final String EXCEL_LOAD_MSG = "The excel file loaded: ";
 
     // for tool tip
     public static final String SELECT_FILE_FIRST_TOOLTIP = "select a excel file first";
@@ -28,4 +29,8 @@ public class GUIString {
     // for ticket
     public static final String TICKET_FINAL_LIST = "World Qualification";
     public static final String NEXT = "NEXT";
+
+    public static final String BACK = "Back";
+
+    public static final String NOTCIE = "Notice";
 }

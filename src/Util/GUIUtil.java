@@ -2,6 +2,7 @@ package Util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class GUIUtil {
     public static void setSize(Component component, Dimension d) {
@@ -40,4 +41,5 @@ public class GUIUtil {
         gbc.gridwidth = gridWidth;
         gbc.gridheight = gridHeight;
     }
+
 }

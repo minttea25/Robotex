@@ -34,7 +34,7 @@ public class ExcelReadManager {
 
         // check the file exist
         if (!(new File(filePath).exists())) {
-            System.out.println("There is no file: " + filePath);
+            //System.out.println("There is no file: " + filePath);
             return;
         }
         this.filePath = filePath;
@@ -43,7 +43,7 @@ public class ExcelReadManager {
     public boolean setFilePath(String filePath) {
         // check the file exist
         if (!(new File(filePath).exists())) {
-            System.out.println("There is no file: " + filePath);
+            //System.out.println("There is no file: " + filePath);
             return false;
         }
         this.filePath = filePath;
@@ -55,10 +55,10 @@ public class ExcelReadManager {
             is = new FileInputStream(filePath);
             workbook = WorkbookFactory.create(is);
 
-            if (Sections.values().length != workbook.getNumberOfSheets()) {
+            /*if (Sections.values().length != workbook.getNumberOfSheets()) {
                 System.out.println("Number of sheets != Sections.length");
                 return;
-            }
+            }*/
 
             loadAllSheet();
         } catch (IOException e) {
@@ -81,10 +81,10 @@ public class ExcelReadManager {
             is = new FileInputStream(filePath);
             workbook = WorkbookFactory.create(is);
 
-            if (Sections.values().length != workbook.getNumberOfSheets()) {
+            /*if (Sections.values().length != workbook.getNumberOfSheets()) {
                 System.out.println("Number of sheets != Sections.length");
                 return null;
-            }
+            }*/
 
             for (int i=0; i<workbook.getNumberOfSheets(); i++) {
                 String sheetName = workbook.getSheetAt(i).getSheetName();
@@ -127,7 +127,7 @@ public class ExcelReadManager {
                 availableIndex.add(i);
                 availableSheetNum++;
             } catch (IllegalArgumentException e) {
-                System.out.println("wrong sheet name: " + sheetName);
+                //System.out.println("wrong sheet name: " + sheetName);
                 fullFileLoaded = false;
             }
         }
@@ -137,8 +137,6 @@ public class ExcelReadManager {
         SheetReadManager[] srms = new SheetReadManager[availableSheetNum];
 
         Future<List<TeamModel>>[] futures = new Future[availableSheetNum];
-
-        System.out.println(availableSheetNum);
 
         try {
             int i=0;
@@ -154,7 +152,7 @@ public class ExcelReadManager {
                 if (t == null) {
                     dataLoaded.put(Sections.valueOf(srms[i].getSheet().getSheetName()), false);
 
-                    System.out.println("Sheet loading failed at Sheet: " + srms[i].getSheet().getSheetName());
+                    //System.out.println("Sheet loading failed at Sheet: " + srms[i].getSheet().getSheetName());
                 }
                 else {
                     data.put(Sections.valueOf(srms[i].getSheet().getSheetName()), t);
@@ -167,12 +165,12 @@ public class ExcelReadManager {
             service.shutdown();
         }
 
-        if (fullFileLoaded) {
+        /*if (fullFileLoaded) {
             System.out.println("All sheet loaded completely");
         }
         else {
             System.out.println("Some sheet is not loaded: " + availableSheetNum + " in " + workbook.getNumberOfSheets());
-        }
+        }*/
     }
 
     public Map<Sections, List<TeamModel>> getData() {
@@ -183,7 +181,7 @@ public class ExcelReadManager {
         try {
             return data.get(section);
         } catch (NullPointerException e) {
-            System.out.println("There is no loaded sheet name: " + section);
+            //System.out.println("There is no loaded sheet name: " + section);
             return null;
         }
     }
@@ -200,7 +198,7 @@ public class ExcelReadManager {
         try {
             return dataLoaded.get(section);
         } catch (NullPointerException e) {
-            System.out.println("There is no loaded sheet name: " + section);
+            // System.out.println("There is no loaded sheet name: " + section);
             return false;
         }
     }

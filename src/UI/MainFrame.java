@@ -1,8 +1,6 @@
 package UI;
 
-import ConstantValues.GUIString;
-import ConstantValues.GUIValue;
-import ConstantValues.Sections;
+import ConstantValues.*;
 import Model.ProgramFunctions;
 import Setup.Setup;
 import Util.GUIUtil;
@@ -90,7 +88,13 @@ public class MainFrame extends JFrame {
                     card.show(getContentPane(), GUIValue.FORMATION_CARD_NAME);
                 }
                 else {
-                    System.out.println("The excel file is not loaded, load first.");
+                    //System.out.println("The excel file is not loaded, load first.");
+                    JOptionPane.showConfirmDialog(
+                            getMainFrame(),
+                            ErrorMsg.e031Msg,
+                            ErrorMsg.error031,
+                            JOptionPane.DEFAULT_OPTION
+                    );
                 }
             }
             else if (obj == mainPanel.formationSetupBtn) {
@@ -102,7 +106,13 @@ public class MainFrame extends JFrame {
                     card.show(getContentPane(), GUIValue.TICKET_CARD_NAME);
                 }
                 else {
-                    System.out.println("The excel file is not loaded, load first.");
+                    //System.out.println("The excel file is not loaded, load first.");
+                    JOptionPane.showConfirmDialog(
+                            getMainFrame(),
+                            ErrorMsg.e031Msg,
+                            ErrorMsg.error031,
+                            JOptionPane.DEFAULT_OPTION
+                    );
                 }
             }
             else if (obj == mainPanel.ticketSetupBtn) {
@@ -178,6 +188,9 @@ public class MainFrame extends JFrame {
 
                 frame.showFrame();
             }
+            else if (obj == formationPanel.backBtn) {
+                card.show(getContentPane(), GUIValue.MAIN_CARD_NAME);
+            }
         }
     }
 
@@ -240,6 +253,9 @@ public class MainFrame extends JFrame {
                         ticketSetup.getSetupDataModel().getValueBySection(s)
                 );
                 frame.showFrame();
+            }
+            else if (obj == formationPanel.backBtn) {
+                card.show(getContentPane(), GUIValue.MAIN_CARD_NAME);
             }
         }
     }

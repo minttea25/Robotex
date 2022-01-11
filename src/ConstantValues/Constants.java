@@ -4,42 +4,42 @@ import java.nio.file.Paths;
 
 public class Constants {
     // for file location
-    public final static String FORMATION_SETUP_FILE_PATH = Paths.get("src", "Setup", "SetupFormation.json").toString();
-    public final static String TICKET_SETUP_FILE_PATH = Paths.get("src", "Setup", "SetupTicket.json").toString();
+    public final static String FORMATION_SETUP_FILE_PATH = Paths.get("Setup", "SetupFormation.json").toString();
+    public final static String TICKET_SETUP_FILE_PATH = Paths.get("Setup", "SetupTicket.json").toString();
 
     // for image location
-    public final static String MAIN_BACKGROUND_PATH = Paths.get("src", "Images", "mainframe.png").toString();
-    public final static String FORMATION_BACKGROUND_PATH = Paths.get("src", "Images", "formation_panel.png").toString();
-    public final static String TICKET_BACKGROUND_PATH = Paths.get("src", "Images", "ticket_panel.png").toString();
-    public final static String MAIN_BUTTON_LEFT_PATH = Paths.get("src", "Images", "button_left.png").toString();
-    public final static String MAIN_BUTTON_RIGHT_PATH = Paths.get("src", "Images", "button_right.png").toString();
+    public final static String MAIN_BACKGROUND_PATH = Paths.get("Images",  "mainframe.png").toString();
+    public final static String FORMATION_BACKGROUND_PATH = Paths.get("Images", "formation_panel.png").toString();
+    public final static String TICKET_BACKGROUND_PATH = Paths.get("Images", "ticket_panel.png").toString();
+    public final static String MAIN_BUTTON_LEFT_PATH = Paths.get("Images", "button_left.png").toString();
+    public final static String MAIN_BUTTON_RIGHT_PATH = Paths.get("Images", "button_right.png").toString();
 
-    public final static String FORMATION_LEGO_SUMO_1KG_PATH = Paths.get("src", "Images", "LegoSumo1kg.png").toString();
-    public final static String FORMATION_LEGO_SUMO_3KG_PATH = Paths.get("src", "Images", "LegoSumo3kg.png").toString();
-    public final static String FORMATION_LINE_FOLLOWING_E_PATH = Paths.get("src", "Images", "LineFollowingE.png").toString();
-    public final static String FORMATION_LINE_FOLLOWING_JH_PATH = Paths.get("src", "Images", "LineFollowingJH.png").toString();
-    public final static String FORMATION_LEGO_FOLKRACE_E_PATH = Paths.get("src", "Images", "LegoFolkraceE.png").toString();
-    public final static String FORMATION_LEGO_FOLKRACE_JH_PATH = Paths.get("src", "Images", "LegoFolkraceJH.png").toString();
-    public final static String TICKET_LEGO_SUMO_1KG_PATH = Paths.get("src", "Images", "LegoSumo1kg.png").toString();
-    public final static String TICKET_LEGO_SUMO_3KG_PATH = Paths.get("src", "Images", "LegoSumo3kg.png").toString();
-    public final static String TICKET_LINE_FOLLOWING_E_PATH = Paths.get("src", "Images", "LineFollowingE.png").toString();
-    public final static String TICKET_LINE_FOLLOWING_JH_PATH = Paths.get("src", "Images", "LineFollowingJH.png").toString();
-    public final static String TICKET_LEGO_FOLKRACE_E_PATH = Paths.get("src", "Images", "LegoFolkraceE.png").toString();
-    public final static String TICKET_LEGO_FOLKRACE_JH_PATH = Paths.get("src", "Images", "LegoFolkraceJH.png").toString();
+    public final static String FORMATION_LEGO_SUMO_1KG_PATH = Paths.get("Images", "LegoSumo1kg.png").toString();
+    public final static String FORMATION_LEGO_SUMO_3KG_PATH = Paths.get("Images", "LegoSumo3kg.png").toString();
+    public final static String FORMATION_LINE_FOLLOWING_E_PATH = Paths.get("Images", "LineFollowingE.png").toString();
+    public final static String FORMATION_LINE_FOLLOWING_JH_PATH = Paths.get("Images", "LineFollowingJH.png").toString();
+    public final static String FORMATION_LEGO_FOLKRACE_E_PATH = Paths.get("Images", "LegoFolkraceE.png").toString();
+    public final static String FORMATION_LEGO_FOLKRACE_JH_PATH = Paths.get("Images", "LegoFolkraceJH.png").toString();
+    public final static String TICKET_LEGO_SUMO_1KG_PATH = Paths.get("Images", "LegoSumo1kg.png").toString();
+    public final static String TICKET_LEGO_SUMO_3KG_PATH = Paths.get("Images", "LegoSumo3kg.png").toString();
+    public final static String TICKET_LINE_FOLLOWING_E_PATH = Paths.get("Images", "LineFollowingE.png").toString();
+    public final static String TICKET_LINE_FOLLOWING_JH_PATH = Paths.get("Images", "LineFollowingJH.png").toString();
+    public final static String TICKET_LEGO_FOLKRACE_E_PATH = Paths.get("Images", "LegoFolkraceE.png").toString();
+    public final static String TICKET_LEGO_FOLKRACE_JH_PATH = Paths.get("Images", "LegoFolkraceJH.png").toString();
 
-    public final static String FORMATION_LEGO_SUMO_PATH = Paths.get("src", "Images", "LegoSumo.png").toString();
-    public final static String FORMATION_LINE_FOLLOWING_PATH = Paths.get("src", "Images", "LineFollowing.png").toString();
-    public final static String FORMATION_LEGO_FOLKRACE_PATH = Paths.get("src", "Images", "FolkRace.png").toString();
+    public final static String FORMATION_LEGO_SUMO_PATH = Paths.get("Images", "LegoSumo.png").toString();
+    public final static String FORMATION_LINE_FOLLOWING_PATH = Paths.get("Images", "LineFollowing.png").toString();
+    public final static String FORMATION_LEGO_FOLKRACE_PATH = Paths.get("Images", "FolkRace.png").toString();
 
-    public final static String TICKET_LEGO_SUMO_PATH = Paths.get("src", "Images", "LegoSumo.png").toString();
-    public final static String TICKET_LINE_FOLLOWING_PATH = Paths.get("src", "Images", "LineFollowing.png").toString();
-    public final static String TICKET_LEGO_FOLKRACE_PATH = Paths.get("src", "Images", "FolkRace.png").toString();
+    public final static String TICKET_LEGO_SUMO_PATH = Paths.get("Images", "LegoSumo.png").toString();
+    public final static String TICKET_LINE_FOLLOWING_PATH = Paths.get("Images", "LineFollowing.png").toString();
+    public final static String TICKET_LEGO_FOLKRACE_PATH = Paths.get("Images", "FolkRace.png").toString();
 
     // for writing excel file
     public final static String ENTRY = "Entry";
-    public final static String EXCEL_SAVE_PATH_FORMATION = Paths.get("src", "CreatedFiles", "Formation").toString();
-    public final static String EXCEL_SAVE_PATH_TICKET = Paths.get("src", "CreatedFiles", "Ticket").toString();
-    public final static String EXCEL_SAVE_PATH = Paths.get("src", "CreatedFiles").toString();
+    public final static String EXCEL_SAVE_PATH_FORMATION = Paths.get("CreatedFiles", "Formation").toString();
+    public final static String EXCEL_SAVE_PATH_TICKET = Paths.get("CreatedFiles", "Ticket").toString();
+    public final static String EXCEL_SAVE_PATH = Paths.get("CreatedFiles").toString();
 
     public final static String TEAM_NUMBER = "TeamNumber";
     public final static String TEAM_NAME = "TeamName";

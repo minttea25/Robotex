@@ -11,7 +11,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
@@ -47,12 +46,13 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
         }
 
         FileOutputStream fos = null;
+        String fName = fileName  + "."+ Constants.EXCEL_EXTENSION_XLSX;
 
         try {
             int row = 0;
             int teamStartColumn = 1;
 
-            fos = new FileOutputStream(fileName  + "."+ Constants.EXCEL_EXTENSION_XLSX);
+            fos = new FileOutputStream(fName);
             workbook = new XSSFWorkbook();
 
             XSSFSheet sheet = workbook.createSheet(section.toString());
@@ -82,7 +82,7 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
                 for (var team : data.get(entryNumber)) {
                     for (int i = teamStartColumn; i < TeamModel.NUMBERS_OF_ATTRIBUTES + team.getMembers().size() + teamStartColumn - 1; i++) {
                         int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES;
-                        switch (1 - i) {
+                        switch (i - 1) {
                             case 0 -> // teamNumber - String
                                     curRow.createCell(i).setCellValue(team.getTeamNumber());
                             case 1 -> // teamName
@@ -106,7 +106,8 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
 
             workbook.write(fos);
             System.out.println("File created");
-        } catch (IOException e) {
+            written = true;
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -116,9 +117,12 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (!written) {
+                if (FileUtil.deleteFile(Paths.get(fName))) {
+                    System.out.println("deleted file");
+                }
+            }
         }
-
-        written = true;
     }
 
     public boolean setData(Map<Integer, List<TeamModel>> T) {

@@ -43,9 +43,23 @@ public class GUIValue {
     public final static int RESULT_PANEL_WIDTH = 1050;
     public final static int RESULT_PANEL_ENTRY_BOX_HEIGHT = 50;
     public final static int RESULT_TICKET_WIDTH = 300;
-    public final static int NEXT_BUTTON_WIDTH = 50;
-    public final static int NEXT_BUTTON_HEIGHT = 20;
+    public final static int NEXT_BUTTON_WIDTH = 60;
+    public final static int NEXT_BUTTON_HEIGHT = 30;
 
-    // ticket frame
+    // back btn
+    public static final int BACK_BTN_X = 50;
+    public static final int BACK_BTN_Y = 50;
+    public static final int BACK_BTN_WIDTH = 60;
+    public static final int BACK_BTN_HEIGHT = 30;
+
+    // image default value
+    public static final int SECTION_UP_BTN_WIDTH = 525;
+    public static final int SECTION_UP_BTN_HEIGHT = 254;
+    public static final int SECTION_DOWN_BTN_WIDTH = 525;
+    public static final int SECTION_DOWN_BTN_HEIGHT = 255;
+    public static final int BUTTON_LEFT_WIDTH = 354;
+    public static final int BUTTON_LEFT_HEIGHT = 156;
+    public static final int BUTTON_RIGHT_WIDTH = 172;
+    public static final int BUTTON_RIGHT_HEIGHT = 156;
 
 }

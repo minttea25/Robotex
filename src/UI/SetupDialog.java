@@ -1,9 +1,6 @@
 package UI;
 
-import ConstantValues.Constants;
-import ConstantValues.GUIString;
-import ConstantValues.GUIValue;
-import ConstantValues.Sections;
+import ConstantValues.*;
 import Model.ProgramFunctions;
 import Model.SetupDataModel;
 import Setup.Setup;
@@ -14,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Objects;
 
 public class SetupDialog extends JDialog{
@@ -52,10 +50,33 @@ public class SetupDialog extends JDialog{
 
         this.setup.loadSetupFile();
 
-        if (!this.setup.isSetupFileLoaded()) {
-            System.out.println("The setup file is not loaded successfully");
-            System.out.println("Check: " + this.setup.getSetupFilePath());
+        if (!(new File(this.setup.getSetupFilePath()).exists())) {
+            int ok = JOptionPane.showConfirmDialog(
+                    getSetupDialog(),
+                    ErrorMsg.e004Msg + this.setup.getSetupFilePath(),
+                    ErrorMsg.error004,
+                    JOptionPane.DEFAULT_OPTION
+            );
+            if (ok == JOptionPane.OK_OPTION) {
+                getSetupDialog().dispose();
+            }
             return;
+        }
+
+        if (!this.setup.isSetupFileLoaded()) {
+            //System.out.println("The setup file is not loaded successfully");
+            //System.out.println("Check: " + this.setup.getSetupFilePath());
+            int ok = JOptionPane.showConfirmDialog(
+                    getSetupDialog(),
+                    ErrorMsg.e005Msg + this.setup.getSetupFilePath(),
+                    ErrorMsg.error005,
+                    JOptionPane.DEFAULT_OPTION
+            );
+            if (ok == JOptionPane.OK_OPTION) {
+                getSetupDialog().dispose();
+            }
+            return;
+
         }
 
         initDialog();
@@ -86,7 +107,7 @@ public class SetupDialog extends JDialog{
 
     public void showDialog() {
         setLocationRelativeTo(parent);
-        setVisible(true);
+        setVisible(this.setup.isSetupFileLoaded());
     }
 
     private void initComponents() {
@@ -245,14 +266,33 @@ public class SetupDialog extends JDialog{
             }
             else if (obj == btnExcelLoad) {
                 if (Objects.equals(setup.getExcelFilePath(), "") || setup.getExcelFilePath() == null) {
-                    System.out.println("There is no selected file");
+                    //System.out.println("There is no selected file");
+                    JOptionPane.showConfirmDialog(
+                            getSetupDialog(),
+                            ErrorMsg.e003Msg,
+                            ErrorMsg.error003,
+                            JOptionPane.DEFAULT_OPTION
+                    );
                     return;
                 }
 
                 setup.loadExcelFile();
 
                 if (setup.isExcelFileLoaded()) {
-                    System.out.println("Load Success!");
+                    StringBuilder msg = new StringBuilder(GUIString.EXCEL_LOAD_MSG + setup.getExcelFilePath());
+                    for (Sections s : setup.getExcelReadManager().getDataLoaded().keySet()) {
+                        if (setup.getExcelReadManager().getDataLoaded(s)) {
+                            msg.append("\n").append(s.toString());
+                        }
+                    }
+
+                    //System.out.println("Load Success!");
+                    JOptionPane.showMessageDialog(
+                            getSetupDialog(),
+                            msg.toString(),
+                            GUIString.NOTCIE,
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
                     btnOK.setEnabled(true);
                     btnOK.setToolTipText(null);
                     btnExcelLoad.setText(GUIString.LOADED);
@@ -262,7 +302,6 @@ public class SetupDialog extends JDialog{
             else if (obj == btnOK) {
                 if (saveValues())
                     dispose();
-
             }
         }
     }
@@ -291,7 +330,13 @@ public class SetupDialog extends JDialog{
 
             for (int v : arr) {
                 if (v <= 0) {
-                    System.out.println(" v <= 0 ");
+                    //System.out.println(" v <= 0 ");
+                    JOptionPane.showConfirmDialog(
+                            getSetupDialog(),
+                            ErrorMsg.e002Msg,
+                            ErrorMsg.error002,
+                            JOptionPane.DEFAULT_OPTION
+                    );
                     return false;
                 }
             }
@@ -304,7 +349,12 @@ public class SetupDialog extends JDialog{
             setup.getSetupDataModel().setLegoFolkraceJH(arr[5]);
 
         } catch (NumberFormatException e) {
-            System.out.println("Integer.parseInt error");
+            // e.printStackTrace();
+            JOptionPane.showConfirmDialog(
+                    getSetupDialog(),
+                    ErrorMsg.e001Msg,
+                    ErrorMsg.error001,
+                    JOptionPane.DEFAULT_OPTION);
             return false;
         }
 

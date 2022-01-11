@@ -1,10 +1,6 @@
 package UI;
 
-import ConstantValues.Constants;
-import ConstantValues.GUIString;
-import ConstantValues.GUIValue;
-import ConstantValues.Sections;
-import Excel.ExcelWriteManagerFormation;
+import ConstantValues.*;
 import Excel.ExcelWriteManagerTicket;
 import Model.TeamModel;
 import Util.GUIUtil;
@@ -23,6 +19,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class TicketFrame extends JFrame {
+    boolean stateOk;
+
     Sections section;
     List<TeamModel> data;
 
@@ -51,6 +49,12 @@ public class TicketFrame extends JFrame {
         this.data = data;
         this.numberOfTickets = numberOfTickets;
 
+        stateOk = checkNumberOfTickets();
+
+        if (!stateOk) {
+            return;
+        }
+
         loadImages();
 
         shuffleData();
@@ -63,6 +67,38 @@ public class TicketFrame extends JFrame {
         attachComponents();
 
         showCard();
+    }
+
+    private boolean checkNumberOfTickets() {
+        if (data == null) {
+            GUIUtil.setSize(this,
+                    new Dimension(GUIValue.MAIN_WIDTH, GUIValue.MAIN_HEIGHT));
+            int ok = JOptionPane.showConfirmDialog(
+                    getTicketFrame(),
+                    ErrorMsg.e022Msg + section,
+                    ErrorMsg.error022,
+                    JOptionPane.DEFAULT_OPTION
+            );
+            if (ok == JOptionPane.OK_OPTION) {
+                getTicketFrame().dispose();
+            }
+            return false;
+        }
+        else if (numberOfTickets > data.size()) {
+            GUIUtil.setSize(this,
+                    new Dimension(GUIValue.MAIN_WIDTH, GUIValue.MAIN_HEIGHT));
+            int ok = JOptionPane.showConfirmDialog(
+                    getTicketFrame(),
+                    ErrorMsg.e021Msg,
+                    ErrorMsg.error021,
+                    JOptionPane.DEFAULT_OPTION
+            );
+            if (ok == JOptionPane.OK_OPTION) {
+                getTicketFrame().dispose();
+            }
+            return false;
+        }
+        return numberOfTickets <= data.size();
     }
 
     private void saveFiles() {
@@ -85,7 +121,10 @@ public class TicketFrame extends JFrame {
     }
 
     public void showFrame() {
-        setVisible(true);
+        setVisible(stateOk);
+        if (!stateOk) {
+            dispose();
+        }
     }
 
     private void showCard() {
@@ -128,11 +167,13 @@ public class TicketFrame extends JFrame {
     }
 
     private void attachComponents() {
-        add(resultPanel);
-        resultPanel.setBounds(
-                GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
-                GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
-        );
+        if (ewmt != null && ewmt.isWritten()) {
+            add(resultPanel);
+            resultPanel.setBounds(
+                    GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
+                    GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
+            );
+        }
 
         add(nextButton);
         nextButton.setBounds(
@@ -176,6 +217,10 @@ public class TicketFrame extends JFrame {
             case LineFollowingE, LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_PATH);
             case LegoFolkraceE, LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_PATH);
         }
+    }
+
+    private TicketFrame getTicketFrame() {
+        return this;
     }
 
     class NextButtonActionListener implements ActionListener {

@@ -1,7 +1,9 @@
 package UI;
 
 import ConstantValues.Constants;
+import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
+import ConstantValues.Sections;
 import Model.ProgramFunctions;
 import Util.ImageLoader;
 
@@ -20,6 +22,7 @@ public class MenuPanel extends JPanel {
     protected JButton lineFollowingJHBtn;
     protected JButton legoFolkraceEBtn;
     protected JButton legoFolkraceJHBtn;
+    protected JButton backBtn;
 
     private ImageIcon legoSumo1kgIcon;
     private ImageIcon legoSumo3kgIcon;
@@ -48,56 +51,110 @@ public class MenuPanel extends JPanel {
         add(legoSumo1kgBtn);
         if (legoSumo1kgImage != null) {
             legoSumo1kgBtn.setBounds(
-                    GUIValue.MAIN_WIDTH / 2 - lineFollowingEIcon.getIconWidth() / 2 - GUIValue.MENU_BUTTON_INTERVAL - legoSumo1kgIcon.getIconWidth(),
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2 - GUIValue.MENU_BUTTON_INTERVAL - GUIValue.SECTION_UP_BTN_WIDTH,
                     GUIValue.MENU_BUTTON_Y,
                     legoSumo1kgIcon.getIconWidth(), legoSumo1kgIcon.getIconHeight()
             );
+        }
+        else {
+            legoSumo1kgBtn.setBounds(
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2 - GUIValue.MENU_BUTTON_INTERVAL - GUIValue.SECTION_UP_BTN_WIDTH,
+                    GUIValue.MENU_BUTTON_Y,
+                    GUIValue.SECTION_UP_BTN_WIDTH, GUIValue.SECTION_UP_BTN_HEIGHT
+            );
+            legoSumo1kgBtn.setText(Sections.LegoSumo1kg.toString());
         }
 
         add(legoSumo3kgBtn);
         if (legoSumo3kgImage != null) {
             legoSumo3kgBtn.setBounds(
-                    GUIValue.MAIN_WIDTH / 2 - lineFollowingEIcon.getIconWidth() / 2 - GUIValue.MENU_BUTTON_INTERVAL - legoSumo1kgIcon.getIconWidth(),
-                    GUIValue.MENU_BUTTON_Y + legoSumo1kgIcon.getIconHeight(),
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2 - GUIValue.MENU_BUTTON_INTERVAL - GUIValue.SECTION_UP_BTN_WIDTH,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
                     legoSumo3kgIcon.getIconWidth(), legoSumo3kgIcon.getIconHeight()
             );
+        }
+        else {
+            legoSumo3kgBtn.setBounds(
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2 - GUIValue.MENU_BUTTON_INTERVAL - GUIValue.SECTION_UP_BTN_WIDTH,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
+                    GUIValue.SECTION_DOWN_BTN_WIDTH, GUIValue.SECTION_DOWN_BTN_HEIGHT
+            );
+            legoSumo3kgBtn.setText(Sections.LegoSumo3kg.toString());
         }
 
         add(lineFollowingEBtn);
         if (lineFollowingEImage != null) {
             lineFollowingEBtn.setBounds(
-                    GUIValue.MAIN_WIDTH / 2 - lineFollowingEIcon.getIconWidth() / 2,
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2,
                     GUIValue.MENU_BUTTON_Y,
                     lineFollowingEIcon.getIconWidth(), lineFollowingEIcon.getIconHeight()
             );
+        }
+        else {
+            lineFollowingEBtn.setBounds(
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2,
+                    GUIValue.MENU_BUTTON_Y,
+                    GUIValue.SECTION_UP_BTN_WIDTH, GUIValue.SECTION_UP_BTN_HEIGHT
+            );
+            lineFollowingEBtn.setText(Sections.LineFollowingE.toString());
         }
 
         add(lineFollowingJHBtn);
         if (lineFollowingJHImage != null) {
             lineFollowingJHBtn.setBounds(
-                    GUIValue.MAIN_WIDTH / 2 - lineFollowingEIcon.getIconWidth() / 2,
-                    GUIValue.MENU_BUTTON_Y + lineFollowingEIcon.getIconHeight(),
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
                     lineFollowingJHIcon.getIconWidth(), lineFollowingJHIcon.getIconHeight()
             );
+        }
+        else {
+            lineFollowingJHBtn.setBounds(
+                    GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
+                    GUIValue.SECTION_DOWN_BTN_WIDTH, GUIValue.SECTION_DOWN_BTN_HEIGHT
+            );
+            lineFollowingJHBtn.setText(Sections.LineFollowingJH.toString());
         }
 
         add(legoFolkraceEBtn);
         if (legoFolkraceEImage != null) {
             legoFolkraceEBtn.setBounds(
-                    GUIValue.MAIN_WIDTH / 2 + lineFollowingEIcon.getIconWidth() / 2 + GUIValue.MENU_BUTTON_INTERVAL,
+                    GUIValue.MAIN_WIDTH / 2 + GUIValue.SECTION_UP_BTN_WIDTH / 2 + GUIValue.MENU_BUTTON_INTERVAL,
                     GUIValue.MENU_BUTTON_Y,
                     legoFolkraceEIcon.getIconWidth(), legoFolkraceJHIcon.getIconHeight()
             );
+        }
+        else {
+            legoFolkraceEBtn.setBounds(
+                    GUIValue.MAIN_WIDTH / 2 + GUIValue.SECTION_UP_BTN_WIDTH / 2 + GUIValue.MENU_BUTTON_INTERVAL,
+                    GUIValue.MENU_BUTTON_Y,
+                    GUIValue.SECTION_UP_BTN_WIDTH, GUIValue.SECTION_UP_BTN_HEIGHT
+            );
+            legoFolkraceEBtn.setText(Sections.LegoFolkraceE.toString());
         }
 
         add(legoFolkraceJHBtn);
         if (legoFolkraceJHImage != null) {
             legoFolkraceJHBtn.setBounds(
-                    GUIValue.MAIN_WIDTH / 2 + lineFollowingEIcon.getIconWidth() / 2 + GUIValue.MENU_BUTTON_INTERVAL,
-                    GUIValue.MENU_BUTTON_Y + legoFolkraceEIcon.getIconHeight(),
+                    GUIValue.MAIN_WIDTH / 2 + GUIValue.SECTION_UP_BTN_WIDTH / 2 + GUIValue.MENU_BUTTON_INTERVAL,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
                     legoFolkraceJHIcon.getIconWidth(), legoFolkraceJHIcon.getIconHeight()
             );
         }
+        else {
+            legoFolkraceJHBtn.setBounds(
+                    GUIValue.MAIN_WIDTH / 2 + GUIValue.SECTION_UP_BTN_WIDTH / 2 + GUIValue.MENU_BUTTON_INTERVAL,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
+                    GUIValue.SECTION_DOWN_BTN_WIDTH, GUIValue.SECTION_DOWN_BTN_HEIGHT
+            );
+            legoFolkraceJHBtn.setText(Sections.LegoFolkraceJH.toString());
+        }
+
+        add(backBtn);
+        backBtn.setBounds(
+                GUIValue.BACK_BTN_X, GUIValue.BACK_BTN_Y,
+                GUIValue.BACK_BTN_WIDTH, GUIValue.BACK_BTN_HEIGHT
+        );
 
         // it should be attached last.
         add(backImageLabel);
@@ -117,25 +174,32 @@ public class MenuPanel extends JPanel {
         lineFollowingJHBtn = new JButton();
         legoFolkraceEBtn = new JButton();
         legoFolkraceJHBtn = new JButton();
+        backBtn = new JButton();
 
         if (backgroundImage != null) {
             backImageLabel.setIcon(new ImageIcon(backgroundImage));
         }
+
         if (legoSumo1kgImage != null) {
             legoSumo1kgBtn.setIcon(legoSumo1kgIcon = new ImageIcon(legoSumo1kgImage));
         }
+
         if (legoSumo3kgImage != null) {
             legoSumo3kgBtn.setIcon(legoSumo3kgIcon = new ImageIcon(legoSumo3kgImage));
         }
+
         if (lineFollowingEImage != null) {
             lineFollowingEBtn.setIcon(lineFollowingEIcon = new ImageIcon(lineFollowingEImage));
         }
+
         if (lineFollowingJHImage != null) {
             lineFollowingJHBtn.setIcon(lineFollowingJHIcon = new ImageIcon(lineFollowingJHImage));
         }
+
         if (legoFolkraceEImage != null) {
             legoFolkraceEBtn.setIcon(legoFolkraceEIcon = new ImageIcon(legoFolkraceEImage));
         }
+
         if (legoFolkraceJHImage != null) {
             legoFolkraceJHBtn.setIcon(legoFolkraceJHIcon = new ImageIcon(legoFolkraceJHImage));
         }
@@ -167,6 +231,8 @@ public class MenuPanel extends JPanel {
         lineFollowingJHBtn.setOpaque(false);
         legoFolkraceEBtn.setOpaque(false);
         legoFolkraceJHBtn.setOpaque(false);
+
+        backBtn.setText(GUIString.BACK);
     }
 
     private void initPanel() {
@@ -205,5 +271,6 @@ public class MenuPanel extends JPanel {
         lineFollowingJHBtn.addActionListener(listener);
         legoFolkraceEBtn.addActionListener(listener);
         legoFolkraceJHBtn.addActionListener(listener);
+        backBtn.addActionListener(listener);
     }
 }

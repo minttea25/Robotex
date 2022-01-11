@@ -1,7 +1,5 @@
 package Util;
 
-import ConstantValues.Constants;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,7 +24,18 @@ public class FileUtil {
         }
     }
 
-    public static boolean deleteFile(Paths path) {
-        return true;
+    public static boolean deleteFile(Path path) {
+        File f = new File(path.toString());
+
+        if (f.exists()) {
+            if (f.delete()) {
+                System.out.println("Wrong file is deleted");
+                return true;
+            }else {
+                System.out.println("Failed to delete file");
+                return false;
+            }
+        }
+        return false;
     }
 }

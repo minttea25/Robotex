@@ -73,7 +73,8 @@ public class SheetReadManager implements Callable {
                             team.setCoachPhone((String) getValueFromCell(cell));
                             break;
                         case 6 + 6:
-                            System.out.println("column end");
+                            // System.out.println("column end");
+                            // over-number number
                             break;
                         default: // member - String
                             team.addMember((String) getValueFromCell(cell));

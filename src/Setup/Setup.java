@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import org.apache.poi.ss.formula.functions.T;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
@@ -46,13 +47,20 @@ public class Setup {
         File file = new File(setupFilePath);
 
         if (!file.exists()) {
-            System.out.println("There is no such file: " + file.getPath());
+            //System.out.println("There is no such file: " + file.getPath());
             return;
         }
 
         try {
             JsonReader jSonReader = new JsonReader(new FileReader(file));
             setupDataModel = gson.fromJson(jSonReader, SetupDataModel.class);
+
+            for(var s : Sections.values()) {
+                if (setupDataModel.getValueBySection(s) <= 0) {
+                    setupFileLoaded = false;
+                    return;
+                }
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -129,5 +137,9 @@ public class Setup {
 
     public String getExcelFilePath() {
         return excelFilePath;
+    }
+
+    public ExcelReadManager getExcelReadManager() {
+        return erm;
     }
 }

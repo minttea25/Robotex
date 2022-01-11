@@ -47,11 +47,12 @@ public class ExcelWriteManagerTicket extends ExcelWriteManager{
         }
 
         FileOutputStream fos = null;
+        String fName = fileName  + "."+ Constants.EXCEL_EXTENSION_XLSX;
 
         try {
             int row = 0;
 
-            fos = new FileOutputStream(fileName  + "."+ Constants.EXCEL_EXTENSION_XLSX);
+            fos = new FileOutputStream(fName);
             workbook = new XSSFWorkbook();
 
             XSSFSheet sheet = workbook.createSheet(section.toString());
@@ -107,7 +108,8 @@ public class ExcelWriteManagerTicket extends ExcelWriteManager{
 
             workbook.write(fos);
             System.out.println("File created");
-        } catch (IOException e) {
+            written = true;
+        }  catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -117,9 +119,12 @@ public class ExcelWriteManagerTicket extends ExcelWriteManager{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (!written) {
+                if (FileUtil.deleteFile(Paths.get(fName))) {
+                    System.out.println("deleted file");
+                }
+            }
         }
-
-        written = true;
     }
 
     public boolean setData(List<TeamModel> T) {

@@ -3,6 +3,7 @@ package UI;
 import ConstantValues.Constants;
 import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
+import Util.GUIUtil;
 import Util.ImageLoader;
 
 import javax.swing.*;
@@ -48,14 +49,29 @@ public class MainPanel extends JPanel{
                     formationIcon.getIconWidth(), formationIcon.getIconHeight()
             );
         }
+        else {
+            formationBtn.setBounds(
+                    GUIValue.MAIN_FORMATION_BUTTON_LEFT_X, GUIValue.MAIN_BUTTON_Y,
+                    GUIValue.BUTTON_LEFT_WIDTH, GUIValue.BUTTON_LEFT_HEIGHT
+            );
+            formationBtn.setText("formation");
+        }
 
         add(formationSetupBtn);
-        if (formationSetupBtnImage != null) {
+        if (formationSetupBtnImage != null && formationBtnImage != null) {
             formationSetupBtn.setBounds(
                     GUIValue.MAIN_FORMATION_BUTTON_LEFT_X + formationIcon.getIconWidth(),
                     GUIValue.MAIN_BUTTON_Y,
                     formationSetupIcon.getIconWidth(), formationSetupIcon.getIconHeight()
             );
+        }
+        else {
+            formationSetupBtn.setBounds(
+                    GUIValue.MAIN_FORMATION_BUTTON_LEFT_X + GUIValue.BUTTON_LEFT_WIDTH,
+                    GUIValue.MAIN_BUTTON_Y,
+                    GUIValue.BUTTON_RIGHT_WIDTH, GUIValue.BUTTON_RIGHT_HEIGHT
+            );
+            formationSetupBtn.setText("formation setup");
         }
 
         add(ticketBtn);
@@ -65,15 +81,31 @@ public class MainPanel extends JPanel{
                     ticketIcon.getIconWidth(), ticketIcon.getIconHeight()
             );
         }
+        else {
+            ticketBtn.setBounds(
+                    GUIValue.MAIN_TICKET_BUTTON_LEFT_X, GUIValue.MAIN_BUTTON_Y,
+                    GUIValue.BUTTON_LEFT_WIDTH, GUIValue.BUTTON_LEFT_HEIGHT
+            );
+            ticketBtn.setText("world ticket");
+        }
 
         add(ticketSetupBtn);
-        if (ticketBtnImage != null) {
+        if (ticketSetupBtnImage != null && ticketBtnImage != null) {
             ticketSetupBtn.setBounds(
                     GUIValue.MAIN_TICKET_BUTTON_LEFT_X + ticketIcon.getIconWidth(),
                     GUIValue.MAIN_BUTTON_Y,
                     ticketSetupIcon.getIconWidth(), ticketSetupIcon.getIconHeight()
             );
         }
+        else {
+            ticketSetupBtn.setBounds(
+                    GUIValue.MAIN_TICKET_BUTTON_LEFT_X + GUIValue.BUTTON_LEFT_WIDTH,
+                    GUIValue.MAIN_BUTTON_Y,
+                    GUIValue.BUTTON_RIGHT_WIDTH, GUIValue.BUTTON_RIGHT_HEIGHT
+            );
+            ticketSetupBtn.setText("world ticket setup");
+        }
+
 
         // it should be attached last.
         add(backImageLabel);
@@ -104,7 +136,7 @@ public class MainPanel extends JPanel{
         if (ticketBtnImage != null) {
             ticketBtn.setIcon(ticketIcon = new ImageIcon(ticketBtnImage));
         }
-        if (ticketBtnImage != null) {
+        if (ticketSetupBtnImage != null) {
             ticketSetupBtn.setIcon(ticketSetupIcon = new ImageIcon(ticketSetupBtnImage));
         }
 
