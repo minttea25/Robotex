@@ -1,11 +1,12 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TeamModel {
-    static final int MAX_MEMBERS = 5;
-    static final int NUMBERS_OF_ATTRIBUTES = 7;
+    public static final int MAX_MEMBERS = 5;
+    public static final int NUMBERS_OF_ATTRIBUTES = 7;
 
     String teamNumber;
     String teamName;
@@ -28,9 +29,15 @@ public class TeamModel {
         this.coachPhone = coachPhone;
         this.coachEmail = coachEmail;
         this.belong = belong;
-        for (var member : members) {
-            this.members.add(member);
+        this.members.addAll(members);
+    }
+
+    public void addMember(String member) {
+        if (this.members.size() >= MAX_MEMBERS) {
+            System.out.println("number of max members is " + MAX_MEMBERS + " - now you try add one more.");
+            return;
         }
+        this.members.add(member);
     }
 
     public void setTeamNumber(String teamNumber) {
@@ -58,15 +65,25 @@ public class TeamModel {
     }
 
     public void setMembers(List<String> members) {
-        for (String m : members) {
-            this.members.add(m);
+        if (this.members.size() > MAX_MEMBERS) {
+            System.out.println("number of max members is " + MAX_MEMBERS + " - now you try to set: " + members.size());
+            return;
         }
+
+        this.members.clear();
+
+        this.members.addAll(members);
     }
 
     public void setMembers(String... members) {
-        for (String m : members) {
-            this.members.add(m);
+        if (this.members.size() > MAX_MEMBERS) {
+            System.out.println("number of max members is " + MAX_MEMBERS + " - now you try to set: " + members.length);
+            return;
         }
+
+        this.members.clear();
+
+        Collections.addAll(this.members, members);
     }
 
     public String getTeamNumber() {
@@ -105,9 +122,12 @@ public class TeamModel {
     @Override
     public String toString() {
         StringBuilder t = new StringBuilder();
-        t.append("teamNumber: " + teamNumber + ", teamName: " + teamName
-                + ", coach: " + coach + ", coachPhone: " + coachPhone
-                + ", coachEmail: " + coachEmail + ", belong: " + belong);
+        t.append("teamNumber: ").append(teamNumber)
+                .append(", teamName: ").append(teamName)
+                .append(", coach: ").append(coach)
+                .append(", coachPhone: ").append(coachPhone)
+                .append(", coachEmail: ").append(coachEmail)
+                .append(", belong: ").append(belong);
 
         if (members.size() == 0) {
             return t.toString();
@@ -116,7 +136,7 @@ public class TeamModel {
         t.append(", members: [");
 
         for (String m : members) {
-            t.append(m + ", ");
+            t.append(m).append(", ");
         }
         t.append("]");
         return t.toString();

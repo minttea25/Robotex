@@ -1,4 +1,4 @@
-package Constants;
+package ConstantValues;
 
 public enum Sections {
     LegoSumo1kg,
