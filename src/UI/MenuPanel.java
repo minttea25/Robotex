@@ -260,7 +260,7 @@ public class MenuPanel extends JPanel {
             legoFolkraceJHImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_PATH);
         }
         else {
-            System.out.println("ERROR");
+            //System.out.println("ERROR");
         }
     }
 

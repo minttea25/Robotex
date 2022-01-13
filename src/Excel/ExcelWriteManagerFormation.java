@@ -34,14 +34,14 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
     @Override
     void createFolder() {
         if (!FileUtil.createFolder(Paths.get(Constants.EXCEL_SAVE_PATH_FORMATION))) {
-            System.out.println("Failed to create folder: " + Constants.EXCEL_SAVE_PATH_FORMATION);
+            //System.out.println("Failed to create folder: " + Constants.EXCEL_SAVE_PATH_FORMATION);
         }
     }
 
     @Override
     public void createExcelFile() {
         if (data == null || data.size() == 0) {
-            System.out.println("There is no data to write.");
+            //System.out.println("There is no data to write.");
             return;
         }
 
@@ -105,7 +105,7 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
             }
 
             workbook.write(fos);
-            System.out.println("File created");
+            //System.out.println("File created");
             written = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +119,7 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
             }
             if (!written) {
                 if (FileUtil.deleteFile(Paths.get(fName))) {
-                    System.out.println("deleted file");
+                    //System.out.println("deleted file");
                 }
             }
         }

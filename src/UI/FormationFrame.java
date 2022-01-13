@@ -8,6 +8,8 @@ import Util.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,10 +25,15 @@ public class FormationFrame extends JFrame {
     Map<Integer, List<TeamModel>> map = new HashMap<>();
 
     int numberOfEntries;
+    int numberOfShowingCards;
+
+    CardLayout card;
+    String[] cardNames;
 
     JLabel backgroundLabel;
-    JScrollPane scrollPane;
-    JPanel resultPanel;
+    JPanel resultPanel; // card layout
+    JButton nextButton;
+
     FormationResultPanel[] panels;
 
     BufferedImage backgroundImage;
@@ -53,6 +60,8 @@ public class FormationFrame extends JFrame {
         initFrame();
         initComponents();
         attachComponents();
+
+        showCard();
     }
 
 
@@ -103,7 +112,7 @@ public class FormationFrame extends JFrame {
         ewmf.createExcelFile();
 
         if (!ewmf.isWritten()) {
-            System.out.println("Failed to create file");
+            //System.out.println("Failed to create file");
         }
     }
 
@@ -115,52 +124,9 @@ public class FormationFrame extends JFrame {
         }
     }
 
-    private void initComponents() {
-        backgroundLabel = new JLabel();
-        panels = new FormationResultPanel[numberOfEntries];
-        for (int entry : map.keySet()) {
-            panels[entry] = new FormationResultPanel(entry, map.get(entry));
-        }
-        resultPanel = new JPanel();
-        scrollPane = new JScrollPane();
-
-        if (backgroundImage != null) {
-            backgroundLabel.setIcon(new ImageIcon(backgroundImage));
-        }
-
-        resultPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        GUIUtil.setSize(resultPanel,
-                new Dimension(
-                        (numberOfEntries - 1) * GUIValue.RESULT_INTERVAL + numberOfEntries * GUIValue.RESULT_WIDTH,
-                        GUIValue.RESULT_PANEL_HEIGHT
-                ));
-
-        for (var panel : panels) {
-            resultPanel.add(panel);
-        }
-
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setViewportView(resultPanel);
-    }
-
-    private void attachComponents() {
-        if (ewmf != null && ewmf.isWritten()) {
-            add(scrollPane);
-            scrollPane.setBounds(
-                    GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
-                    GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
-            );
-        }
-
-        add(backgroundLabel);
-        backgroundLabel.setBounds(
-                0, 0,
-                backgroundImage.getWidth(), backgroundImage.getHeight()
-        );
-    }
-
     private void initFrame() {
+        card = new CardLayout();
+
         setLayout(null);
         setTitle(GUIString.FORMATION_FRAME_TITLE + " - " + section.toString());
         setResizable(GUIValue.WINDOW_RESIZABLE);
@@ -169,6 +135,76 @@ public class FormationFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
+
+    private void initComponents() {
+        backgroundLabel = new JLabel();
+        resultPanel = new JPanel();
+        nextButton = new JButton();
+        panels = new FormationResultPanel[numberOfShowingCards];
+
+        int index = 0;
+        for (int i=0; i<numberOfShowingCards; i++) {
+            Object[] keyArr = map.keySet().toArray();
+
+            Map<Integer, List<TeamModel>> data = new HashMap<>();
+            for (int j=0; j<GUIValue.FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL; j++) {
+                if (index >= map.size()) {
+                    break;
+                }
+                data.put((int) keyArr[index], map.get(keyArr[index]));
+                index++;
+            }
+            panels[i] = new FormationResultPanel(data);
+        }
+
+        if (backgroundImage != null) {
+            backgroundLabel.setIcon(new ImageIcon(backgroundImage));
+        }
+
+        nextButton.setText(GUIString.NEXT);
+        nextButton.addActionListener(new NextButtonActionListener());
+
+        resultPanel.setLayout(card);
+        for (int i=0; i<panels.length; i++){
+            String cardName = GUIValue.FORMATION_BASE_CARD_NAME + i;
+            resultPanel.add(cardName, panels[i]);
+            cardNames[i] = cardName;
+        }
+    }
+
+    private void attachComponents() {
+        if (ewmf != null && ewmf.isWritten()) {
+            add(resultPanel);
+            resultPanel.setBounds(
+                    GUIValue.RESULT_BOX_X, GUIValue.RESULT_BOX_Y,
+                    GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
+            );
+        }
+
+        add(nextButton);
+        nextButton.setBounds(
+                GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - GUIValue.NEXT_BUTTON_WIDTH,
+                GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 20,
+                GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
+        );
+
+        add(backgroundLabel);
+        backgroundLabel.setBounds(
+                0, 0,
+                backgroundImage.getWidth(), backgroundImage.getHeight()
+        );
+    }
+
+    private void showCard() {
+        if (cardNames != null) {
+            card.show(resultPanel, cardNames[0]);
+        }
+        else {
+            //System.out.println("CardName is null");
+        }
+    }
+
+
 
     public void showFrame() {
         setVisible(stateOk);
@@ -192,6 +228,8 @@ public class FormationFrame extends JFrame {
             i++;
         }
 
+        this.numberOfShowingCards = (int) (Math.ceil(map.size() / (double)GUIValue.FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL));
+        this.cardNames = new String[this.numberOfShowingCards];
 
         /*for (int key : map.keySet()) {
             System.out.println(key);
@@ -209,5 +247,22 @@ public class FormationFrame extends JFrame {
 
     private FormationFrame getFormationFrame() {
         return this;
+    }
+
+    private void showNextCard() {
+        card.next(resultPanel);
+    }
+
+
+    class NextButtonActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object obj = e.getSource();
+
+            if (obj == nextButton) {
+                showNextCard();
+            }
+        }
     }
 }

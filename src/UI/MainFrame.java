@@ -254,7 +254,7 @@ public class MainFrame extends JFrame {
                 );
                 frame.showFrame();
             }
-            else if (obj == formationPanel.backBtn) {
+            else if (obj == ticketPanel.backBtn) {
                 card.show(getContentPane(), GUIValue.MAIN_CARD_NAME);
             }
         }

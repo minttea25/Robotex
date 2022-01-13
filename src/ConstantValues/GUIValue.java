@@ -26,6 +26,7 @@ public class GUIValue {
     public static final String TICKET_1ST_CARD_NAME = "1st";
     public static final String TICKET_2nd_CARD_NAME = "2nd";
     public static final String TICKET_3rd_CARD_NAME = "3rd";
+    public static final String FORMATION_BASE_CARD_NAME = "formation";
 
     // setup
     public final static int SETUP_MARGIN = 5;
@@ -35,21 +36,27 @@ public class GUIValue {
     public final static int SETUP_GRID_Y = 1;
 
     // formation / ticket frame
-    public final static int RESULT_PANEL_HEIGHT = 600;
-    public final static int RESULT_INTERVAL = 10;
-    public final static int RESULT_WIDTH = 200;
-    public final static int RESULT_PANEL_X = 650;
-    public final static int RESULT_PANEL_Y = 350;
-    public final static int RESULT_PANEL_WIDTH = 1050;
-    public final static int RESULT_PANEL_ENTRY_BOX_HEIGHT = 50;
-    public final static int RESULT_TICKET_WIDTH = 300;
-    public final static int NEXT_BUTTON_WIDTH = 60;
+    public final static int RESULT_BOX_X = 650;
+    public final static int RESULT_BOX_Y = 350;
+    public final static int RESULT_PANEL_WIDTH = 250;
+    public final static int RESULT_PANEL_HEIGHT = 550;
+    public final static int RESULT_PANEL_TITLE_WIDTH = RESULT_PANEL_WIDTH;
+    public final static int RESULT_PANEL_TITLE_HEIGHT = 50;
+    public final static int RESULT_PANEL_BODY_WIDTH = RESULT_PANEL_WIDTH;
+    public final static int RESULT_PANEL_BODY_HEIGHT = RESULT_PANEL_HEIGHT - RESULT_PANEL_TITLE_HEIGHT;
+    public final static int RESULT_BOX_WIDTH = 1100;
+    public final static int RESULT_BOX_HEIGHT = 600;
+    public final static int RESULT_PANEL_INTERVAL = 20;
+    public final static int NEXT_BUTTON_WIDTH = 80;
     public final static int NEXT_BUTTON_HEIGHT = 30;
+
+    public final static int TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS = 10;
+    public final static int FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL = 4;
 
     // back btn
     public static final int BACK_BTN_X = 50;
     public static final int BACK_BTN_Y = 50;
-    public static final int BACK_BTN_WIDTH = 60;
+    public static final int BACK_BTN_WIDTH = 80;
     public static final int BACK_BTN_HEIGHT = 30;
 
     // image default value

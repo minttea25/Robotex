@@ -38,7 +38,7 @@ public class TicketFrame extends JFrame {
 
     TicketResultPanel panel1st;
     TicketResultPanel panel2nd;
-    TicketResultPanel panel3rd;
+    TicketResultScrollPanel panel3rd;
 
     BufferedImage backgroundImage;
 
@@ -149,8 +149,7 @@ public class TicketFrame extends JFrame {
         nextButton = new JButton();
         panel1st = new TicketResultPanel(ticket1st, numberOfTickets);
         panel2nd = new TicketResultPanel(ticket2nd, numberOfTickets);
-        panel3rd = new TicketResultPanel(ticket3rd, numberOfTickets);
-
+        panel3rd = new TicketResultScrollPanel(ticket3rd, GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS);
 
         if (backgroundImage != null) {
             backgroundLabel.setIcon(new ImageIcon(backgroundImage));
@@ -170,15 +169,15 @@ public class TicketFrame extends JFrame {
         if (ewmt != null && ewmt.isWritten()) {
             add(resultPanel);
             resultPanel.setBounds(
-                    GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
-                    GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
+                    GUIValue.RESULT_BOX_X, GUIValue.RESULT_BOX_Y,
+                    GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
             );
         }
 
         add(nextButton);
         nextButton.setBounds(
-                GUIValue.RESULT_PANEL_X + GUIValue.RESULT_PANEL_WIDTH - GUIValue.NEXT_BUTTON_WIDTH,
-                GUIValue.RESULT_PANEL_Y + GUIValue.RESULT_PANEL_HEIGHT + 20,
+                GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - GUIValue.NEXT_BUTTON_WIDTH,
+                GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 20,
                 GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
         );
 

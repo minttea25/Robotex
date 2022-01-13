@@ -28,6 +28,8 @@ public class GUIString {
 
     // for ticket
     public static final String TICKET_FINAL_LIST = "World Qualification";
+    public static final String TICKET_PRELIMINARY_LIST = "Preliminary Teams";
+    public static final String TICKET_PRELIMINARY_LIST_3 = "Preliminary2 (in order)";
     public static final String NEXT = "NEXT";
 
     public static final String BACK = "Back";
