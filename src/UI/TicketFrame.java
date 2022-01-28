@@ -5,6 +5,7 @@ import Excel.ExcelWriteManagerTicket;
 import Model.TeamModel;
 import Util.GUIUtil;
 import Util.ImageLoader;
+import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +15,7 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 public class TicketFrame extends JFrame {
@@ -38,11 +38,16 @@ public class TicketFrame extends JFrame {
 
     TicketResultPanel panel1st;
     TicketResultPanel panel2nd;
-    TicketResultPanel panel3rd;
+    TicketResultScrollPanel panel3rd;
 
     BufferedImage backgroundImage;
+    BufferedImage nextBtnImage;
+
+    ImageIcon nextBtnIcon;
 
     ExcelWriteManagerTicket ewmt;
+
+    Set<String> loadFailSet = new HashSet<>();
 
     public TicketFrame(Sections section, List<TeamModel> data, int numberOfTickets) {
         this.section = section;
@@ -67,6 +72,8 @@ public class TicketFrame extends JFrame {
         attachComponents();
 
         showCard();
+
+        OptionPaneUtil.showUnloadedImages(loadFailSet, getTicketFrame());
     }
 
     private boolean checkNumberOfTickets() {
@@ -149,14 +156,19 @@ public class TicketFrame extends JFrame {
         nextButton = new JButton();
         panel1st = new TicketResultPanel(ticket1st, numberOfTickets);
         panel2nd = new TicketResultPanel(ticket2nd, numberOfTickets);
-        panel3rd = new TicketResultPanel(ticket3rd, numberOfTickets);
-
+        panel3rd = new TicketResultScrollPanel(ticket3rd, GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS);
 
         if (backgroundImage != null) {
             backgroundLabel.setIcon(new ImageIcon(backgroundImage));
         }
 
-        nextButton.setText(GUIString.NEXT);
+        if (nextBtnImage != null) {
+            nextButton.setIcon(nextBtnIcon = new ImageIcon(nextBtnImage));
+        }
+        else {
+            nextButton.setText(GUIString.NEXT);
+        }
+        GUIUtil.makeButtonForImage(nextButton);
         nextButton.addActionListener(new NextButtonActionListener());
 
         resultPanel.setLayout(card);
@@ -170,23 +182,36 @@ public class TicketFrame extends JFrame {
         if (ewmt != null && ewmt.isWritten()) {
             add(resultPanel);
             resultPanel.setBounds(
-                    GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
-                    GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
+                    GUIValue.RESULT_BOX_X, GUIValue.RESULT_BOX_Y,
+                    GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
             );
         }
 
         add(nextButton);
-        nextButton.setBounds(
-                GUIValue.RESULT_PANEL_X + GUIValue.RESULT_PANEL_WIDTH - GUIValue.NEXT_BUTTON_WIDTH,
-                GUIValue.RESULT_PANEL_Y + GUIValue.RESULT_PANEL_HEIGHT + 20,
-                GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
-        );
+        if (nextBtnImage != null) {
+            nextButton.setBounds(
+                    GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - nextBtnIcon.getIconWidth(),
+                    GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 10,
+                    nextBtnIcon.getIconWidth(), nextBtnIcon.getIconHeight()
+            );
+        }
+        else {
+            nextButton.setBounds(
+                    GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - GUIValue.NEXT_BUTTON_WIDTH/4,
+                    GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 15,
+                    GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
+            );
+            nextButton.setText(GUIString.NEXT);
+        }
+
 
         add(backgroundLabel);
-        backgroundLabel.setBounds(
-                0, 0,
-                backgroundImage.getWidth(), backgroundImage.getHeight()
-        );
+        if(backgroundImage != null) {
+            backgroundLabel.setBounds(
+                    0, 0,
+                    backgroundImage.getWidth(), backgroundImage.getHeight()
+            );
+        }
     }
 
     private void divideData() {
@@ -212,10 +237,29 @@ public class TicketFrame extends JFrame {
     }
 
     private void loadImages() {
+        nextBtnImage = ImageLoader.loadImage(Constants.NEXT_BUTTON_WHITE_PATH);
+
         switch (section) {
-            case LegoSumo1kg, LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_PATH);
-            case LineFollowingE, LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_PATH);
-            case LegoFolkraceE, LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_PATH);
+            case LegoSumo1kg -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH);
+            case LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_3KG_BG_PATH);
+            case LineFollowingE -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_E_BG_PATH);
+            case LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH);
+            case LegoFolkraceE -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH);
+            case LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH);
+        }
+
+        if (nextBtnImage == null)
+            loadFailSet.add(Constants.NEXT_BUTTON_WHITE_PATH);
+        if (backgroundImage == null) {
+            switch (section) {
+                case LegoSumo1kg -> loadFailSet.add(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH);
+                case LegoSumo3kg -> loadFailSet.add(Constants.TICKET_LEGO_SUMO_3KG_BG_PATH);
+                case LineFollowingE -> loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_E_BG_PATH);
+                case LineFollowingJH -> loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH);
+                case LegoFolkraceE -> loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH);
+                case LegoFolkraceJH -> loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH);
+
+            }
         }
     }
 

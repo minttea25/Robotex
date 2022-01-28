@@ -113,7 +113,7 @@ public class SetupDialog extends JDialog{
     private void initComponents() {
         filePanel = new JPanel();
         labelFile = new JLabel(GUIString.FILE_LABEL);
-        textFieldFile = new JTextField(15);
+        textFieldFile = new JTextField(GUIValue.SETUP_FILE_TEXT_FIELD_COLUMNS);
         buttonFile = new JButton(GUIString.CHOOSE_FILE);
 
         valuePanel = new JPanel();
@@ -136,6 +136,15 @@ public class SetupDialog extends JDialog{
         buttonPanel = new JPanel();
         btnExcelLoad = new JButton(GUIString.LOAD);
         btnOK = new JButton(GUIString.OK);
+
+        labelNumberOfEntries.setHorizontalAlignment(JLabel.CENTER);
+
+        tfLegoSumo1kg.setHorizontalAlignment(JTextField.CENTER);
+        tfLegoSumo3kg.setHorizontalAlignment(JTextField.CENTER);
+        tfLineFollowingE.setHorizontalAlignment(JTextField.CENTER);
+        tfLineFollowingJH.setHorizontalAlignment(JTextField.CENTER);
+        tfFolkraceE.setHorizontalAlignment(JTextField.CENTER);
+        tfFolkraceJH.setHorizontalAlignment(JTextField.CENTER);
 
         btnExcelLoad.setToolTipText(GUIString.SELECT_FILE_FIRST_TOOLTIP);
         btnOK.setToolTipText(GUIString.LOAD_FIRST_TOOLTIP);

@@ -98,6 +98,7 @@ public class MainFrame extends JFrame {
                 }
             }
             else if (obj == mainPanel.formationSetupBtn) {
+                formationSetup = new Setup(ProgramFunctions.Formation);
                 SetupDialog dialog = new SetupDialog(ProgramFunctions.Formation, getMainFrame(), formationSetup);
                 dialog.showDialog();
             }
@@ -116,6 +117,7 @@ public class MainFrame extends JFrame {
                 }
             }
             else if (obj == mainPanel.ticketSetupBtn) {
+                ticketSetup = new Setup(ProgramFunctions.Ticket);
                 SetupDialog dialog = new SetupDialog(ProgramFunctions.Ticket, getMainFrame(), ticketSetup);
                 dialog.showDialog();
             }
@@ -254,7 +256,7 @@ public class MainFrame extends JFrame {
                 );
                 frame.showFrame();
             }
-            else if (obj == formationPanel.backBtn) {
+            else if (obj == ticketPanel.backBtn) {
                 card.show(getContentPane(), GUIValue.MAIN_CARD_NAME);
             }
         }

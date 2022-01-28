@@ -5,11 +5,14 @@ import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
 import Util.GUIUtil;
 import Util.ImageLoader;
+import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainPanel extends JPanel{
     private JLabel backImageLabel;
@@ -29,11 +32,14 @@ public class MainPanel extends JPanel{
     private BufferedImage ticketBtnImage;
     private BufferedImage ticketSetupBtnImage;
 
+    Set<String> loadFailSet = new HashSet<>();
 
     public MainPanel() {
         initPanel();
         initComponents();
         attachComponents();
+
+        OptionPaneUtil.showUnloadedImages(loadFailSet, null);
     }
 
     private void initPanel() {
@@ -60,7 +66,7 @@ public class MainPanel extends JPanel{
         add(formationSetupBtn);
         if (formationSetupBtnImage != null && formationBtnImage != null) {
             formationSetupBtn.setBounds(
-                    GUIValue.MAIN_FORMATION_BUTTON_LEFT_X + formationIcon.getIconWidth(),
+                    GUIValue.MAIN_FORMATION_BUTTON_LEFT_X + formationIcon.getIconWidth() - 2,
                     GUIValue.MAIN_BUTTON_Y,
                     formationSetupIcon.getIconWidth(), formationSetupIcon.getIconHeight()
             );
@@ -92,7 +98,7 @@ public class MainPanel extends JPanel{
         add(ticketSetupBtn);
         if (ticketSetupBtnImage != null && ticketBtnImage != null) {
             ticketSetupBtn.setBounds(
-                    GUIValue.MAIN_TICKET_BUTTON_LEFT_X + ticketIcon.getIconWidth(),
+                    GUIValue.MAIN_TICKET_BUTTON_LEFT_X + ticketIcon.getIconWidth() - 2,
                     GUIValue.MAIN_BUTTON_Y,
                     ticketSetupIcon.getIconWidth(), ticketSetupIcon.getIconHeight()
             );
@@ -168,10 +174,16 @@ public class MainPanel extends JPanel{
 
     private void loadImages() {
         backgroundImage = ImageLoader.loadImage(Constants.MAIN_BACKGROUND_PATH);
-        formationBtnImage = ImageLoader.loadImage(Constants.MAIN_BUTTON_LEFT_PATH);
-        formationSetupBtnImage = ImageLoader.loadImage(Constants.MAIN_BUTTON_RIGHT_PATH);
-        ticketBtnImage = ImageLoader.loadImage(Constants.MAIN_BUTTON_LEFT_PATH);
-        ticketSetupBtnImage = ImageLoader.loadImage(Constants.MAIN_BUTTON_RIGHT_PATH);
+        formationBtnImage = ImageLoader.loadImage(Constants.FORMATION_BUTTON_LEFT_PATH);
+        formationSetupBtnImage = ImageLoader.loadImage(Constants.FORMATION_BUTTON_RIGHT_PATH);
+        ticketBtnImage = ImageLoader.loadImage(Constants.TICKET_BUTTON_LEFT_PATH);
+        ticketSetupBtnImage = ImageLoader.loadImage(Constants.TICKET_BUTTON_RIGHT_PATH);
+
+        if (backgroundImage == null) loadFailSet.add(Constants.MAIN_BACKGROUND_PATH);
+        if (formationBtnImage == null) loadFailSet.add(Constants.FORMATION_BUTTON_LEFT_PATH);
+        if (formationSetupBtnImage == null) loadFailSet.add(Constants.FORMATION_BUTTON_RIGHT_PATH);
+        if (ticketBtnImage == null) loadFailSet.add(Constants.TICKET_BUTTON_LEFT_PATH);
+        if (ticketSetupBtnImage == null) loadFailSet.add(Constants.TICKET_BUTTON_RIGHT_PATH);
     }
 
 

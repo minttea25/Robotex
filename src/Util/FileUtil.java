@@ -11,7 +11,7 @@ public class FileUtil {
         if (!folder.exists()) {
             try {
                 Files.createDirectory(Paths.get(folder.getAbsolutePath()));
-                System.out.println("Folder created");
+                //System.out.println("Folder created");
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -19,7 +19,7 @@ public class FileUtil {
             }
         }
         else {
-            System.out.println("Already exists");
+            //System.out.println("Already exists");
             return true;
         }
     }
@@ -29,10 +29,10 @@ public class FileUtil {
 
         if (f.exists()) {
             if (f.delete()) {
-                System.out.println("Wrong file is deleted");
+                //System.out.println("Wrong file is deleted");
                 return true;
             }else {
-                System.out.println("Failed to delete file");
+                //System.out.println("Failed to delete file");
                 return false;
             }
         }

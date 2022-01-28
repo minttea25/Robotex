@@ -42,4 +42,17 @@ public class GUIUtil {
         gbc.gridheight = gridHeight;
     }
 
+    public static void setFontOnJLabels(Font font, JLabel... labels) {
+        for (JLabel label : labels) {
+            label.setFont(font);
+        }
+    }
+
+    public static void makeButtonForImage(JButton button) {
+        button.setBorderPainted(false);
+        button.setBackground(new Color(255, 255, 255, 0));
+        button.setBorder(null);
+        button.setOpaque(false);
+    }
+
 }

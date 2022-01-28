@@ -5,9 +5,12 @@ import Excel.ExcelWriteManagerFormation;
 import Model.TeamModel;
 import Util.GUIUtil;
 import Util.ImageLoader;
+import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,15 +26,25 @@ public class FormationFrame extends JFrame {
     Map<Integer, List<TeamModel>> map = new HashMap<>();
 
     int numberOfEntries;
+    int numberOfShowingCards;
+
+    CardLayout card;
+    String[] cardNames;
 
     JLabel backgroundLabel;
-    JScrollPane scrollPane;
-    JPanel resultPanel;
+    JPanel resultPanel; // card layout
+    JButton nextButton;
+
     FormationResultPanel[] panels;
 
     BufferedImage backgroundImage;
+    BufferedImage nextBtnImage;
+
+    ImageIcon nextBtnIcon;
 
     ExcelWriteManagerFormation ewmf;
+
+    Set<String> loadFailSet = new HashSet<>();
 
     public FormationFrame(Sections section, List<TeamModel> data, int numberOfEntries) {
         this.section = section;
@@ -53,8 +66,11 @@ public class FormationFrame extends JFrame {
         initFrame();
         initComponents();
         attachComponents();
-    }
 
+        showCard();
+
+        OptionPaneUtil.showUnloadedImages(loadFailSet, getFormationFrame());
+    }
 
     private boolean checkNumberOfEntries() {
         if (data == null) {
@@ -103,64 +119,40 @@ public class FormationFrame extends JFrame {
         ewmf.createExcelFile();
 
         if (!ewmf.isWritten()) {
-            System.out.println("Failed to create file");
+            //System.out.println("Failed to create file");
         }
     }
 
     private void loadImages() {
+        nextBtnImage = ImageLoader.loadImage(Constants.NEXT_BUTTON_RED_PATH);
+
         switch (section) {
-            case LegoSumo1kg, LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_PATH);
-            case LineFollowingE, LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_PATH);
-            case LegoFolkraceE, LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_PATH);
-        }
-    }
-
-    private void initComponents() {
-        backgroundLabel = new JLabel();
-        panels = new FormationResultPanel[numberOfEntries];
-        for (int entry : map.keySet()) {
-            panels[entry] = new FormationResultPanel(entry, map.get(entry));
-        }
-        resultPanel = new JPanel();
-        scrollPane = new JScrollPane();
-
-        if (backgroundImage != null) {
-            backgroundLabel.setIcon(new ImageIcon(backgroundImage));
+            case LegoSumo1kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH);
+            case LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH);
+            case LineFollowingE -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_E_BG_PATH);
+            case LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_JH_BG_PATH);
+            case LegoFolkraceE -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_E_BG_PATH);
+            case LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH);
         }
 
-        resultPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        GUIUtil.setSize(resultPanel,
-                new Dimension(
-                        (numberOfEntries - 1) * GUIValue.RESULT_INTERVAL + numberOfEntries * GUIValue.RESULT_WIDTH,
-                        GUIValue.RESULT_PANEL_HEIGHT
-                ));
+        if (nextBtnImage == null)
+            loadFailSet.add(Constants.NEXT_BUTTON_RED_PATH);
+        if (backgroundImage == null) {
+            switch (section) {
+                case LegoSumo1kg -> loadFailSet.add(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH);
+                case LegoSumo3kg -> loadFailSet.add(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH);
+                case LineFollowingE -> loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_E_BG_PATH);
+                case LineFollowingJH -> loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_JH_BG_PATH);
+                case LegoFolkraceE -> loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_E_BG_PATH);
+                case LegoFolkraceJH -> loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH);
 
-        for (var panel : panels) {
-            resultPanel.add(panel);
+            }
         }
-
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollPane.setViewportView(resultPanel);
-    }
-
-    private void attachComponents() {
-        if (ewmf != null && ewmf.isWritten()) {
-            add(scrollPane);
-            scrollPane.setBounds(
-                    GUIValue.RESULT_PANEL_X, GUIValue.RESULT_PANEL_Y,
-                    GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT
-            );
-        }
-
-        add(backgroundLabel);
-        backgroundLabel.setBounds(
-                0, 0,
-                backgroundImage.getWidth(), backgroundImage.getHeight()
-        );
     }
 
     private void initFrame() {
+        card = new CardLayout();
+
         setLayout(null);
         setTitle(GUIString.FORMATION_FRAME_TITLE + " - " + section.toString());
         setResizable(GUIValue.WINDOW_RESIZABLE);
@@ -169,6 +161,96 @@ public class FormationFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
+
+    private void initComponents() {
+        backgroundLabel = new JLabel();
+        resultPanel = new JPanel();
+        nextButton = new JButton();
+        panels = new FormationResultPanel[numberOfShowingCards];
+
+        int index = 0;
+        for (int i=0; i<numberOfShowingCards; i++) {
+            Object[] keyArr = map.keySet().toArray();
+
+            Map<Integer, List<TeamModel>> data = new HashMap<>();
+            for (int j=0; j<GUIValue.FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL; j++) {
+                if (index >= map.size()) {
+                    break;
+                }
+                data.put((int) keyArr[index], map.get(keyArr[index]));
+                index++;
+            }
+            panels[i] = new FormationResultPanel(data);
+        }
+
+        if (backgroundImage != null) {
+            backgroundLabel.setIcon(new ImageIcon(backgroundImage));
+        }
+
+        if (nextBtnImage != null) {
+            nextButton.setIcon(nextBtnIcon = new ImageIcon(nextBtnImage));
+        }
+        else {
+            nextButton.setText(GUIString.NEXT);
+        }
+        GUIUtil.makeButtonForImage(nextButton);
+        nextButton.addActionListener(new NextButtonActionListener());
+
+        resultPanel.setLayout(card);
+        for (int i=0; i<panels.length; i++){
+            String cardName = GUIValue.FORMATION_BASE_CARD_NAME + i;
+            resultPanel.add(cardName, panels[i]);
+            cardNames[i] = cardName;
+        }
+    }
+
+    private void attachComponents() {
+        if (ewmf != null && ewmf.isWritten()) {
+            add(resultPanel);
+            resultPanel.setBounds(
+                    GUIValue.RESULT_BOX_X, GUIValue.RESULT_BOX_Y,
+                    GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
+            );
+        }
+        if (! (numberOfShowingCards <= 1)) {
+            add(nextButton);
+            if (nextBtnImage != null) {
+                nextButton.setBounds(
+                        GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - nextBtnIcon.getIconWidth(),
+                        GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 10,
+                        nextBtnIcon.getIconWidth(), nextBtnIcon.getIconHeight()
+                );
+            }
+            else {
+                nextButton.setBounds(
+                        GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - GUIValue.NEXT_BUTTON_WIDTH/4,
+                        GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 15,
+                        GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
+                );
+                nextButton.setText(GUIString.NEXT);
+            }
+        }
+
+
+        add(backgroundLabel);
+        if (backgroundImage != null) {
+            backgroundLabel.setBounds(
+                    0, 0,
+                    backgroundImage.getWidth(), backgroundImage.getHeight()
+            );
+        }
+    }
+
+    private void showCard() {
+        if (cardNames != null) {
+            card.show(resultPanel, cardNames[0]);
+        }
+        else {
+            //System.out.println("CardName is null");
+        }
+    }
+
+
 
     public void showFrame() {
         setVisible(stateOk);
@@ -192,6 +274,8 @@ public class FormationFrame extends JFrame {
             i++;
         }
 
+        this.numberOfShowingCards = (int) (Math.ceil(map.size() / (double)GUIValue.FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL));
+        this.cardNames = new String[this.numberOfShowingCards];
 
         /*for (int key : map.keySet()) {
             System.out.println(key);
@@ -209,5 +293,22 @@ public class FormationFrame extends JFrame {
 
     private FormationFrame getFormationFrame() {
         return this;
+    }
+
+    private void showNextCard() {
+        card.next(resultPanel);
+    }
+
+
+    class NextButtonActionListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object obj = e.getSource();
+
+            if (obj == nextButton) {
+                showNextCard();
+            }
+        }
     }
 }
