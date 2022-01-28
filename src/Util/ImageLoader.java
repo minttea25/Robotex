@@ -9,10 +9,15 @@ public class ImageLoader {
     public static BufferedImage loadImage(String path) {
         try {
             File imgFile = new File(path);
-            return ImageIO.read(imgFile);
+            if (!imgFile.exists()) {
+                return null;
+            } else {
+                return ImageIO.read(imgFile);
+            }
+
         } catch (IOException e) {
-            System.out.println("Can not load image: " + path);
-            e.printStackTrace();
+            //System.out.println("Can not load image: " + path);
+            //e.printStackTrace();
             return null;
         }
     }

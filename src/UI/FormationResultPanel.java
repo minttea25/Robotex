@@ -1,13 +1,19 @@
 package UI;
 
+import ConstantValues.Constants;
 import ConstantValues.GUIValue;
 import Model.TeamModel;
 import Util.GUIUtil;
+import Util.ImageLoader;
+import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class FormationResultPanel extends JPanel {
     Map<Integer, List<TeamModel>> data;
@@ -15,19 +21,35 @@ public class FormationResultPanel extends JPanel {
     int numberOfShowingPanels;
     ResultPanel[] panels;
 
+    BufferedImage contourImage;
+
+    Set<String> loadFailSet = new HashSet<>();
+
     public FormationResultPanel(Map<Integer, List<TeamModel>> data) {
         this.data = data;
         this.numberOfShowingPanels = data.size();
+        
+        loadImage();
 
         initPanel();
         initComponents();
         attachComponents();
+
+        //OptionPaneUtil.showUnloadedImages(loadFailSet, null);
+    }
+
+    private void loadImage() {
+        contourImage = ImageLoader.loadImage(Constants.VERTICAL_CONTOUR_PATH);
+        if (contourImage == null) {
+            loadFailSet.add(Constants.VERTICAL_CONTOUR_PATH);
+        }
     }
 
     private void initPanel() {
         FlowLayout layout = new FlowLayout(FlowLayout.CENTER);
         layout.setHgap(GUIValue.RESULT_PANEL_INTERVAL);
         setLayout(layout);
+        setBackground(Color.white);
 
 
         GUIUtil.setSize(this,
@@ -39,15 +61,21 @@ public class FormationResultPanel extends JPanel {
 
         int i=0;
         for (int key : data.keySet()) {
-            panels[i] = new ResultPanel(String.valueOf(key), data.get(key));
+            panels[i] = new ResultPanel("Entry " + (key + 1), data.get(key));
             i++;
         }
 
     }
 
     private void attachComponents() {
-        for (ResultPanel p : panels) {
-            add(p);
+        for (int i=0; i<panels.length; i++) {
+            add(panels[i]);
+
+            if (contourImage != null) {
+                if (i != panels.length - 1) {
+                    add(new JLabel(new ImageIcon(contourImage)));
+                }
+            }
         }
     }
 

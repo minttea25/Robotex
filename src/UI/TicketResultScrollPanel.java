@@ -1,5 +1,6 @@
 package UI;
 
+import ConstantValues.Constants;
 import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
 import Model.TeamModel;
@@ -29,7 +30,8 @@ public class TicketResultScrollPanel extends JPanel {
         this.showingNumber = showingNumber;
 
         this.showingNumberOfPanels = (int)(Math.ceil(list.size() / (double)this.showingNumber));
-        this.title = GUIString.TICKET_PRELIMINARY_LIST_3;
+        //this.title = GUIString.TICKET_PRELIMINARY_LIST_3;
+        this.title = "";
 
         initPanel();
         initComponents();
@@ -38,6 +40,7 @@ public class TicketResultScrollPanel extends JPanel {
 
     private void initPanel() {
         setLayout(new FlowLayout(FlowLayout.CENTER));
+        setBackground(Constants.themeColor);
         GUIUtil.setSize(this,
                 GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT);
     }
@@ -48,6 +51,7 @@ public class TicketResultScrollPanel extends JPanel {
         layout.setHgap(GUIValue.RESULT_PANEL_INTERVAL);
         setLayout(layout);
         view.setLayout(layout);
+        view.setBackground(Constants.themeColor);
         GUIUtil.setSize(view,
                 getCalculatedWidth(), GUIValue.RESULT_BOX_HEIGHT);
 
@@ -71,6 +75,8 @@ public class TicketResultScrollPanel extends JPanel {
         }
 
         scrollPane = new JScrollPane();
+        scrollPane.setBackground(Constants.themeColor);
+        scrollPane.setBorder(null);
         GUIUtil.setSize(scrollPane,
                 GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT);
 

@@ -98,6 +98,7 @@ public class MainFrame extends JFrame {
                 }
             }
             else if (obj == mainPanel.formationSetupBtn) {
+                formationSetup = new Setup(ProgramFunctions.Formation);
                 SetupDialog dialog = new SetupDialog(ProgramFunctions.Formation, getMainFrame(), formationSetup);
                 dialog.showDialog();
             }
@@ -116,6 +117,7 @@ public class MainFrame extends JFrame {
                 }
             }
             else if (obj == mainPanel.ticketSetupBtn) {
+                ticketSetup = new Setup(ProgramFunctions.Ticket);
                 SetupDialog dialog = new SetupDialog(ProgramFunctions.Ticket, getMainFrame(), ticketSetup);
                 dialog.showDialog();
             }

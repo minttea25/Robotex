@@ -6,11 +6,14 @@ import ConstantValues.GUIValue;
 import ConstantValues.Sections;
 import Model.ProgramFunctions;
 import Util.ImageLoader;
+import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MenuPanel extends JPanel {
     ProgramFunctions fun;
@@ -30,6 +33,7 @@ public class MenuPanel extends JPanel {
     private ImageIcon lineFollowingJHIcon;
     private ImageIcon legoFolkraceEIcon;
     private ImageIcon legoFolkraceJHIcon;
+    private ImageIcon homeBtnIcon;
 
     private BufferedImage backgroundImage;
     private BufferedImage legoSumo1kgImage;
@@ -38,6 +42,9 @@ public class MenuPanel extends JPanel {
     private BufferedImage lineFollowingJHImage;
     private BufferedImage legoFolkraceEImage;
     private BufferedImage legoFolkraceJHImage;
+    private BufferedImage homeBtnImage;
+
+    Set<String> loadFailSet = new HashSet<>();
 
     public MenuPanel(ProgramFunctions fun) {
         this.fun = fun;
@@ -45,6 +52,8 @@ public class MenuPanel extends JPanel {
         initPanel();
         initComponents();
         attachComponents();
+
+        OptionPaneUtil.showUnloadedImages(loadFailSet, null);
     }
 
     private void attachComponents() {
@@ -69,7 +78,7 @@ public class MenuPanel extends JPanel {
         if (legoSumo3kgImage != null) {
             legoSumo3kgBtn.setBounds(
                     GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2 - GUIValue.MENU_BUTTON_INTERVAL - GUIValue.SECTION_UP_BTN_WIDTH,
-                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT - 3,
                     legoSumo3kgIcon.getIconWidth(), legoSumo3kgIcon.getIconHeight()
             );
         }
@@ -103,7 +112,7 @@ public class MenuPanel extends JPanel {
         if (lineFollowingJHImage != null) {
             lineFollowingJHBtn.setBounds(
                     GUIValue.MAIN_WIDTH / 2 - GUIValue.SECTION_UP_BTN_WIDTH / 2,
-                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT - 3,
                     lineFollowingJHIcon.getIconWidth(), lineFollowingJHIcon.getIconHeight()
             );
         }
@@ -137,7 +146,7 @@ public class MenuPanel extends JPanel {
         if (legoFolkraceJHImage != null) {
             legoFolkraceJHBtn.setBounds(
                     GUIValue.MAIN_WIDTH / 2 + GUIValue.SECTION_UP_BTN_WIDTH / 2 + GUIValue.MENU_BUTTON_INTERVAL,
-                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT,
+                    GUIValue.MENU_BUTTON_Y + GUIValue.SECTION_UP_BTN_HEIGHT - 2,
                     legoFolkraceJHIcon.getIconWidth(), legoFolkraceJHIcon.getIconHeight()
             );
         }
@@ -151,10 +160,20 @@ public class MenuPanel extends JPanel {
         }
 
         add(backBtn);
-        backBtn.setBounds(
-                GUIValue.BACK_BTN_X, GUIValue.BACK_BTN_Y,
-                GUIValue.BACK_BTN_WIDTH, GUIValue.BACK_BTN_HEIGHT
-        );
+        if (homeBtnImage != null) {
+            backBtn.setBounds(
+                    GUIValue.HOME_BTN_X, GUIValue.HOME_BTN_Y,
+                    homeBtnIcon.getIconWidth(), homeBtnIcon.getIconHeight()
+            );
+        }
+        else {
+            backBtn.setBounds(
+                    GUIValue.HOME_BTN_X, GUIValue.HOME_BTN_Y,
+                    GUIValue.HOME_BTN_WIDTH, GUIValue.HOME_BTN_HEIGHT
+            );
+            backBtn.setText(GUIString.BACK);
+        }
+
 
         // it should be attached last.
         add(backImageLabel);
@@ -232,7 +251,14 @@ public class MenuPanel extends JPanel {
         legoFolkraceEBtn.setOpaque(false);
         legoFolkraceJHBtn.setOpaque(false);
 
-        backBtn.setText(GUIString.BACK);
+        //backBtn.setText(GUIString.BACK);
+        if (homeBtnImage != null) {
+            backBtn.setIcon(homeBtnIcon = new ImageIcon(homeBtnImage));
+        }
+        backBtn.setBorderPainted(false);
+        backBtn.setBackground(new Color(255, 255, 255, 0));
+        backBtn.setBorder(null);
+        backBtn.setOpaque(false);
     }
 
     private void initPanel() {
@@ -243,25 +269,49 @@ public class MenuPanel extends JPanel {
     private void loadImages() {
         if (fun == ProgramFunctions.Formation) {
             backgroundImage = ImageLoader.loadImage(Constants.FORMATION_BACKGROUND_PATH);
-            legoSumo1kgImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_1KG_PATH);
-            legoSumo3kgImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_3KG_PATH);
-            lineFollowingEImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_E_PATH);
-            lineFollowingJHImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_JH_PATH);
-            legoFolkraceEImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_E_PATH);
-            legoFolkraceJHImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_JH_PATH);
+            legoSumo1kgImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_1KG_BTN_PATH);
+            legoSumo3kgImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_3KG_BTN_PATH);
+            lineFollowingEImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_E_BTN_PATH);
+            lineFollowingJHImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_JH_BTN_PATH);
+            legoFolkraceEImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_E_BTN_PATH);
+            legoFolkraceJHImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_JH_BTN_PATH);
+
+            homeBtnImage = ImageLoader.loadImage(Constants.HOME_RED_PATH);
+
+            if (backgroundImage == null) loadFailSet.add(Constants.FORMATION_BACKGROUND_PATH);
+            if(legoSumo1kgImage == null) loadFailSet.add(Constants.FORMATION_LEGO_SUMO_1KG_BTN_PATH);
+            if(legoSumo3kgImage == null) loadFailSet.add(Constants.FORMATION_LEGO_SUMO_3KG_BTN_PATH);
+            if(lineFollowingEImage == null) loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_E_BTN_PATH);
+            if(lineFollowingJHImage == null) loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_JH_BTN_PATH);
+            if(legoFolkraceEImage == null) loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_E_BTN_PATH);
+            if(legoFolkraceJHImage == null) loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_JH_BTN_PATH);
+            if (homeBtnImage == null) loadFailSet.add(Constants.HOME_RED_PATH);
         }
         else if (fun == ProgramFunctions.Ticket) {
             backgroundImage = ImageLoader.loadImage(Constants.TICKET_BACKGROUND_PATH);
-            legoSumo1kgImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_1KG_PATH);
-            legoSumo3kgImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_3KG_PATH);
-            lineFollowingEImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_E_PATH);
-            lineFollowingJHImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_PATH);
-            legoFolkraceEImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_PATH);
-            legoFolkraceJHImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_PATH);
+            legoSumo1kgImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_1KG_BTN_PATH);
+            legoSumo3kgImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_3KG_BTN_PATH);
+            lineFollowingEImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_E_BTN_PATH);
+            lineFollowingJHImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_BTN_PATH);
+            legoFolkraceEImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_BTN_PATH);
+            legoFolkraceJHImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BTN_PATH);
+
+            homeBtnImage = ImageLoader.loadImage(Constants.HOME_WHITE_PATH);
+
+            if (backgroundImage == null) loadFailSet.add(Constants.TICKET_BACKGROUND_PATH);
+            if(legoSumo1kgImage == null) loadFailSet.add(Constants.TICKET_LEGO_SUMO_1KG_BTN_PATH);
+            if(legoSumo3kgImage == null) loadFailSet.add(Constants.TICKET_LEGO_SUMO_3KG_BTN_PATH);
+            if(lineFollowingEImage == null) loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_E_BTN_PATH);
+            if(lineFollowingJHImage == null) loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_JH_BTN_PATH);
+            if(legoFolkraceEImage == null) loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_E_BTN_PATH);
+            if(legoFolkraceJHImage == null) loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_JH_BTN_PATH);
+            if (homeBtnImage == null) loadFailSet.add(Constants.HOME_WHITE_PATH);
         }
         else {
             //System.out.println("ERROR");
         }
+
+
     }
 
     public void addButtonActionListener(ActionListener listener) {

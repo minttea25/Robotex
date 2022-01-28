@@ -5,6 +5,7 @@ import Excel.ExcelWriteManagerFormation;
 import Model.TeamModel;
 import Util.GUIUtil;
 import Util.ImageLoader;
+import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +38,13 @@ public class FormationFrame extends JFrame {
     FormationResultPanel[] panels;
 
     BufferedImage backgroundImage;
+    BufferedImage nextBtnImage;
+
+    ImageIcon nextBtnIcon;
 
     ExcelWriteManagerFormation ewmf;
+
+    Set<String> loadFailSet = new HashSet<>();
 
     public FormationFrame(Sections section, List<TeamModel> data, int numberOfEntries) {
         this.section = section;
@@ -62,8 +68,9 @@ public class FormationFrame extends JFrame {
         attachComponents();
 
         showCard();
-    }
 
+        OptionPaneUtil.showUnloadedImages(loadFailSet, getFormationFrame());
+    }
 
     private boolean checkNumberOfEntries() {
         if (data == null) {
@@ -117,10 +124,29 @@ public class FormationFrame extends JFrame {
     }
 
     private void loadImages() {
+        nextBtnImage = ImageLoader.loadImage(Constants.NEXT_BUTTON_RED_PATH);
+
         switch (section) {
-            case LegoSumo1kg, LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_PATH);
-            case LineFollowingE, LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_PATH);
-            case LegoFolkraceE, LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_PATH);
+            case LegoSumo1kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH);
+            case LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH);
+            case LineFollowingE -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_E_BG_PATH);
+            case LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_JH_BG_PATH);
+            case LegoFolkraceE -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_E_BG_PATH);
+            case LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH);
+        }
+
+        if (nextBtnImage == null)
+            loadFailSet.add(Constants.NEXT_BUTTON_RED_PATH);
+        if (backgroundImage == null) {
+            switch (section) {
+                case LegoSumo1kg -> loadFailSet.add(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH);
+                case LegoSumo3kg -> loadFailSet.add(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH);
+                case LineFollowingE -> loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_E_BG_PATH);
+                case LineFollowingJH -> loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_JH_BG_PATH);
+                case LegoFolkraceE -> loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_E_BG_PATH);
+                case LegoFolkraceJH -> loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH);
+
+            }
         }
     }
 
@@ -161,7 +187,13 @@ public class FormationFrame extends JFrame {
             backgroundLabel.setIcon(new ImageIcon(backgroundImage));
         }
 
-        nextButton.setText(GUIString.NEXT);
+        if (nextBtnImage != null) {
+            nextButton.setIcon(nextBtnIcon = new ImageIcon(nextBtnImage));
+        }
+        else {
+            nextButton.setText(GUIString.NEXT);
+        }
+        GUIUtil.makeButtonForImage(nextButton);
         nextButton.addActionListener(new NextButtonActionListener());
 
         resultPanel.setLayout(card);
@@ -180,19 +212,33 @@ public class FormationFrame extends JFrame {
                     GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
             );
         }
+        if (! (numberOfShowingCards <= 1)) {
+            add(nextButton);
+            if (nextBtnImage != null) {
+                nextButton.setBounds(
+                        GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - nextBtnIcon.getIconWidth(),
+                        GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 10,
+                        nextBtnIcon.getIconWidth(), nextBtnIcon.getIconHeight()
+                );
+            }
+            else {
+                nextButton.setBounds(
+                        GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - GUIValue.NEXT_BUTTON_WIDTH/4,
+                        GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 15,
+                        GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
+                );
+                nextButton.setText(GUIString.NEXT);
+            }
+        }
 
-        add(nextButton);
-        nextButton.setBounds(
-                GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - GUIValue.NEXT_BUTTON_WIDTH,
-                GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 20,
-                GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
-        );
 
         add(backgroundLabel);
-        backgroundLabel.setBounds(
-                0, 0,
-                backgroundImage.getWidth(), backgroundImage.getHeight()
-        );
+        if (backgroundImage != null) {
+            backgroundLabel.setBounds(
+                    0, 0,
+                    backgroundImage.getWidth(), backgroundImage.getHeight()
+            );
+        }
     }
 
     private void showCard() {

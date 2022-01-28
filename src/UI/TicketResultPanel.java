@@ -1,5 +1,6 @@
 package UI;
 
+import ConstantValues.Constants;
 import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
 import Model.TeamModel;
@@ -28,8 +29,11 @@ public class TicketResultPanel extends Panel {
         if (numberOfShowingPanels == 1) {
             this.title = GUIString.TICKET_FINAL_LIST;
         }
-        else {
+        /*else {
             this.title = GUIString.TICKET_PRELIMINARY_LIST;
+        }*/
+        else {
+            this.title = "";
         }
 
         initPanel();
@@ -39,6 +43,7 @@ public class TicketResultPanel extends Panel {
 
     private void initPanel() {
         setLayout(new FlowLayout(FlowLayout.CENTER));
+        setBackground(Constants.themeColor);
 
         GUIUtil.setSize(this,
                 GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT);

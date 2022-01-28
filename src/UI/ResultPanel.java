@@ -1,5 +1,6 @@
 package UI;
 
+import ConstantValues.Constants;
 import ConstantValues.GUIValue;
 import Model.TeamModel;
 import Util.GUIUtil;
@@ -8,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Random;
+import java.util.Objects;
 
 public class ResultPanel extends JPanel {
     String title;
@@ -36,6 +37,7 @@ public class ResultPanel extends JPanel {
 
         GUIUtil.setSize(this,
                 GUIValue.RESULT_PANEL_WIDTH, GUIValue.RESULT_PANEL_HEIGHT);
+
     }
 
     private void initComponents() {
@@ -44,14 +46,17 @@ public class ResultPanel extends JPanel {
         titleLabel = new JLabel();
         backgroundLabel = new JLabel();
 
-        upPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        Random r = new Random();
-        upPanel.setBackground(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));
 
-        titleLabel.setText(title);
-        titleLabel.setVerticalAlignment(JLabel.CENTER);
-        titleLabel.setHorizontalAlignment(JLabel.CENTER);
-        upPanel.add(titleLabel);
+        upPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        if (!Objects.equals(title, "") && title != null) {
+            upPanel.setBackground(Constants.themeColor);
+            titleLabel.setText(title);
+            titleLabel.setVerticalAlignment(JLabel.CENTER);
+            titleLabel.setHorizontalAlignment(JLabel.CENTER);
+            titleLabel.setFont(GUIValue.TITLE_FONT);
+            titleLabel.setForeground(Color.white);
+            upPanel.add(titleLabel);
+        }
 
         downPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -77,20 +82,33 @@ public class ResultPanel extends JPanel {
 
             teamNumberLabel.setText(data.get(i).getTeamNumber());
             teamNameLabel.setText(data.get(i).getTeamName());
+
+            teamNumberLabel.setFont(GUIValue.TEXT_FONT);
+            teamNameLabel.setFont(GUIValue.TEXT_FONT);
         }
     }
 
     private void attachComponents() {
-        add(upPanel);
-        upPanel.setBounds(
-                0, 0,
-                GUIValue.RESULT_PANEL_TITLE_WIDTH, GUIValue.RESULT_PANEL_TITLE_HEIGHT
-        );
+        if (title == null || title.equals("")) {
+            add(downPanel);
+            downPanel.setBounds(
+                    0, 0,
+                    GUIValue.RESULT_PANEL_BODY_WIDTH, GUIValue.RESULT_PANEL_TITLE_HEIGHT + GUIValue.RESULT_PANEL_BODY_HEIGHT
+            );
+        }
+        else {
+            add(upPanel);
+            upPanel.setBounds(
+                    0, 0,
+                    GUIValue.RESULT_PANEL_TITLE_WIDTH, GUIValue.RESULT_PANEL_TITLE_HEIGHT
+            );
 
-        add(downPanel);
-        downPanel.setBounds(
-                0, GUIValue.RESULT_PANEL_TITLE_HEIGHT,
-                GUIValue.RESULT_PANEL_BODY_WIDTH, GUIValue.RESULT_PANEL_BODY_HEIGHT
-        );
+            add(downPanel);
+            downPanel.setBounds(
+                    0, GUIValue.RESULT_PANEL_TITLE_HEIGHT,
+                    GUIValue.RESULT_PANEL_BODY_WIDTH, GUIValue.RESULT_PANEL_BODY_HEIGHT
+            );
+        }
+
     }
 }

@@ -19,6 +19,9 @@ public class ErrorMsg {
     // main frame
     public static final String error031 = "E031";
 
+    // common
+    public static final String error041 = "E041";
+
 
     public static final String e001Msg = "Enter only numbers";
     public static final String e002Msg = "Enter a number greater than 1";
@@ -30,4 +33,5 @@ public class ErrorMsg {
     public static final String e021Msg = "Number of tickets can not greater than number of teams\nCheck the setup values";
     public static final String e022Msg = "The sheet does not exist or is not loaded\nCheck the sheet: Ticket - ";
     public static final String e031Msg = "A excel file did not load.\nLoad a file at Setup, first";
+    public static final String e041Msg = "Can not find image: \n";
 }
