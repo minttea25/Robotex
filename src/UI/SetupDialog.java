@@ -139,6 +139,13 @@ public class SetupDialog extends JDialog{
 
         labelNumberOfEntries.setHorizontalAlignment(JLabel.CENTER);
 
+        /*labelLegoSumo1kg.setHorizontalAlignment(JTextField.CENTER);
+        labelLegoSumo3kg.setHorizontalAlignment(JTextField.CENTER);
+        labelLineFollowingE.setHorizontalAlignment(JTextField.CENTER);
+        labelLineFollowingJH.setHorizontalAlignment(JTextField.CENTER);
+        labelFolkraceE.setHorizontalAlignment(JTextField.CENTER);
+        labelFolkraceJH.setHorizontalAlignment(JTextField.CENTER);*/
+
         tfLegoSumo1kg.setHorizontalAlignment(JTextField.CENTER);
         tfLegoSumo3kg.setHorizontalAlignment(JTextField.CENTER);
         tfLineFollowingE.setHorizontalAlignment(JTextField.CENTER);
@@ -160,7 +167,7 @@ public class SetupDialog extends JDialog{
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets.top = GUIValue.SETUP_GRID_PADDING;
         gbc.insets.bottom = GUIValue.SETUP_GRID_PADDING;
-        gbc.insets.left = GUIValue.SETUP_GRID_PADDING;
+        gbc.insets.left = GUIValue.SETUP_GRID_PADDING_LEFT;
         gbc.insets.right = GUIValue.SETUP_GRID_PADDING;
 
         GUIUtil.setGridBagConstraintsWeight(gbc, 1.0, 1.0);

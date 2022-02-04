@@ -36,6 +36,8 @@ public class TicketFrame extends JFrame {
     JPanel resultPanel; // card layout
     JButton nextButton;
 
+    CountDownPanel countPanel;
+
     TicketResultPanel panel1st;
     TicketResultPanel panel2nd;
     TicketResultScrollPanel panel3rd;
@@ -135,7 +137,10 @@ public class TicketFrame extends JFrame {
     }
 
     private void showCard() {
-        card.show(resultPanel, GUIValue.TICKET_1ST_CARD_NAME);
+        card.show(resultPanel, GUIValue.COUNT_DOWN_CARD_NAME);
+
+        GifCloseThread t = new GifCloseThread();
+        t.start();
     }
 
     private void initFrame() {
@@ -154,6 +159,7 @@ public class TicketFrame extends JFrame {
         backgroundLabel = new JLabel();
         resultPanel = new JPanel();
         nextButton = new JButton();
+        countPanel = new CountDownPanel();
         panel1st = new TicketResultPanel(ticket1st, numberOfTickets);
         panel2nd = new TicketResultPanel(ticket2nd, numberOfTickets);
         panel3rd = new TicketResultScrollPanel(ticket3rd, GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS);
@@ -173,6 +179,7 @@ public class TicketFrame extends JFrame {
 
         resultPanel.setLayout(card);
 
+        resultPanel.add(GUIValue.COUNT_DOWN_CARD_NAME, countPanel);
         resultPanel.add(GUIValue.TICKET_1ST_CARD_NAME, panel1st);
         resultPanel.add(GUIValue.TICKET_2nd_CARD_NAME, panel2nd);
         resultPanel.add(GUIValue.TICKET_3rd_CARD_NAME, panel3rd);
@@ -267,6 +274,22 @@ public class TicketFrame extends JFrame {
         return this;
     }
 
+    class GifCloseThread extends Thread {
+        @Override
+        public void run() {
+            try {
+                nextButton.setVisible(false);
+                Thread.sleep(5000);
+                showNextCard();
+                resultPanel.remove(countPanel);
+                nextButton.setVisible(true);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     class NextButtonActionListener implements ActionListener {
 
         @Override
@@ -278,5 +301,4 @@ public class TicketFrame extends JFrame {
             }
         }
     }
-
 }

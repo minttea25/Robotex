@@ -24,7 +24,7 @@ public class ExcelFileChooser extends JFileChooser {
 
     public void openDialog() {
         if (showOpenDialog(parent) != JFileChooser.APPROVE_OPTION) {
-            System.out.println("file not selected");
+            //System.out.println("file not selected");
             return;
         }
 
@@ -35,7 +35,7 @@ public class ExcelFileChooser extends JFileChooser {
 
     public String getFilePath() {
         if (filePath == null) {
-            System.out.println("File is not chosen");
+            //System.out.println("File is not chosen");
             return null;
         }
         return filePath;
@@ -49,9 +49,9 @@ public class ExcelFileChooser extends JFileChooser {
         }
 
         if (extension.equals(Constants.EXCEL_EXTENSION_XLSX)
-                || extension.equals(Constants.EXCEL_EXTENSION_XLSX)
+                || extension.equals(Constants.EXCEL_EXTENSION_XLS)
                 || extension.equals(Constants.EXCEL_EXTENSION_XLS.toUpperCase())
-                || extension.equals(Constants.EXCEL_EXTENSION_XLS.toUpperCase())) {
+                || extension.equals(Constants.EXCEL_EXTENSION_XLSX.toUpperCase())) {
             return true;
         }
         else {
