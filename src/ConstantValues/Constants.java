@@ -54,6 +54,8 @@ public class Constants {
 
     public final static String VERTICAL_CONTOUR_PATH = Paths.get("Images", "formation", "verticalContour.png").toString();
 
+    public final static String COUNT_DOWN_PATH = Paths.get("Images", "ticket", "count.gif").toString();
+
     // for writing excel file
     public final static String ENTRY = "Entry";
     public final static String EXCEL_SAVE_PATH_FORMATION = Paths.get("CreatedFiles", "Formation").toString();

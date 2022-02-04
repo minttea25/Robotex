@@ -25,6 +25,7 @@ public class GUIValue {
     public static final String TICKET_CARD_NAME = "ticket";
 
     // for ticket card layout name - DO NOT MODIFY THESE VALUES
+    public static final String COUNT_DOWN_CARD_NAME = "count";
     public static final String TICKET_1ST_CARD_NAME = "1st";
     public static final String TICKET_2nd_CARD_NAME = "2nd";
     public static final String TICKET_3rd_CARD_NAME = "3rd";
@@ -33,6 +34,7 @@ public class GUIValue {
     // setup
     public final static int SETUP_MARGIN = 5;
     public final static int SETUP_GRID_PADDING = 3;
+    public final static int SETUP_GRID_PADDING_LEFT = 10;
     public final static int SETUP_GRID_X_0 = 1;
     public final static int SETUP_GRID_X_1 = 2;
     public final static int SETUP_GRID_Y = 1;
