@@ -19,6 +19,10 @@ import java.util.*;
 import java.util.List;
 
 public class TicketFrame extends JFrame {
+    CountDownPanel countDownPanel;
+    JPanel contentPanel;
+
+
     boolean stateOk;
 
     Sections section;
@@ -35,8 +39,6 @@ public class TicketFrame extends JFrame {
     JLabel backgroundLabel;
     JPanel resultPanel; // card layout
     JButton nextButton;
-
-    CountDownPanel countPanel;
 
     TicketResultPanel panel1st;
     TicketResultPanel panel2nd;
@@ -73,7 +75,7 @@ public class TicketFrame extends JFrame {
         initComponents();
         attachComponents();
 
-        showCard();
+        // showCard();
 
         OptionPaneUtil.showUnloadedImages(loadFailSet, getTicketFrame());
     }
@@ -130,17 +132,14 @@ public class TicketFrame extends JFrame {
     }
 
     public void showFrame() {
+        if (stateOk) {
+            GifCloseThread t = new GifCloseThread();
+            t.start();
+        }
         setVisible(stateOk);
         if (!stateOk) {
             dispose();
         }
-    }
-
-    private void showCard() {
-        card.show(resultPanel, GUIValue.COUNT_DOWN_CARD_NAME);
-
-        GifCloseThread t = new GifCloseThread();
-        t.start();
     }
 
     private void initFrame() {
@@ -156,10 +155,14 @@ public class TicketFrame extends JFrame {
     }
 
     private void initComponents() {
+        countDownPanel = new CountDownPanel();
+        contentPanel = new JPanel();
+
+        contentPanel.setLayout(null);
+
         backgroundLabel = new JLabel();
         resultPanel = new JPanel();
         nextButton = new JButton();
-        countPanel = new CountDownPanel();
         panel1st = new TicketResultPanel(ticket1st, numberOfTickets);
         panel2nd = new TicketResultPanel(ticket2nd, numberOfTickets);
         panel3rd = new TicketResultScrollPanel(ticket3rd, GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS);
@@ -179,7 +182,6 @@ public class TicketFrame extends JFrame {
 
         resultPanel.setLayout(card);
 
-        resultPanel.add(GUIValue.COUNT_DOWN_CARD_NAME, countPanel);
         resultPanel.add(GUIValue.TICKET_1ST_CARD_NAME, panel1st);
         resultPanel.add(GUIValue.TICKET_2nd_CARD_NAME, panel2nd);
         resultPanel.add(GUIValue.TICKET_3rd_CARD_NAME, panel3rd);
@@ -187,14 +189,14 @@ public class TicketFrame extends JFrame {
 
     private void attachComponents() {
         if (ewmt != null && ewmt.isWritten()) {
-            add(resultPanel);
+            contentPanel.add(resultPanel);
             resultPanel.setBounds(
                     GUIValue.RESULT_BOX_X, GUIValue.RESULT_BOX_Y,
                     GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
             );
         }
 
-        add(nextButton);
+        contentPanel.add(nextButton);
         if (nextBtnImage != null) {
             nextButton.setBounds(
                     GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - nextBtnIcon.getIconWidth(),
@@ -212,13 +214,26 @@ public class TicketFrame extends JFrame {
         }
 
 
-        add(backgroundLabel);
+        contentPanel.add(backgroundLabel);
         if(backgroundImage != null) {
             backgroundLabel.setBounds(
                     0, 0,
                     backgroundImage.getWidth(), backgroundImage.getHeight()
             );
         }
+
+        add(countDownPanel);
+        countDownPanel.setBounds(
+                0, 0,
+                this.getWidth(), this.getHeight()
+        );
+
+        add(contentPanel);
+        contentPanel.setBounds(
+                0, 0,
+                getWidth(), getHeight()
+        );
+        contentPanel.setVisible(false);
     }
 
     private void divideData() {
@@ -275,14 +290,20 @@ public class TicketFrame extends JFrame {
     }
 
     class GifCloseThread extends Thread {
+
         @Override
         public void run() {
             try {
-                nextButton.setVisible(false);
-                Thread.sleep(5000);
-                showNextCard();
-                resultPanel.remove(countPanel);
-                nextButton.setVisible(true);
+                Thread.sleep(Constants.COUNTDOWN_CLOSE_TIME);
+                remove(countDownPanel);
+
+                /*add(contentPanel);
+                contentPanel.setBounds(
+                        0, 0,
+                        getWidth(), getHeight()
+                );*/
+                contentPanel.setVisible(true);
+                card.show(resultPanel, GUIValue.TICKET_1ST_CARD_NAME);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

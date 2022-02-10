@@ -3,6 +3,7 @@ package UI;
 import ConstantValues.Constants;
 import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
+import Model.ProgramFunctions;
 import Model.TeamModel;
 import Util.GUIUtil;
 
@@ -43,14 +44,19 @@ public class TicketResultPanel extends Panel {
 
     private void initPanel() {
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        setBackground(Constants.themeColor);
+        setBackground(Constants.THEME_COLOR);
 
         GUIUtil.setSize(this,
                 GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT);
     }
 
     private void initComponents() {
-        panels = new ResultPanel[numberOfShowingPanels];
+        if (numberOfShowingPanels == 1) {
+            panels = new ResultPanelWorldQualification[numberOfShowingPanels];
+        }
+        else {
+            panels = new ResultPanel[numberOfShowingPanels];
+        }
 
         Map<Integer, List<TeamModel>> map = new HashMap<>();
         int index = 0;
@@ -62,7 +68,12 @@ public class TicketResultPanel extends Panel {
             }
             map.put(i, teams);
 
-            panels[i] = new ResultPanel(title, map.get(i));
+            if (numberOfShowingPanels == 1) {
+                panels[i] = new ResultPanelWorldQualification(title, map.get(i), ProgramFunctions.Ticket);
+            }
+            else {
+                panels[i] = new ResultPanel(title, map.get(i), ProgramFunctions.Ticket);
+            }
         }
     }
 

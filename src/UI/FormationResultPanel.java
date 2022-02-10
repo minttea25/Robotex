@@ -2,6 +2,7 @@ package UI;
 
 import ConstantValues.Constants;
 import ConstantValues.GUIValue;
+import Model.ProgramFunctions;
 import Model.TeamModel;
 import Util.GUIUtil;
 import Util.ImageLoader;
@@ -61,7 +62,7 @@ public class FormationResultPanel extends JPanel {
 
         int i=0;
         for (int key : data.keySet()) {
-            panels[i] = new ResultPanel("Entry " + (key + 1), data.get(key));
+            panels[i] = new ResultPanel("Entry " + (key + 1), data.get(key), ProgramFunctions.Formation);
             i++;
         }
 
