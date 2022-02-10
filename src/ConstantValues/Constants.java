@@ -83,6 +83,11 @@ public class Constants {
     public static final String SAVE_FILE_DATE_FORMAT = "HH-mm-ss";
 
     // theme color - rgb
-    public static final Color themeColor = new Color(193, 29, 56);
+    public static final Color THEME_COLOR = new Color(193, 29, 56);
 
+    public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
+
+    public static final Color FORMATION_PANEL_BACK = new Color(240, 240, 240);
+
+    public static final int COUNTDOWN_CLOSE_TIME = 5000;
 }

@@ -1,8 +1,8 @@
 package UI;
 
 import ConstantValues.Constants;
-import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
+import Model.ProgramFunctions;
 import Model.TeamModel;
 import Util.GUIUtil;
 
@@ -40,7 +40,7 @@ public class TicketResultScrollPanel extends JPanel {
 
     private void initPanel() {
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        setBackground(Constants.themeColor);
+        setBackground(Constants.THEME_COLOR);
         GUIUtil.setSize(this,
                 GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT);
     }
@@ -51,7 +51,7 @@ public class TicketResultScrollPanel extends JPanel {
         layout.setHgap(GUIValue.RESULT_PANEL_INTERVAL);
         setLayout(layout);
         view.setLayout(layout);
-        view.setBackground(Constants.themeColor);
+        view.setBackground(Constants.THEME_COLOR);
         GUIUtil.setSize(view,
                 getCalculatedWidth(), GUIValue.RESULT_BOX_HEIGHT);
 
@@ -70,12 +70,12 @@ public class TicketResultScrollPanel extends JPanel {
             }
             map.put(i, teams);
 
-            panels[i] = new ResultPanel(title, map.get(i));
+            panels[i] = new ResultPanel(title, map.get(i), ProgramFunctions.Ticket);
             view.add(panels[i]);
         }
 
         scrollPane = new JScrollPane();
-        scrollPane.setBackground(Constants.themeColor);
+        scrollPane.setBackground(Constants.THEME_COLOR);
         scrollPane.setBorder(null);
         GUIUtil.setSize(scrollPane,
                 GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT);

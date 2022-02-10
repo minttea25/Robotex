@@ -25,7 +25,6 @@ public class GUIValue {
     public static final String TICKET_CARD_NAME = "ticket";
 
     // for ticket card layout name - DO NOT MODIFY THESE VALUES
-    public static final String COUNT_DOWN_CARD_NAME = "count";
     public static final String TICKET_1ST_CARD_NAME = "1st";
     public static final String TICKET_2nd_CARD_NAME = "2nd";
     public static final String TICKET_3rd_CARD_NAME = "3rd";
@@ -60,6 +59,9 @@ public class GUIValue {
     public final static int TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS = 10;
     public final static int FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL = 3;
 
+    public final static int RESULT_PANEL_WIDTH_WQ = 700;
+    public final static int RESULT_PANEL_HEIGHT_WQ = 670;
+
     // back btn
     public static final int HOME_BTN_X = 50;
     public static final int HOME_BTN_Y = 60;
@@ -77,8 +79,10 @@ public class GUIValue {
     public static final int BUTTON_RIGHT_HEIGHT = 155;
 
     // font
-    private static final int TITLE_FONT_SIZE = 28;
-    private static final int TEXT_FONT_SIZE = 20;
+    private static final int TITLE_FONT_SIZE = 35;
+    private static final int TEXT_FONT_SIZE = 23;
+
+    private static final int TEXT_FONT_SIZE_WQ = 35;
 
     private static final String ONE_STORE_MOBILE_POP = "ONE 모바일POP OTF";
     private static final String CAFE_24_DANGDANG = "카페24 당당해";
@@ -88,5 +92,7 @@ public class GUIValue {
 
     public static final Font TITLE_FONT = new Font(NEXON_MAPLESTORY, Font.BOLD, TITLE_FONT_SIZE);
     public static final Font TEXT_FONT = new Font(NEXON_MAPLESTORY, Font.BOLD, TEXT_FONT_SIZE);
+
+    public static final Font TEXT_FONT_WQ = new Font(NEXON_MAPLESTORY, Font.BOLD, TEXT_FONT_SIZE_WQ);
 
 }

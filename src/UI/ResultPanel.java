@@ -2,6 +2,7 @@ package UI;
 
 import ConstantValues.Constants;
 import ConstantValues.GUIValue;
+import Model.ProgramFunctions;
 import Model.TeamModel;
 import Util.GUIUtil;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ResultPanel extends JPanel {
+    ProgramFunctions pf;
     String title;
     List<TeamModel> data;
 
@@ -23,16 +25,45 @@ public class ResultPanel extends JPanel {
     ImageIcon icon;
     BufferedImage backgroundImage;
 
-    public ResultPanel(String title, List<TeamModel> data) {
+    Font titleFont;
+    Font font;
+
+    Color titleBackColor;
+    Color titleFontColor;
+    Color contentBackColor;
+    Color contentFontColor;
+
+    public ResultPanel(String title, List<TeamModel> data, ProgramFunctions pf) {
         this.title = title;
         this.data = data;
+        this.pf = pf;
 
+        initFont();
+        initColor();
         initPanel();
         initComponents();
         attachComponents();
     }
 
-    private void initPanel() {
+    private void initColor() {
+        if (pf == ProgramFunctions.Formation) {
+            titleBackColor = Constants.THEME_COLOR;
+            titleFontColor = Color.white;
+            contentBackColor = Constants.FORMATION_PANEL_BACK;
+            contentFontColor = Color.black;
+        }
+        else {
+            titleBackColor = contentBackColor = Constants.THEME_COLOR;
+            titleFontColor = contentFontColor = Color.white;
+        }
+    }
+
+    protected void initFont() {
+        titleFont = GUIValue.TITLE_FONT;
+        font = GUIValue.TEXT_FONT;
+    }
+
+    protected void initPanel() {
         setLayout(null);
 
         GUIUtil.setSize(this,
@@ -40,25 +71,25 @@ public class ResultPanel extends JPanel {
 
     }
 
-    private void initComponents() {
+    protected void initComponents() {
         upPanel = new JPanel();
         downPanel = new JPanel();
         titleLabel = new JLabel();
         backgroundLabel = new JLabel();
 
-
         upPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         if (!Objects.equals(title, "") && title != null) {
-            upPanel.setBackground(Constants.themeColor);
+            upPanel.setBackground(titleBackColor);
             titleLabel.setText(title);
             titleLabel.setVerticalAlignment(JLabel.CENTER);
             titleLabel.setHorizontalAlignment(JLabel.CENTER);
-            titleLabel.setFont(GUIValue.TITLE_FONT);
-            titleLabel.setForeground(Color.white);
+            titleLabel.setFont(titleFont);
+            titleLabel.setForeground(titleFontColor);
             upPanel.add(titleLabel);
         }
 
         downPanel.setLayout(new GridBagLayout());
+        downPanel.setBackground(contentBackColor);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         GUIUtil.setGridBagConstraintsWeight(gbc, 1.0, 1.0);
@@ -77,18 +108,21 @@ public class ResultPanel extends JPanel {
                     1, 1);
             downPanel.add(teamNameLabel, gbc);
 
+            teamNumberLabel.setForeground(contentFontColor);
+            teamNameLabel.setForeground(contentFontColor);
+
             teamNumberLabel.setHorizontalAlignment(JLabel.CENTER);
             teamNameLabel.setHorizontalAlignment(JLabel.CENTER);
 
             teamNumberLabel.setText(data.get(i).getTeamNumber());
             teamNameLabel.setText(data.get(i).getTeamName());
 
-            teamNumberLabel.setFont(GUIValue.TEXT_FONT);
-            teamNameLabel.setFont(GUIValue.TEXT_FONT);
+            teamNumberLabel.setFont(font);
+            teamNameLabel.setFont(font);
         }
     }
 
-    private void attachComponents() {
+    protected void attachComponents() {
         if (title == null || title.equals("")) {
             add(downPanel);
             downPanel.setBounds(
