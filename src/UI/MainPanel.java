@@ -3,7 +3,6 @@ package UI;
 import ConstantValues.Constants;
 import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
-import Util.GUIUtil;
 import Util.ImageLoader;
 import Util.OptionPaneUtil;
 

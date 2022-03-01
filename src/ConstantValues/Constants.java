@@ -49,11 +49,9 @@ public class Constants {
 
     public final static String HOME_RED_PATH = Paths.get("Images", "formation", "home_red.png").toString();
     public final static String HOME_WHITE_PATH = Paths.get("Images", "ticket", "home_white.png").toString();
-    public final static String NEXT_BUTTON_RED_PATH = Paths.get("Images", "formation", "next_button_red.png").toString();
-    public final static String NEXT_BUTTON_WHITE_PATH = Paths.get("Images", "ticket", "next_button_white.png").toString();
 
-    public final static String VERTICAL_CONTOUR_PATH = Paths.get("Images", "formation", "verticalContour.png").toString();
-
+    public final static String VERTICAL_CONTOUR_RED_PATH = Paths.get("Images", "formation", "verticalContour.png").toString();
+    public final static String VERTICAL_CONTOUR_WHITE_PATH = Paths.get("Images", "ticket", "verticalContour.png").toString();
     public final static String COUNT_DOWN_PATH = Paths.get("Images", "ticket", "count.gif").toString();
 
     // for writing excel file
@@ -87,7 +85,5 @@ public class Constants {
 
     public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
 
-    public static final Color FORMATION_PANEL_BACK = new Color(240, 240, 240);
-
-    public static final int COUNTDOWN_CLOSE_TIME = 5000;
+    public static final int COUNTDOWN_CLOSE_TIME = 5300;
 }

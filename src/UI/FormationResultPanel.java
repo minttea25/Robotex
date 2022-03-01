@@ -6,7 +6,6 @@ import Model.ProgramFunctions;
 import Model.TeamModel;
 import Util.GUIUtil;
 import Util.ImageLoader;
-import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,14 +34,12 @@ public class FormationResultPanel extends JPanel {
         initPanel();
         initComponents();
         attachComponents();
-
-        //OptionPaneUtil.showUnloadedImages(loadFailSet, null);
     }
 
     private void loadImage() {
-        contourImage = ImageLoader.loadImage(Constants.VERTICAL_CONTOUR_PATH);
+        contourImage = ImageLoader.loadImage(Constants.VERTICAL_CONTOUR_RED_PATH);
         if (contourImage == null) {
-            loadFailSet.add(Constants.VERTICAL_CONTOUR_PATH);
+            loadFailSet.add(Constants.VERTICAL_CONTOUR_RED_PATH);
         }
     }
 
@@ -51,7 +48,6 @@ public class FormationResultPanel extends JPanel {
         layout.setHgap(GUIValue.RESULT_PANEL_INTERVAL);
         setLayout(layout);
         setBackground(Color.white);
-
 
         GUIUtil.setSize(this,
                 GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT);
@@ -65,7 +61,6 @@ public class FormationResultPanel extends JPanel {
             panels[i] = new ResultPanel("Entry " + (key + 1), data.get(key), ProgramFunctions.Formation);
             i++;
         }
-
     }
 
     private void attachComponents() {

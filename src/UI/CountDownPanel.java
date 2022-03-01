@@ -10,8 +10,6 @@ public class CountDownPanel extends JPanel {
 
     protected ImageIcon icon;
 
-    JFrame parent;
-
     CountDownPanel(){
         init();
 

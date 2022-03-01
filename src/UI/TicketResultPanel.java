@@ -6,8 +6,11 @@ import ConstantValues.GUIValue;
 import Model.ProgramFunctions;
 import Model.TeamModel;
 import Util.GUIUtil;
+import Util.ImageLoader;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
@@ -16,30 +19,47 @@ public class TicketResultPanel extends Panel {
     int numberOfShowingTeams;
     int numberOfShowingPanels;
 
+    int nth;
+
     String title;
 
     ResultPanel[] panels;
 
+    BufferedImage contourImage;
+    Set<String> loadFailSet = new HashSet<>();
 
-    public TicketResultPanel(List<TeamModel> list, int showingNumber) {
+    public TicketResultPanel(List<TeamModel> list, int nth) {
         this.list = list;
-        this.numberOfShowingTeams = showingNumber;
+        this.numberOfShowingTeams = list.size();
+        this.nth = nth;
 
-        this.numberOfShowingPanels = (int)Math.ceil(list.size() / showingNumber);
+        this.numberOfShowingPanels = (int)Math.ceil(list.size() / numberOfShowingTeams);
 
-        if (numberOfShowingPanels == 1) {
+        this.numberOfShowingPanels = switch (nth) {
+            case 1 -> 1;
+            case 2, 3 -> (int)Math.ceil((double) list.size()/GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS);
+            default -> throw new IllegalStateException("Unexpected value: " + nth);
+        };
+
+        if (nth == 1) {
             this.title = GUIString.TICKET_FINAL_LIST;
         }
-        /*else {
-            this.title = GUIString.TICKET_PRELIMINARY_LIST;
-        }*/
         else {
-            this.title = "";
+            this.title = GUIString.TICKET_PRELIMINARY_LIST;
         }
+
+        loadImages();
 
         initPanel();
         initComponents();
         attachComponents();
+    }
+
+    private void loadImages() {
+        contourImage = ImageLoader.loadImage(Constants.VERTICAL_CONTOUR_WHITE_PATH);
+        if (contourImage == null) {
+            loadFailSet.add(Constants.VERTICAL_CONTOUR_WHITE_PATH);
+        }
     }
 
     private void initPanel() {
@@ -51,7 +71,7 @@ public class TicketResultPanel extends Panel {
     }
 
     private void initComponents() {
-        if (numberOfShowingPanels == 1) {
+        if (nth == 1) {
             panels = new ResultPanelWorldQualification[numberOfShowingPanels];
         }
         else {
@@ -62,24 +82,33 @@ public class TicketResultPanel extends Panel {
         int index = 0;
         for (int i = 0; i< numberOfShowingPanels; i++) {
             List<TeamModel> teams = new ArrayList<>();
-            for (int j = 0; j< numberOfShowingTeams; j++) {
+            for (int j = 0; j< GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS; j++) {
+                if (index >= list.size()) {
+                    break;
+                }
                 teams.add(list.get(index));
                 index++;
             }
             map.put(i, teams);
 
-            if (numberOfShowingPanels == 1) {
+            if (nth == 1) {
                 panels[i] = new ResultPanelWorldQualification(title, map.get(i), ProgramFunctions.Ticket);
             }
             else {
-                panels[i] = new ResultPanel(title, map.get(i), ProgramFunctions.Ticket);
+                panels[i] = new ResultPanel(title + " " + (nth-1), map.get(i), ProgramFunctions.Ticket);
             }
         }
     }
 
     private void attachComponents() {
-        for (ResultPanel p : panels) {
-            add(p);
+        for (int i=0; i<panels.length; i++) {
+            add(panels[i]);
+
+            if (contourImage != null) {
+                if (i != panels.length - 1) {
+                    add(new JLabel(new ImageIcon(contourImage)));
+                }
+            }
         }
     }
 

@@ -11,11 +11,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class ExcelWriteManagerTicket extends ExcelWriteManager{
+public class ExcelWriteManagerTicket extends ExcelWriteManager implements Callable {
     List<TeamModel> data;
     int numberOfTickets;
 
@@ -135,5 +135,11 @@ public class ExcelWriteManagerTicket extends ExcelWriteManager{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public Boolean call() {
+        createExcelFile();
+        return written;
     }
 }

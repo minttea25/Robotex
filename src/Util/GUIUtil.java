@@ -1,8 +1,9 @@
 package Util;
 
+import ConstantValues.Constants;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class GUIUtil {
     public static void setSize(Component component, Dimension d) {
@@ -48,11 +49,11 @@ public class GUIUtil {
         }
     }
 
-    public static void makeButtonForImage(JButton button) {
+    public static void makeButtonTransparent(JButton button) {
         button.setBorderPainted(false);
-        button.setBackground(new Color(255, 255, 255, 0));
+        button.setContentAreaFilled(false);
+        button.setBackground(Constants.TRANSPARENT);
         button.setBorder(null);
         button.setOpaque(false);
     }
-
 }

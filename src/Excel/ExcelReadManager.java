@@ -164,13 +164,6 @@ public class ExcelReadManager {
         } finally {
             service.shutdown();
         }
-
-        /*if (fullFileLoaded) {
-            System.out.println("All sheet loaded completely");
-        }
-        else {
-            System.out.println("Some sheet is not loaded: " + availableSheetNum + " in " + workbook.getNumberOfSheets());
-        }*/
     }
 
     public Map<Sections, List<TeamModel>> getData() {
@@ -184,10 +177,6 @@ public class ExcelReadManager {
             //System.out.println("There is no loaded sheet name: " + section);
             return null;
         }
-    }
-
-    public boolean isFullFileLoaded() {
-        return fullFileLoaded;
     }
 
     public Map<Sections, Boolean> getDataLoaded() {

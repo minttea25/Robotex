@@ -2,7 +2,6 @@ package Excel;
 
 import Model.TeamModel;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -40,14 +39,6 @@ public class SheetReadManager implements Callable {
 
                 while (cellItr.hasNext()) {
                     Cell cell = cellItr.next();
-
-                    //System.out.println("[ " + cell.toString() + " ]");
-
-                    /*// check empty row
-                    if (cell.toString() == "") {
-                        System.out.println("EMPTY");
-                        eofFlag = true;
-                    }*/
 
                     int columnIndex = cell.getColumnIndex();
 
@@ -169,9 +160,6 @@ public class SheetReadManager implements Callable {
     }
 
     private Object getValueFromCell(Cell cell) {
-        /*if (cell.getCellType() == CellType.BLANK)
-            System.out.println(cell.getCellType() + "asdf");
-*/
         return switch (cell.getCellType()) {
             case STRING -> cell.getStringCellValue();
             // case BOOLEAN -> cell.getBooleanCellValue();
