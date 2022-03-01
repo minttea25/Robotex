@@ -14,8 +14,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
-public class ExcelWriteManagerFormation extends ExcelWriteManager{
+public class ExcelWriteManagerFormation extends ExcelWriteManager implements Callable {
     Map<Integer, List<TeamModel>> data;
 
     public ExcelWriteManagerFormation(Sections section, Map<Integer, List<TeamModel>> data, String fileName) {
@@ -133,5 +134,11 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager{
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public Boolean call() {
+        createExcelFile();
+        return this.written;
     }
 }

@@ -1,7 +1,6 @@
 package UI;
 
 import ConstantValues.*;
-import Excel.ExcelWriteManagerTicket;
 import Model.TeamModel;
 import Util.GUIUtil;
 import Util.ImageLoader;
@@ -9,21 +8,15 @@ import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
 public class TicketFrame extends JFrame {
     CountDownPanel countDownPanel;
     JPanel contentPanel;
-
-
-    boolean stateOk;
 
     Sections section;
     List<TeamModel> data;
@@ -33,23 +26,22 @@ public class TicketFrame extends JFrame {
     List<TeamModel> ticket3rd = new ArrayList<>();
 
     int numberOfTickets;
+    int numberOfPanels;
+    int numberOf3rdPanels;
+
+    final int NUMBER_OF_TEAMS_ON_3RD_PANEL = GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS*GUIValue.TICKET_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL;
+
+    CardLayout mainCard;
 
     CardLayout card;
 
     JLabel backgroundLabel;
     JPanel resultPanel; // card layout
-    JButton nextButton;
+    //JButton nextButton;
 
-    TicketResultPanel panel1st;
-    TicketResultPanel panel2nd;
-    TicketResultScrollPanel panel3rd;
+    TicketResultPanel[] panels;
 
     BufferedImage backgroundImage;
-    BufferedImage nextBtnImage;
-
-    ImageIcon nextBtnIcon;
-
-    ExcelWriteManagerTicket ewmt;
 
     Set<String> loadFailSet = new HashSet<>();
 
@@ -58,94 +50,38 @@ public class TicketFrame extends JFrame {
         this.data = data;
         this.numberOfTickets = numberOfTickets;
 
-        stateOk = checkNumberOfTickets();
-
-        if (!stateOk) {
-            return;
+        if (data.size() > numberOfTickets*3) {
+            this.numberOf3rdPanels = (int) Math.ceil(
+                    (double)(data.size() - 3*numberOfTickets)/NUMBER_OF_TEAMS_ON_3RD_PANEL);
         }
+        else {
+            this.numberOf3rdPanels = 0;
+        }
+
+        this.numberOfPanels = (data.size() > numberOfTickets ? 2 : 1) + numberOf3rdPanels;
 
         loadImages();
 
-        shuffleData();
         divideData();
-
-        saveFiles();
 
         initFrame();
         initComponents();
         attachComponents();
 
-        // showCard();
-
         OptionPaneUtil.showUnloadedImages(loadFailSet, getTicketFrame());
     }
 
-    private boolean checkNumberOfTickets() {
-        if (data == null) {
-            GUIUtil.setSize(this,
-                    new Dimension(GUIValue.MAIN_WIDTH, GUIValue.MAIN_HEIGHT));
-            int ok = JOptionPane.showConfirmDialog(
-                    getTicketFrame(),
-                    ErrorMsg.e022Msg + section,
-                    ErrorMsg.error022,
-                    JOptionPane.DEFAULT_OPTION
-            );
-            if (ok == JOptionPane.OK_OPTION) {
-                getTicketFrame().dispose();
-            }
-            return false;
-        }
-        else if (numberOfTickets > data.size()) {
-            GUIUtil.setSize(this,
-                    new Dimension(GUIValue.MAIN_WIDTH, GUIValue.MAIN_HEIGHT));
-            int ok = JOptionPane.showConfirmDialog(
-                    getTicketFrame(),
-                    ErrorMsg.e021Msg,
-                    ErrorMsg.error021,
-                    JOptionPane.DEFAULT_OPTION
-            );
-            if (ok == JOptionPane.OK_OPTION) {
-                getTicketFrame().dispose();
-            }
-            return false;
-        }
-        return numberOfTickets <= data.size();
-    }
-
-    private void saveFiles() {
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(Constants.SAVE_FILE_DATE_FORMAT);
-        String fileName = section.toString() + " - " + date + " " + time.format(timeFormatter);
-        ewmt = new ExcelWriteManagerTicket(
-                section,
-                data,
-                fileName,
-                numberOfTickets
-        );
-
-        ewmt.createExcelFile();
-
-        if (!ewmt.isWritten()) {
-            System.out.println("Failed to create file");
-        }
-    }
-
     public void showFrame() {
-        if (stateOk) {
-            GifCloseThread t = new GifCloseThread();
-            t.start();
-        }
-        setVisible(stateOk);
-        if (!stateOk) {
-            dispose();
-        }
+        GifCloseThread t = new GifCloseThread();
+        t.start();
+        setVisible(true);
     }
 
     private void initFrame() {
+        mainCard = new CardLayout();
         card = new CardLayout();
 
-        setLayout(null);
+        setLayout(mainCard);
         setTitle(GUIString.TICKET_FRAME_TITLE + " - " + section.toString());
         setResizable(GUIValue.WINDOW_RESIZABLE);
         GUIUtil.setSize(this,
@@ -162,57 +98,57 @@ public class TicketFrame extends JFrame {
 
         backgroundLabel = new JLabel();
         resultPanel = new JPanel();
-        nextButton = new JButton();
-        panel1st = new TicketResultPanel(ticket1st, numberOfTickets);
-        panel2nd = new TicketResultPanel(ticket2nd, numberOfTickets);
-        panel3rd = new TicketResultScrollPanel(ticket3rd, GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS);
+        //nextButton = new JButton();
+        panels = new TicketResultPanel[numberOfPanels];
+
+        int idx = 0;
+        for (int i=0; i<numberOfPanels; i++) {
+            if (i==0) {
+                panels[i] = new TicketResultPanel(ticket1st, 1);
+            }
+            else if (i==1) {
+                panels[i] = new TicketResultPanel(ticket2nd, 2);
+            }
+            else {
+                List<TeamModel> t = new ArrayList<>();
+                for (int j=0; j<NUMBER_OF_TEAMS_ON_3RD_PANEL; j++) {
+                    if (idx >= ticket3rd.size()) {
+                        break;
+                    }
+                    t.add(ticket3rd.get(idx++));
+                }
+                panels[i] = new TicketResultPanel(t, 3);
+            }
+        }
 
         if (backgroundImage != null) {
             backgroundLabel.setIcon(new ImageIcon(backgroundImage));
         }
 
-        if (nextBtnImage != null) {
-            nextButton.setIcon(nextBtnIcon = new ImageIcon(nextBtnImage));
-        }
-        else {
-            nextButton.setText(GUIString.NEXT);
-        }
-        GUIUtil.makeButtonForImage(nextButton);
-        nextButton.addActionListener(new NextButtonActionListener());
+        //GUIUtil.makeButtonTransparent(nextButton);
+        //nextButton.addActionListener(new NextButtonActionListener());
 
         resultPanel.setLayout(card);
 
-        resultPanel.add(GUIValue.TICKET_1ST_CARD_NAME, panel1st);
-        resultPanel.add(GUIValue.TICKET_2nd_CARD_NAME, panel2nd);
-        resultPanel.add(GUIValue.TICKET_3rd_CARD_NAME, panel3rd);
+        for (int i=0; i<numberOfPanels; i++) {
+            resultPanel.add(String.valueOf(i), panels[i]);
+            panels[i].addMouseListener(new NextCheckMouseListener());
+        }
     }
 
     private void attachComponents() {
-        if (ewmt != null && ewmt.isWritten()) {
-            contentPanel.add(resultPanel);
-            resultPanel.setBounds(
-                    GUIValue.RESULT_BOX_X, GUIValue.RESULT_BOX_Y,
-                    GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
-            );
-        }
+        /*contentPanel.add(nextButton);
+        nextButton.setBounds(
+                GUIValue.RESULT_BOX_X,
+                GUIValue.RESULT_BOX_Y,
+                GUIValue.RESULT_BOX_WIDTH/2, GUIValue.RESULT_BOX_HEIGHT
+        );*/
 
-        contentPanel.add(nextButton);
-        if (nextBtnImage != null) {
-            nextButton.setBounds(
-                    GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - nextBtnIcon.getIconWidth(),
-                    GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 10,
-                    nextBtnIcon.getIconWidth(), nextBtnIcon.getIconHeight()
-            );
-        }
-        else {
-            nextButton.setBounds(
-                    GUIValue.RESULT_BOX_X + GUIValue.RESULT_BOX_WIDTH - GUIValue.NEXT_BUTTON_WIDTH/4,
-                    GUIValue.RESULT_BOX_Y + GUIValue.RESULT_BOX_HEIGHT + 15,
-                    GUIValue.NEXT_BUTTON_WIDTH, GUIValue.NEXT_BUTTON_HEIGHT
-            );
-            nextButton.setText(GUIString.NEXT);
-        }
-
+        contentPanel.add(resultPanel);
+        resultPanel.setBounds(
+                GUIValue.RESULT_BOX_X, GUIValue.RESULT_BOX_Y,
+                GUIValue.RESULT_BOX_WIDTH, GUIValue.RESULT_BOX_HEIGHT
+        );
 
         contentPanel.add(backgroundLabel);
         if(backgroundImage != null) {
@@ -222,18 +158,17 @@ public class TicketFrame extends JFrame {
             );
         }
 
-        add(countDownPanel);
-        countDownPanel.setBounds(
-                0, 0,
-                this.getWidth(), this.getHeight()
-        );
-
-        add(contentPanel);
+        add("content", contentPanel);
         contentPanel.setBounds(
                 0, 0,
                 getWidth(), getHeight()
         );
-        contentPanel.setVisible(false);
+
+        add("count", countDownPanel);
+        countDownPanel.setBounds(
+                0, 0,
+                this.getWidth(), this.getHeight()
+        );
     }
 
     private void divideData() {
@@ -254,13 +189,7 @@ public class TicketFrame extends JFrame {
         card.next(resultPanel);
     }
 
-    private void shuffleData() {
-        Collections.shuffle(data);
-    }
-
     private void loadImages() {
-        nextBtnImage = ImageLoader.loadImage(Constants.NEXT_BUTTON_WHITE_PATH);
-
         switch (section) {
             case LegoSumo1kg -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH);
             case LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_3KG_BG_PATH);
@@ -270,8 +199,6 @@ public class TicketFrame extends JFrame {
             case LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH);
         }
 
-        if (nextBtnImage == null)
-            loadFailSet.add(Constants.NEXT_BUTTON_WHITE_PATH);
         if (backgroundImage == null) {
             switch (section) {
                 case LegoSumo1kg -> loadFailSet.add(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH);
@@ -294,16 +221,12 @@ public class TicketFrame extends JFrame {
         @Override
         public void run() {
             try {
+                mainCard.show(getTicketFrame().getContentPane(), "count");
                 Thread.sleep(Constants.COUNTDOWN_CLOSE_TIME);
+                mainCard.show(getTicketFrame().getContentPane(), "content");
                 remove(countDownPanel);
 
-                /*add(contentPanel);
-                contentPanel.setBounds(
-                        0, 0,
-                        getWidth(), getHeight()
-                );*/
-                contentPanel.setVisible(true);
-                card.show(resultPanel, GUIValue.TICKET_1ST_CARD_NAME);
+                card.show(resultPanel, String.valueOf(0));
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -311,7 +234,7 @@ public class TicketFrame extends JFrame {
         }
     }
 
-    class NextButtonActionListener implements ActionListener {
+    /*class NextButtonActionListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -320,6 +243,40 @@ public class TicketFrame extends JFrame {
             if (obj == nextButton) {
                 showNextCard();
             }
+        }
+    }*/
+
+    class NextCheckMouseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            showNextCard();
+            /*int x = e.getX();
+            int y = e.getY();
+            System.out.println("Clicked: " + x + " " + y);
+            if (x>=GUIValue.RESULT_BOX_X && x <= GUIValue.RESULT_BOX_X+GUIValue.RESULT_BOX_WIDTH
+                && y >= GUIValue.RESULT_BOX_Y && y <= GUIValue.RESULT_BOX_Y+GUIValue.RESULT_BOX_WIDTH) {
+                showNextCard();
+            }*/
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
         }
     }
 }

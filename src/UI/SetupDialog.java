@@ -316,8 +316,48 @@ public class SetupDialog extends JDialog{
                 }
             }
             else if (obj == btnOK) {
-                if (saveValues())
-                    dispose();
+                if (saveValues()) {
+                    if (!setup.checkSetupValues()) {
+                        String msg = (fun==ProgramFunctions.Formation) ? ErrorMsg.e011Msg : ErrorMsg.e021Msg;
+                        String err = (fun==ProgramFunctions.Formation) ? ErrorMsg.error011 : ErrorMsg.error021;
+                        int res = JOptionPane.showConfirmDialog(
+                                getSetupDialog(),
+                                msg + "\n" + setup.getCheckNumErrorList(),
+                                err,
+                                JOptionPane.DEFAULT_OPTION
+                        );
+                    }
+                    setup.saveFiles(fun);
+
+                    boolean atLeast = false;
+                    String txt = "These sections are processed successfully: ";
+                    for (Sections s : setup.getWriteStatus().keySet()) {
+                        if (setup.getWriteStatus().get(s)) {
+                            txt += "\n " + s.toString();
+                            atLeast = true;
+                        }
+                    }
+                    int r;
+                    if (atLeast) {
+                        r = JOptionPane.showConfirmDialog(
+                                getSetupDialog(),
+                                txt,
+                                GUIString.NOTCIE,
+                                JOptionPane.DEFAULT_OPTION
+                        );
+                    }
+                    else {
+                        r = JOptionPane.showConfirmDialog(
+                                getSetupDialog(),
+                                txt + "\n\nNONE",
+                                GUIString.NOTCIE,
+                                JOptionPane.DEFAULT_OPTION
+                        );
+                    }
+                    if (r == JOptionPane.OK_OPTION) {
+                        dispose();
+                    }
+                }
             }
         }
     }

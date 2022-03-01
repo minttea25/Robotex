@@ -132,60 +132,72 @@ public class MainFrame extends JFrame {
 
             if (obj == formationPanel.legoSumo1kgBtn) {
                 Sections s = Sections.LegoSumo1kg;
+                if (!checkStatus(ProgramFunctions.Formation, s)) {
+                    return;
+                }
                 FormationFrame frame = new FormationFrame(
                         s,
-                        formationSetup.getTeamDataBySection(s),
-                        formationSetup.getSetupDataModel().getValueBySection(s)
+                        formationSetup.getEntryMaps().get(s)
                 );
 
                 frame.showFrame();
             }
             else if (obj == formationPanel.legoSumo3kgBtn) {
                 Sections s = Sections.LegoSumo3kg;
+                if (!checkStatus(ProgramFunctions.Formation, s)) {
+                    return;
+                }
                 FormationFrame frame = new FormationFrame(
                         s,
-                        formationSetup.getTeamDataBySection(s),
-                        formationSetup.getSetupDataModel().getValueBySection(s)
+                        formationSetup.getEntryMaps().get(s)
                 );
 
                 frame.showFrame();
             }
             else if (obj == formationPanel.lineFollowingEBtn) {
                 Sections s = Sections.LineFollowingE;
+                if (!checkStatus(ProgramFunctions.Formation, s)) {
+                    return;
+                }
                 FormationFrame frame = new FormationFrame(
                         s,
-                        formationSetup.getTeamDataBySection(s),
-                        formationSetup.getSetupDataModel().getValueBySection(s)
+                        formationSetup.getEntryMaps().get(s)
                 );
 
                 frame.showFrame();
             }
             else if (obj == formationPanel.lineFollowingJHBtn) {
                 Sections s = Sections.LineFollowingJH;
+                if (!checkStatus(ProgramFunctions.Formation, s)) {
+                    return;
+                }
                 FormationFrame frame = new FormationFrame(
                         s,
-                        formationSetup.getTeamDataBySection(s),
-                        formationSetup.getSetupDataModel().getValueBySection(s)
+                        formationSetup.getEntryMaps().get(s)
                 );
 
                 frame.showFrame();
             }
             else if (obj == formationPanel.legoFolkraceEBtn) {
                 Sections s = Sections.LegoFolkraceE;
+                if (!checkStatus(ProgramFunctions.Formation, s)) {
+                    return;
+                }
                 FormationFrame frame = new FormationFrame(
                         s,
-                        formationSetup.getTeamDataBySection(s),
-                        formationSetup.getSetupDataModel().getValueBySection(s)
+                        formationSetup.getEntryMaps().get(s)
                 );
 
                 frame.showFrame();
             }
             else if (obj == formationPanel.legoFolkraceJHBtn) {
                 Sections s = Sections.LegoFolkraceJH;
+                if (!checkStatus(ProgramFunctions.Formation, s)) {
+                    return;
+                }
                 FormationFrame frame = new FormationFrame(
                         s,
-                        formationSetup.getTeamDataBySection(s),
-                        formationSetup.getSetupDataModel().getValueBySection(s)
+                        formationSetup.getEntryMaps().get(s)
                 );
 
                 frame.showFrame();
@@ -260,5 +272,44 @@ public class MainFrame extends JFrame {
                 card.show(getContentPane(), GUIValue.MAIN_CARD_NAME);
             }
         }
+    }
+
+    private boolean checkStatus(ProgramFunctions fun, Sections s) {
+        if(fun == ProgramFunctions.Formation) {
+            // not load data
+            if (!formationSetup.getStatus().containsKey(s)) {
+                return false;
+            }
+            // wrong num
+            else if (!formationSetup.getStatus().get(s)) {
+                JOptionPane.showConfirmDialog(
+                        getMainFrame(),
+                        ErrorMsg.e011Msg + ": " + s.toString() + "\ndata size: " + formationSetup.getTeamDataBySection(s).size()
+                                + "\nnow: " + formationSetup.getSetupDataModel().getValueBySection(s),
+                        ErrorMsg.error011,
+                        JOptionPane.DEFAULT_OPTION
+                );
+                return false;
+            }
+        }
+        else {
+            // not load data
+            if (!ticketSetup.getStatus().containsKey(s)) {
+                return false;
+            }
+            // wrong num
+            else if (!ticketSetup.getStatus().get(s)) {
+                JOptionPane.showConfirmDialog(
+                        getMainFrame(),
+                        ErrorMsg.e021Msg + ": " + s.toString() + "\ndata size: " + ticketSetup.getTeamDataBySection(s).size()
+                                + "\nnow: " + ticketSetup.getSetupDataModel().getValueBySection(s),
+                        ErrorMsg.error021,
+                        JOptionPane.DEFAULT_OPTION
+                );
+                return false;
+            }
+        }
+
+        return true;
     }
 }

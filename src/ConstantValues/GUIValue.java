@@ -45,7 +45,7 @@ public class GUIValue {
     public final static int RESULT_BOX_WIDTH = 1090;
     public final static int RESULT_BOX_HEIGHT = 690;
 
-    public final static int RESULT_PANEL_WIDTH = 320;
+    public final static int RESULT_PANEL_WIDTH = 420; //320
     public final static int RESULT_PANEL_HEIGHT = 670;
     public final static int RESULT_PANEL_TITLE_WIDTH = RESULT_PANEL_WIDTH;
     public final static int RESULT_PANEL_TITLE_HEIGHT = 50;
@@ -57,7 +57,8 @@ public class GUIValue {
     public final static int NEXT_BUTTON_HEIGHT = 35;
 
     public final static int TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS = 10;
-    public final static int FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL = 3;
+    public final static int TICKET_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL = 2;
+    public final static int FORMATION_SHOWING_NUMBERS_OF_TEAMS_EACH_PANEL = 2;
 
     public final static int RESULT_PANEL_WIDTH_WQ = 700;
     public final static int RESULT_PANEL_HEIGHT_WQ = 670;
@@ -80,7 +81,7 @@ public class GUIValue {
 
     // font
     private static final int TITLE_FONT_SIZE = 35;
-    private static final int TEXT_FONT_SIZE = 23;
+    private static final int TEXT_FONT_SIZE = 30; //23
 
     private static final int TEXT_FONT_SIZE_WQ = 35;
 

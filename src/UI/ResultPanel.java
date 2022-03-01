@@ -8,9 +8,7 @@ import Util.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Objects;
 
 public class ResultPanel extends JPanel {
     ProgramFunctions pf;
@@ -21,9 +19,6 @@ public class ResultPanel extends JPanel {
     JPanel upPanel;
     JPanel downPanel;
     JLabel backgroundLabel;
-
-    ImageIcon icon;
-    BufferedImage backgroundImage;
 
     Font titleFont;
     Font font;
@@ -49,7 +44,7 @@ public class ResultPanel extends JPanel {
         if (pf == ProgramFunctions.Formation) {
             titleBackColor = Constants.THEME_COLOR;
             titleFontColor = Color.white;
-            contentBackColor = Constants.FORMATION_PANEL_BACK;
+            contentBackColor = Color.white;
             contentFontColor = Color.black;
         }
         else {
@@ -78,15 +73,14 @@ public class ResultPanel extends JPanel {
         backgroundLabel = new JLabel();
 
         upPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        if (!Objects.equals(title, "") && title != null) {
-            upPanel.setBackground(titleBackColor);
-            titleLabel.setText(title);
-            titleLabel.setVerticalAlignment(JLabel.CENTER);
-            titleLabel.setHorizontalAlignment(JLabel.CENTER);
-            titleLabel.setFont(titleFont);
-            titleLabel.setForeground(titleFontColor);
-            upPanel.add(titleLabel);
-        }
+
+        upPanel.setBackground(titleBackColor);
+        titleLabel.setText(title);
+        titleLabel.setVerticalAlignment(JLabel.CENTER);
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setFont(titleFont);
+        titleLabel.setForeground(titleFontColor);
+        upPanel.add(titleLabel);
 
         downPanel.setLayout(new GridBagLayout());
         downPanel.setBackground(contentBackColor);
