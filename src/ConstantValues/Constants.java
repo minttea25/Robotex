@@ -46,6 +46,8 @@ public class Constants {
     public final static String TICKET_LEGO_FOLKRACE_E_BG_PATH = Paths.get("Images", "ticket", "Ticket_FolkraceE_Bg.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_JH_BG_PATH = Paths.get("Images", "ticket", "Ticket_FolkraceJH_Bg.png").toString();
 
+    public final static String TICKET_COUNTDOWN_BG_PATH = Paths.get("Images", "ticket", "CountDown_BG.png").toString();
+
 
     public final static String HOME_RED_PATH = Paths.get("Images", "formation", "home_red.png").toString();
     public final static String HOME_WHITE_PATH = Paths.get("Images", "ticket", "home_white.png").toString();
@@ -85,5 +87,5 @@ public class Constants {
 
     public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
 
-    public static final int COUNTDOWN_CLOSE_TIME = 5300;
+    public static final int COUNTDOWN_CLOSE_TIME = 5000; // max value: 60000 (60s)
 }
