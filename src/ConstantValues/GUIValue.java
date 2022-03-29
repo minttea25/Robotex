@@ -24,11 +24,12 @@ public class GUIValue {
     public static final String FORMATION_CARD_NAME = "formation";
     public static final String TICKET_CARD_NAME = "ticket";
 
-    // for ticket card layout name - DO NOT MODIFY THESE VALUES
-    public static final String TICKET_1ST_CARD_NAME = "1st";
-    public static final String TICKET_2nd_CARD_NAME = "2nd";
-    public static final String TICKET_3rd_CARD_NAME = "3rd";
+    // for formation card layout name - DO NOT MODIFY THESE VALUES
     public static final String FORMATION_BASE_CARD_NAME = "formation";
+
+    // for ticket card layout
+    public static final String TICKET_COUNT_CARD_NAME = "count";
+    public static final String TICKET_CONTENT_CARD_NAME = "content";
 
     // setup
     public final static int SETUP_MARGIN = 5;
@@ -79,8 +80,11 @@ public class GUIValue {
     public static final int BUTTON_RIGHT_WIDTH = 174;
     public static final int BUTTON_RIGHT_HEIGHT = 155;
 
+    public static final int COUNTDOWN_LABEL_WIDTH = 400;
+    public static final int COUNTDOWN_LABEL_HEIGHT = 400;
+
     // font
-    private static final int TITLE_FONT_SIZE = 35;
+    private static final int TITLE_FONT_SIZE = 38;
     private static final int TEXT_FONT_SIZE = 30; //23
 
     private static final int TEXT_FONT_SIZE_WQ = 35;
@@ -96,4 +100,5 @@ public class GUIValue {
 
     public static final Font TEXT_FONT_WQ = new Font(NEXON_MAPLESTORY, Font.BOLD, TEXT_FONT_SIZE_WQ);
 
+    public static final Font COUNT_FONT = new Font(NEXON_MAPLESTORY, Font.BOLD, 400);
 }

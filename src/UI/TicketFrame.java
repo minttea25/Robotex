@@ -8,6 +8,7 @@ import Util.OptionPaneUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -72,8 +73,7 @@ public class TicketFrame extends JFrame {
     }
 
     public void showFrame() {
-        GifCloseThread t = new GifCloseThread();
-        t.start();
+        mainCard.show(getTicketFrame().getContentPane(), GUIValue.TICKET_COUNT_CARD_NAME);
         setVisible(true);
     }
 
@@ -91,7 +91,7 @@ public class TicketFrame extends JFrame {
     }
 
     private void initComponents() {
-        countDownPanel = new CountDownPanel();
+        countDownPanel = new CountDownPanel(this.getTicketFrame());
         contentPanel = new JPanel();
 
         contentPanel.setLayout(null);
@@ -158,13 +158,13 @@ public class TicketFrame extends JFrame {
             );
         }
 
-        add("content", contentPanel);
+        add(GUIValue.TICKET_CONTENT_CARD_NAME, contentPanel);
         contentPanel.setBounds(
                 0, 0,
                 getWidth(), getHeight()
         );
 
-        add("count", countDownPanel);
+        add(GUIValue.TICKET_COUNT_CARD_NAME, countDownPanel);
         countDownPanel.setBounds(
                 0, 0,
                 this.getWidth(), this.getHeight()
@@ -212,6 +212,12 @@ public class TicketFrame extends JFrame {
         }
     }
 
+    protected void showContentPanel() {
+        mainCard.show(getTicketFrame().getContentPane(), GUIValue.TICKET_CONTENT_CARD_NAME);
+        remove(countDownPanel);
+        card.show(resultPanel, "0");
+    }
+
     private TicketFrame getTicketFrame() {
         return this;
     }
@@ -221,9 +227,9 @@ public class TicketFrame extends JFrame {
         @Override
         public void run() {
             try {
-                mainCard.show(getTicketFrame().getContentPane(), "count");
+                mainCard.show(getTicketFrame().getContentPane(), GUIValue.TICKET_COUNT_CARD_NAME);
                 Thread.sleep(Constants.COUNTDOWN_CLOSE_TIME);
-                mainCard.show(getTicketFrame().getContentPane(), "content");
+                mainCard.show(getTicketFrame().getContentPane(), GUIValue.TICKET_CONTENT_CARD_NAME);
                 remove(countDownPanel);
 
                 card.show(resultPanel, String.valueOf(0));
@@ -246,7 +252,7 @@ public class TicketFrame extends JFrame {
         }
     }*/
 
-    class NextCheckMouseListener implements MouseListener {
+    class NextCheckMouseListener extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -258,25 +264,6 @@ public class TicketFrame extends JFrame {
                 && y >= GUIValue.RESULT_BOX_Y && y <= GUIValue.RESULT_BOX_Y+GUIValue.RESULT_BOX_WIDTH) {
                 showNextCard();
             }*/
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
         }
     }
 }
