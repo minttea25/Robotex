@@ -1,15 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="Robotex:jar">
+  <artifact type="jar" build-on-make="true" name="Robotex:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Robotex_jar</output-path>
     <root id="archive" name="Robotex.jar">
       <element id="module-output" name="Robotex" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Robotes Korea ExLib/poi-4.1.2/poi-4.1.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Robotes Korea ExLib/poi-4.1.2/poi-ooxml-4.1.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Robotes Korea ExLib/poi-4.1.2/poi-ooxml-schemas-4.1.2.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Robotes Korea ExLib/poi-4.1.2/ooxml-lib/xmlbeans-3.1.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Robotes Korea ExLib/poi-4.1.2/lib/commons-compress-1.19.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Robotes Korea ExLib/poi-4.1.2/lib/commons-collections4-4.4.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Robotes Korea ExLib/gson-2.8.9.jar" path-in-jar="/" />
+      <element id="library" level="project" name="gson-2.8.9" />
+      <element id="library" level="project" name="poi-ooxml-4.1.2" />
     </root>
   </artifact>
 </component>

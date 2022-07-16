@@ -32,5 +32,11 @@ public class GUIString {
 
     public static final String BACK = "Back";
 
-    public static final String NOTCIE = "Notice";
+    public static final String NOTICE = "Notice";
+
+
+    // version (not loaded from json or other files)
+    public static final String VERSION = "Ver. 1.0.0";
+    public static final String DEV_ = "Created by minttea25; https://github.com/minttea25";
+
 }

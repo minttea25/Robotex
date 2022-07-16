@@ -306,7 +306,7 @@ public class SetupDialog extends JDialog{
                     JOptionPane.showMessageDialog(
                             getSetupDialog(),
                             msg.toString(),
-                            GUIString.NOTCIE,
+                            GUIString.NOTICE,
                             JOptionPane.INFORMATION_MESSAGE
                     );
                     btnOK.setEnabled(true);
@@ -342,7 +342,7 @@ public class SetupDialog extends JDialog{
                         r = JOptionPane.showConfirmDialog(
                                 getSetupDialog(),
                                 txt,
-                                GUIString.NOTCIE,
+                                GUIString.NOTICE,
                                 JOptionPane.DEFAULT_OPTION
                         );
                     }
@@ -350,7 +350,7 @@ public class SetupDialog extends JDialog{
                         r = JOptionPane.showConfirmDialog(
                                 getSetupDialog(),
                                 txt + "\n\nNONE",
-                                GUIString.NOTCIE,
+                                GUIString.NOTICE,
                                 JOptionPane.DEFAULT_OPTION
                         );
                     }

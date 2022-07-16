@@ -5,6 +5,7 @@ import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
 import Util.ImageLoader;
 import Util.OptionPaneUtil;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,9 @@ public class MainPanel extends JPanel{
     private BufferedImage formationSetupBtnImage;
     private BufferedImage ticketBtnImage;
     private BufferedImage ticketSetupBtnImage;
+
+    private JLabel devLabel;
+    private JLabel verLabel;
 
     Set<String> loadFailSet = new HashSet<>();
 
@@ -111,6 +115,8 @@ public class MainPanel extends JPanel{
             ticketSetupBtn.setText("world ticket setup");
         }
 
+        initAdditionalLabel();
+
 
         // it should be attached last.
         add(backImageLabel);
@@ -183,6 +189,20 @@ public class MainPanel extends JPanel{
         if (formationSetupBtnImage == null) loadFailSet.add(Constants.FORMATION_BUTTON_RIGHT_PATH);
         if (ticketBtnImage == null) loadFailSet.add(Constants.TICKET_BUTTON_LEFT_PATH);
         if (ticketSetupBtnImage == null) loadFailSet.add(Constants.TICKET_BUTTON_RIGHT_PATH);
+    }
+
+    private void initAdditionalLabel() {
+        devLabel = new JLabel(GUIString.DEV_);
+        verLabel = new JLabel(GUIString.VERSION);
+
+        devLabel.setFont(new Font("메이플스토리", Font.PLAIN, 12));
+        verLabel.setFont(new Font("메이플스토리", Font.PLAIN, 12));
+
+        add(devLabel);
+        devLabel.setBounds(1550, 20, 500, 50);
+
+        add(verLabel);
+        verLabel.setBounds(30, 20, 300, 50);
     }
 
 
