@@ -195,11 +195,11 @@ public class MainPanel extends JPanel{
         devLabel = new JLabel(GUIString.DEV_);
         verLabel = new JLabel(GUIString.VERSION);
 
-        devLabel.setFont(new Font("메이플스토리", Font.PLAIN, 10));
-        verLabel.setFont(new Font("메이플스토리", Font.PLAIN, 10));
+        devLabel.setFont(new Font("메이플스토리", Font.PLAIN, 12));
+        verLabel.setFont(new Font("메이플스토리", Font.PLAIN, 12));
 
         add(devLabel);
-        devLabel.setBounds(1600, 20, 500, 50);
+        devLabel.setBounds(1550, 20, 500, 50);
 
         add(verLabel);
         verLabel.setBounds(30, 20, 300, 50);
