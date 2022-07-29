@@ -5,7 +5,6 @@ import ConstantValues.GUIString;
 import ConstantValues.GUIValue;
 import Util.ImageLoader;
 import Util.OptionPaneUtil;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import javax.swing.*;
 import java.awt.*;
