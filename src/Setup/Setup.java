@@ -69,7 +69,7 @@ public class Setup {
             JsonReader jSonReader = new JsonReader(new FileReader(file));
             setupDataModel = gson.fromJson(jSonReader, SetupDataModel.class);
 
-            for(var s : Sections.values()) {
+            for(Sections s : Sections.values()) {
                 if (setupDataModel.getValueBySection(s) <= 0) {
                     setupFileLoaded = false;
                     return;
@@ -121,14 +121,26 @@ public class Setup {
     public boolean checkSetupValues() {
         boolean flag = true;
         for (Sections s : teamData.keySet()) {
-            int num = switch (s) {
+            int num = -1;
+            switch (s) {
+                case LegoSumo1kg : num = setupDataModel.getLegoSumo1kg(); break;
+                case LegoSumo3kg : num = setupDataModel.getLegoSumo3kg(); break;
+                case LineFollowingE : num = setupDataModel.getLineFollowingE(); break;
+                case LineFollowingJH : num = setupDataModel.getLineFollowingJH(); break;
+                case LegoFolkraceE : num = setupDataModel.getLegoFolkraceE(); break;
+                case LegoFolkraceJH : num = setupDataModel.getLegoFolkraceJH(); break;
+                default: num = -1; break;
+            }
+
+
+            /*int num = switch (s) {
                 case LegoSumo1kg -> setupDataModel.getLegoSumo1kg();
                 case LegoSumo3kg -> setupDataModel.getLegoSumo3kg();
                 case LineFollowingE -> setupDataModel.getLineFollowingE();
                 case LineFollowingJH -> setupDataModel.getLineFollowingJH();
                 case LegoFolkraceE -> setupDataModel.getLegoFolkraceE();
                 case LegoFolkraceJH -> setupDataModel.getLegoFolkraceJH();
-            };
+            };*/
 
             if(teamData.get(s).size() < num) {
                 checkNumErrorList += "\n" + s + ": " + teamData.get(s).size();
@@ -167,7 +179,7 @@ public class Setup {
                 }
 
                 int i = 0;
-                for (var team : teamData.get(s)) {
+                for (TeamModel team : teamData.get(s)) {
                     entryMaps.get(s).get(i).add(team);
                     if (i >= entryMaps.get(s).size() - 1) {
                         i = 0;

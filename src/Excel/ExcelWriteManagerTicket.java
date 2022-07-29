@@ -81,20 +81,27 @@ public class ExcelWriteManagerTicket extends ExcelWriteManager implements Callab
                     int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES + 1;
 
                     switch (i) {
-                        case 0 -> // teamNumber - String
+                        case 0 : // teamNumber - String
                                 curRow.createCell(i).setCellValue(team.getTeamNumber());
-                        case 1 -> // teamName
+                                break;
+                        case 1 : // teamName
                                 curRow.createCell(i).setCellValue(team.getTeamName());
-                        case 2 -> // belong
+                                break;
+                        case 2 : // belong
                                 curRow.createCell(i).setCellValue(team.getBelong());
-                        case 3 -> // coach
+                                break;
+                        case 3 : // coach
                                 curRow.createCell(i).setCellValue(team.getCoach());
-                        case 4 -> // coach email
+                                break;
+                        case 4 : // coach email
                                 curRow.createCell(i).setCellValue(team.getCoachEmail());
-                        case 5 -> // coach phone
+                                break;
+                        case 5 : // coach phone
                                 curRow.createCell(i).setCellValue(team.getCoachPhone());
-                        default -> // members
+                                break;
+                        default : // members
                                 curRow.createCell(i).setCellValue(team.getMembers().get(j));
+                                break;
                     }
                 }
 

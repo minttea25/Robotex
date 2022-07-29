@@ -12,14 +12,24 @@ public class SetupDataModel {
     int LegoFolkraceJH;
 
     public int getValueBySection(Sections s) {
-        return switch (s) {
+        switch (s) {
+            case LegoSumo1kg : return this.LegoSumo1kg;
+            case LegoSumo3kg : return this.LegoSumo3kg;
+            case LineFollowingE : return this.LineFollowingE;
+            case LineFollowingJH : return this.LineFollowingJH;
+            case LegoFolkraceE : return this.LegoFolkraceE;
+            case LegoFolkraceJH : return this.LegoFolkraceJH;
+            default: return -1;
+        }
+
+        /*return switch (s) {
             case LegoSumo1kg -> this.LegoSumo1kg;
             case LegoSumo3kg -> this.LegoSumo3kg;
             case LineFollowingE -> this.LineFollowingE;
             case LineFollowingJH -> this.LineFollowingJH;
             case LegoFolkraceE -> this.LegoFolkraceE;
             case LegoFolkraceJH -> this.LegoFolkraceJH;
-        };
+        };*/
     }
 
     public void setLegoSumo1kg(int legoSumo1kg) {

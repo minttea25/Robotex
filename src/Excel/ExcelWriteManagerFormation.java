@@ -80,24 +80,31 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager implements Cal
                 curRow = sheet.createRow(row);
                 curRow.createCell(0).setCellValue(String.valueOf(entryNumber));
 
-                for (var team : data.get(entryNumber)) {
+                for (TeamModel team : data.get(entryNumber)) {
                     for (int i = teamStartColumn; i < TeamModel.NUMBERS_OF_ATTRIBUTES + team.getMembers().size() + teamStartColumn - 1; i++) {
                         int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES;
                         switch (i - 1) {
-                            case 0 -> // teamNumber - String
+                            case 0 : // teamNumber - String
                                     curRow.createCell(i).setCellValue(team.getTeamNumber());
-                            case 1 -> // teamName
+                                    break;
+                            case 1 : // teamName
                                     curRow.createCell(i).setCellValue(team.getTeamName());
-                            case 2 -> // belong
+                                    break;
+                            case 2 : // belong
                                     curRow.createCell(i).setCellValue(team.getBelong());
-                            case 3 -> // coach
+                                    break;
+                            case 3 : // coach
                                     curRow.createCell(i).setCellValue(team.getCoach());
-                            case 4 -> // coach email
+                                    break;
+                            case 4 : // coach email
                                     curRow.createCell(i).setCellValue(team.getCoachEmail());
-                            case 5 -> // coach phone
+                                    break;
+                            case 5 : // coach phone
                                     curRow.createCell(i).setCellValue(team.getCoachPhone());
-                            default -> // members
+                                    break;
+                            default : // members
                                     curRow.createCell(i).setCellValue(team.getMembers().get(j));
+                                    break;
                         }
                     }
                     row++;

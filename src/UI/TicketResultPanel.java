@@ -35,11 +35,17 @@ public class TicketResultPanel extends Panel {
 
         this.numberOfShowingPanels = (int)Math.ceil(list.size() / numberOfShowingTeams);
 
-        this.numberOfShowingPanels = switch (nth) {
+        /*this.numberOfShowingPanels = switch (nth) {
             case 1 -> 1;
             case 2, 3 -> (int)Math.ceil((double) list.size()/GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS);
             default -> throw new IllegalStateException("Unexpected value: " + nth);
-        };
+        };*/
+
+        switch (nth) {
+            case 1 : this.numberOfShowingPanels = 1; break;
+            case 2: case 3: this.numberOfShowingPanels = (int)Math.ceil((double) list.size()/GUIValue.TICKET_PRELIMINARY_LAST_SHOWING_EACH_TEAMS); break;
+            default: throw new IllegalStateException("Unexpected value: " + nth);
+        }
 
         if (nth == 1) {
             this.title = GUIString.TICKET_FINAL_LIST;

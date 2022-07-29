@@ -160,14 +160,30 @@ public class SheetReadManager implements Callable {
     }
 
     private Object getValueFromCell(Cell cell) {
-        return switch (cell.getCellType()) {
+        switch ((cell.getCellType())) {
+            case STRING:
+                return cell.getStringCellValue();
+//            case BOOLEAN :
+//                return cell.getBooleanCellValue();
+            case NUMERIC:
+                return cell.getNumericCellValue(); // caution: return DOUBLE
+//            case FORMULA:
+//                return cell.getCellFormula();
+            case BLANK :
+                return null;
+            default:
+                return null;
+
+        }
+
+        /*return switch (cell.getCellType()) {
             case STRING -> cell.getStringCellValue();
             // case BOOLEAN -> cell.getBooleanCellValue();
             case NUMERIC -> cell.getNumericCellValue(); // caution: return DOUBLE
             // case FORMULA -> cell.getCellFormula();
             case BLANK -> null;
             default -> null;
-        };
+        };*/
     }
 
     public Sheet getSheet() {
