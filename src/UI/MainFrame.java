@@ -251,7 +251,7 @@ public class MainFrame extends JFrame {
                 frame.showFrame();
             }
             else if (obj == ticketPanel.legoFolkraceEBtn) {
-                Sections s = Sections.LineFollowingE;
+                Sections s = Sections.LegoFolkraceE;
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -260,7 +260,7 @@ public class MainFrame extends JFrame {
                 frame.showFrame();
             }
             else if (obj == ticketPanel.legoFolkraceJHBtn) {
-                Sections s = Sections.LineFollowingJH;
+                Sections s = Sections.LegoFolkraceJH;
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
