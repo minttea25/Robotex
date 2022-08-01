@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class SheetReadManager implements Callable {
@@ -18,6 +19,7 @@ public class SheetReadManager implements Callable {
     }
 
     public List<TeamModel> singleCall() {
+        boolean eofFlag = false;
         List<TeamModel> teamData = new ArrayList<>();
 
         try {
@@ -36,7 +38,6 @@ public class SheetReadManager implements Callable {
 
                 Iterator<Cell> cellItr = row.cellIterator();
 
-
                 while (cellItr.hasNext()) {
                     Cell cell = cellItr.next();
 
@@ -44,6 +45,9 @@ public class SheetReadManager implements Callable {
 
                     switch (columnIndex) {
                         case 0: // no - pass this value
+                            if (getValueFromCell(cell) == null || getValueFromCell(cell).toString().trim() == "") {
+                                eofFlag = true;
+                            }
                             break;
                         case 1: // teamNumber - String
                             team.setTeamNumber((String) getValueFromCell(cell));
@@ -71,8 +75,15 @@ public class SheetReadManager implements Callable {
                             team.addMember((String) getValueFromCell(cell));
                             break;
                     }
+
+                    if (eofFlag) break;
                 }
-                teamData.add(team);
+                if (!eofFlag) {
+                    teamData.add(team);
+                }
+                else {
+                    break;
+                }
             }
 
         } catch (Exception e) {
@@ -109,9 +120,8 @@ public class SheetReadManager implements Callable {
 
                     switch (columnIndex) {
                         case 0: // no - pass this value
-                            if (getValueFromCell(cell) == null) {
+                            if (getValueFromCell(cell) == null || Objects.requireNonNull(getValueFromCell(cell)).toString().trim() == "") {
                                 eofFlag = true;
-                                System.out.println("NULSFLDSJFLSFS");
                             }
                             break;
                         case 1: // teamNumber - String
@@ -143,6 +153,7 @@ public class SheetReadManager implements Callable {
                         break;
                     }
                 }
+
                 if (!eofFlag) {
                     teamData.add(team);
                 }
@@ -154,7 +165,6 @@ public class SheetReadManager implements Callable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         return teamData;
     }

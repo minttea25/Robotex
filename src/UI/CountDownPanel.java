@@ -25,7 +25,9 @@ public class CountDownPanel extends JPanel {
 
     Timer timer;
     long startTime = -1;
+    final long showCorrValue = 1000;
     long duration = Constants.COUNTDOWN_CLOSE_TIME;
+
 
     SimpleDateFormat min = new SimpleDateFormat("s");
 
@@ -57,7 +59,7 @@ public class CountDownPanel extends JPanel {
 
         setTimer();
 
-        addMouseListener(new MouseAdapter() {
+        /*addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!timer.isRunning()) {
@@ -65,7 +67,7 @@ public class CountDownPanel extends JPanel {
                     timer.start();
                 }
             }
-        });
+        });*/
 
         add(minLabel);
 
@@ -92,6 +94,13 @@ public class CountDownPanel extends JPanel {
         }
     }
 
+    public void StartTimer() {
+        if (!timer.isRunning()) {
+            startTime = -1;
+            timer.start();
+        }
+    }
+
     private void setTimer() {
         timer = new Timer(10, new ActionListener() {
             @Override
@@ -113,7 +122,7 @@ public class CountDownPanel extends JPanel {
                     parent.showContentPanel();
                 }
 
-                Long tt = duration - clockTime;
+                Long tt = duration - clockTime + showCorrValue;
                 minLabel.setText(min.format(tt));
 
             }

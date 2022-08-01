@@ -209,7 +209,6 @@ public class MainFrame extends JFrame {
     }
 
     class TicketPanelActionListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             Object obj = e.getSource();
