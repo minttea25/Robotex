@@ -75,6 +75,8 @@ public class TicketFrame extends JFrame {
     public void showFrame() {
         mainCard.show(getTicketFrame().getContentPane(), GUIValue.TICKET_COUNT_CARD_NAME);
         setVisible(true);
+
+        countDownPanel.StartTimer();
     }
 
     private void initFrame() {

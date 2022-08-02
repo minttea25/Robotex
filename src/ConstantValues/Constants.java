@@ -74,6 +74,9 @@ public class Constants {
     public final static String MEMBER4 = "Member4";
     public final static String MEMBER5 = "Member5";
 
+    public final static String WORLD_TICKET_TEAM_TAG = "세계대회";
+    public final static String WORLD_TICKET_TEAM_PRE_TAG = "예비";
+
     // acceptable excel file extension
     public static final String EXCEL_EXTENSION_DESCRIPTION = "xlsx / xls";
     public static final String EXCEL_EXTENSION_XLSX = "xlsx";

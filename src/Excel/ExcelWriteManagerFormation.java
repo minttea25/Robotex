@@ -78,11 +78,11 @@ public class ExcelWriteManagerFormation extends ExcelWriteManager implements Cal
 
             for (int entryNumber : data.keySet()) {
                 curRow = sheet.createRow(row);
-                curRow.createCell(0).setCellValue(String.valueOf(entryNumber));
 
                 for (TeamModel team : data.get(entryNumber)) {
                     for (int i = teamStartColumn; i < TeamModel.NUMBERS_OF_ATTRIBUTES + team.getMembers().size() + teamStartColumn - 1; i++) {
                         int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES;
+                        curRow.createCell(0).setCellValue(entryNumber);
                         switch (i - 1) {
                             case 0 : // teamNumber - String
                                     curRow.createCell(i).setCellValue(team.getTeamNumber());

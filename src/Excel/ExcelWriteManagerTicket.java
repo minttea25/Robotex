@@ -4,6 +4,7 @@ import ConstantValues.Constants;
 import ConstantValues.Sections;
 import Model.TeamModel;
 import Util.FileUtil;
+
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -78,38 +79,46 @@ public class ExcelWriteManagerTicket extends ExcelWriteManager implements Callab
                 curRow = sheet.createRow(row);
 
                 for (int i=0; i<TeamModel.NUMBERS_OF_ATTRIBUTES + team.getMembers().size() - 1; i++) {
-                    int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES + 1;
+
+                    if (row <= numberOfTickets) {
+                        curRow.createCell(0).setCellValue(Constants.WORLD_TICKET_TEAM_TAG);
+                    }
+                    else {
+                        curRow.createCell(0).setCellValue(Constants.WORLD_TICKET_TEAM_PRE_TAG + (row-numberOfTickets));
+                    }
+
+                    int j = i - TeamModel.NUMBERS_OF_ATTRIBUTES + 1; // column 1 부터 출력
 
                     switch (i) {
                         case 0 : // teamNumber - String
-                                curRow.createCell(i).setCellValue(team.getTeamNumber());
+                                curRow.createCell(i+1).setCellValue(team.getTeamNumber());
                                 break;
                         case 1 : // teamName
-                                curRow.createCell(i).setCellValue(team.getTeamName());
+                                curRow.createCell(i+1).setCellValue(team.getTeamName());
                                 break;
                         case 2 : // belong
-                                curRow.createCell(i).setCellValue(team.getBelong());
+                                curRow.createCell(i+1).setCellValue(team.getBelong());
                                 break;
                         case 3 : // coach
-                                curRow.createCell(i).setCellValue(team.getCoach());
+                                curRow.createCell(i+1).setCellValue(team.getCoach());
                                 break;
                         case 4 : // coach email
-                                curRow.createCell(i).setCellValue(team.getCoachEmail());
+                                curRow.createCell(i+1).setCellValue(team.getCoachEmail());
                                 break;
                         case 5 : // coach phone
-                                curRow.createCell(i).setCellValue(team.getCoachPhone());
+                                curRow.createCell(i+1).setCellValue(team.getCoachPhone());
                                 break;
                         default : // members
-                                curRow.createCell(i).setCellValue(team.getMembers().get(j));
+                                curRow.createCell(i+1).setCellValue(team.getMembers().get(j));
                                 break;
                     }
                 }
 
-                if (row == numberOfTickets || row == (1 + numberOfTickets * 3)) {
+                /*if (row == numberOfTickets || row == (1 + numberOfTickets * 3)) {
                     row++;
                     curRow = sheet.createRow(row);
                     curRow.createCell(0).setCellValue("");
-                }
+                }*/
                 row++;
             }
 
