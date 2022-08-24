@@ -55,15 +55,35 @@ public class FormationFrame extends JFrame {
 
     private void loadImages() {
         switch (section) {
+            case LegoSumo1kg : backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH); break;
+            case LegoSumo3kg : backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH); break;
+            case LineFollowingE : backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_E_BG_PATH); break;
+            case LineFollowingJH : backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_JH_BG_PATH); break;
+            case LegoFolkraceE : backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_E_BG_PATH); break;
+            case LegoFolkraceJH : backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH); break;
+        }
+
+        /*switch (section) {
             case LegoSumo1kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH);
             case LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH);
             case LineFollowingE -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_E_BG_PATH);
             case LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LINE_FOLLOWING_JH_BG_PATH);
             case LegoFolkraceE -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_E_BG_PATH);
             case LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH);
-        }
+        }*/
 
         if (backgroundImage == null) {
+            switch (section) {
+                case LegoSumo1kg : loadFailSet.add(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH); break;
+                case LegoSumo3kg : loadFailSet.add(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH); break;
+                case LineFollowingE : loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_E_BG_PATH); break;
+                case LineFollowingJH : loadFailSet.add(Constants.FORMATION_LINE_FOLLOWING_JH_BG_PATH); break;
+                case LegoFolkraceE : loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_E_BG_PATH); break;
+                case LegoFolkraceJH : loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH); break;
+            }
+        }
+
+        /*if (backgroundImage == null) {
             switch (section) {
                 case LegoSumo1kg -> loadFailSet.add(Constants.FORMATION_LEGO_SUMO_1KG_BG_PATH);
                 case LegoSumo3kg -> loadFailSet.add(Constants.FORMATION_LEGO_SUMO_3KG_BG_PATH);
@@ -73,7 +93,7 @@ public class FormationFrame extends JFrame {
                 case LegoFolkraceJH -> loadFailSet.add(Constants.FORMATION_LEGO_FOLKRACE_JH_BG_PATH);
 
             }
-        }
+        }*/
     }
 
     private void initFrame() {

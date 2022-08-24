@@ -36,7 +36,7 @@ public class GUIString {
 
 
     // version (not loaded from json or other files)
-    public static final String VERSION = "Ver. 1.0.0";
+    public static final String VERSION = "Ver. 1.0.3-220824";
     public static final String DEV_ = "Created by minttea25; https://github.com/minttea25";
 
 }

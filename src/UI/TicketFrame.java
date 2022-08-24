@@ -75,6 +75,8 @@ public class TicketFrame extends JFrame {
     public void showFrame() {
         mainCard.show(getTicketFrame().getContentPane(), GUIValue.TICKET_COUNT_CARD_NAME);
         setVisible(true);
+
+        countDownPanel.StartTimer();
     }
 
     private void initFrame() {
@@ -191,15 +193,36 @@ public class TicketFrame extends JFrame {
 
     private void loadImages() {
         switch (section) {
+            case LegoSumo1kg : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH); break;
+            case LegoSumo3kg : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_3KG_BG_PATH); break;
+            case LineFollowingE : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_E_BG_PATH); break;
+            case LineFollowingJH : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH); break;
+            case LegoFolkraceE : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH); break;
+            case LegoFolkraceJH : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH); break;
+        }
+
+        /*switch (section) {
             case LegoSumo1kg -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH);
             case LegoSumo3kg -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_SUMO_3KG_BG_PATH);
             case LineFollowingE -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_E_BG_PATH);
             case LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH);
             case LegoFolkraceE -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH);
             case LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH);
-        }
+        }*/
 
         if (backgroundImage == null) {
+            switch (section) {
+                case LegoSumo1kg : loadFailSet.add(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH); break;
+                case LegoSumo3kg : loadFailSet.add(Constants.TICKET_LEGO_SUMO_3KG_BG_PATH); break;
+                case LineFollowingE : loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_E_BG_PATH); break;
+                case LineFollowingJH : loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH); break;
+                case LegoFolkraceE : loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH); break;
+                case LegoFolkraceJH : loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH); break;
+
+            }
+        }
+
+        /*if (backgroundImage == null) {
             switch (section) {
                 case LegoSumo1kg -> loadFailSet.add(Constants.TICKET_LEGO_SUMO_1KG_BG_PATH);
                 case LegoSumo3kg -> loadFailSet.add(Constants.TICKET_LEGO_SUMO_3KG_BG_PATH);
@@ -209,7 +232,7 @@ public class TicketFrame extends JFrame {
                 case LegoFolkraceJH -> loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH);
 
             }
-        }
+        }*/
     }
 
     protected void showContentPanel() {
