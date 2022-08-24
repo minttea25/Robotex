@@ -8,7 +8,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class SheetReadManager implements Callable {
@@ -19,7 +18,6 @@ public class SheetReadManager implements Callable {
     }
 
     public List<TeamModel> singleCall() {
-        boolean eofFlag = false;
         List<TeamModel> teamData = new ArrayList<>();
 
         try {
@@ -37,53 +35,56 @@ public class SheetReadManager implements Callable {
                 }
 
                 Iterator<Cell> cellItr = row.cellIterator();
+                boolean valid = false;
 
                 while (cellItr.hasNext()) {
                     Cell cell = cellItr.next();
 
                     int columnIndex = cell.getColumnIndex();
 
+                    if (columnIndex == 0) {
+                        valid = true;
+                    }
+
                     switch (columnIndex) {
                         case 0: // no - pass this value
-                            if (getValueFromCell(cell) == null || getValueFromCell(cell).toString().trim() == "") {
-                                eofFlag = true;
+                            // 빈 칸 데이터가 있을 경우도 데이터가 없는 것으로 간주해야함
+                            Object o = getValueFromCell(cell);
+                            if (o == null || o.toString().trim().equals("")) {
+                                valid = false;
                             }
                             break;
                         case 1: // teamNumber - String
-                            team.setTeamNumber((String) getValueFromCell(cell));
+                            team.setTeamNumber(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 2: // teamName - String
-                            team.setTeamName((String) getValueFromCell(cell));
+                            team.setTeamName(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 3: // belong - String
-                            team.setBelong((String) getValueFromCell(cell));
+                            team.setBelong(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 4: // coach - String
-                            team.setCoach((String) getValueFromCell(cell));
+                            team.setCoach(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 5: // coach email - String
-                            team.setCoachEmail((String) getValueFromCell(cell));
+                            team.setCoachEmail(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 6: // coach phone - String
-                            team.setCoachPhone((String) getValueFromCell(cell));
+                            team.setCoachPhone(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 6 + 6:
                             // System.out.println("column end");
                             // over-number number
                             break;
                         default: // member - String
-                            team.addMember((String) getValueFromCell(cell));
+                            team.addMember(String.valueOf(getValueFromCell(cell)));
                             break;
                     }
-
-                    if (eofFlag) break;
                 }
-                if (!eofFlag) {
+                if (valid)
                     teamData.add(team);
-                }
-                else {
+                else
                     break;
-                }
             }
 
         } catch (Exception e) {
@@ -97,8 +98,6 @@ public class SheetReadManager implements Callable {
     public List<TeamModel> call() {
         List<TeamModel> teamData = new ArrayList<>();
 
-        boolean eofFlag = false;
-
         try {
             Iterator<Row> rowItr = sheet.iterator();
 
@@ -113,48 +112,56 @@ public class SheetReadManager implements Callable {
                 }
 
                 Iterator<Cell> cellItr = row.cellIterator();
-
+                boolean valid = false;
                 while (cellItr.hasNext()) {
                     Cell cell = cellItr.next();
                     int columnIndex = cell.getColumnIndex();
 
+                    // No 데이터가 존재하는지 확인
+                    // 없다면 해당 라인이 마지막 라인으로 인식
+                    if (columnIndex == 0) {
+                        valid = true;
+                    }
+
                     switch (columnIndex) {
                         case 0: // no - pass this value
-                            if (getValueFromCell(cell) == null || Objects.requireNonNull(getValueFromCell(cell)).toString().trim() == "") {
-                                eofFlag = true;
+                            // 빈 칸 데이터가 있을 경우도 데이터가 없는 것으로 간주해야함
+                            Object o = getValueFromCell(cell);
+                            if (o == null || o.toString().trim().equals("")) {
+                                valid = false;
                             }
                             break;
                         case 1: // teamNumber - String
-                            team.setTeamNumber((String) getValueFromCell(cell));
+                            team.setTeamNumber(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 2: // teamName - String
-                            team.setTeamName((String) getValueFromCell(cell));
+                            team.setTeamName(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 3: // belong - String
-                            team.setBelong((String) getValueFromCell(cell));
+                            team.setBelong(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 4: // coach - String
-                            team.setCoach((String) getValueFromCell(cell));
+                            team.setCoach(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 5: // coach email - String
-                            team.setCoachEmail((String) getValueFromCell(cell));
+                            team.setCoachEmail(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 6: // coach phone - String
-                            team.setCoachPhone((String) getValueFromCell(cell));
+                            team.setCoachPhone(String.valueOf(getValueFromCell(cell)));
                             break;
                         case 6 + 6:
                             System.out.println("column end");
                             break;
                         default: // member - String
-                            team.addMember((String) getValueFromCell(cell));
+                            team.addMember(String.valueOf(getValueFromCell(cell)));
                             break;
                     }
-                    if (eofFlag) {
+                    // invalid 한 라인일 경우 데이터의 끝으로 간주하여 읽기 stop
+                    if (!valid) {
                         break;
                     }
                 }
-
-                if (!eofFlag) {
+                if (valid) {
                     teamData.add(team);
                 }
                 else {
@@ -166,6 +173,7 @@ public class SheetReadManager implements Callable {
             e.printStackTrace();
         }
 
+
         return teamData;
     }
 
@@ -176,7 +184,7 @@ public class SheetReadManager implements Callable {
 //            case BOOLEAN :
 //                return cell.getBooleanCellValue();
             case NUMERIC:
-                return cell.getNumericCellValue(); // caution: return DOUBLE
+                return String.valueOf((int)cell.getNumericCellValue()); // caution: return DOUBLE -> String
 //            case FORMULA:
 //                return cell.getCellFormula();
             case BLANK :
