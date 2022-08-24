@@ -91,26 +91,33 @@ public class ExcelWriteManagerTicket extends ExcelWriteManager implements Callab
 
                     switch (i) {
                         case 0 : // teamNumber - String
-                                curRow.createCell(i+1).setCellValue(team.getTeamNumber());
-                                break;
+                            //curRow.createCell(i+1).setCellValue(team.getTeamNumber());
+                            setCellValue(curRow, i+1, team.getTeamNumber());
+                            break;
                         case 1 : // teamName
-                                curRow.createCell(i+1).setCellValue(team.getTeamName());
-                                break;
+                            //curRow.createCell(i+1).setCellValue(team.getTeamName());
+                            setCellValue(curRow, i+1, team.getTeamName());
+                            break;
                         case 2 : // belong
-                                curRow.createCell(i+1).setCellValue(team.getBelong());
-                                break;
+                            //curRow.createCell(i+1).setCellValue(team.getBelong());
+                            setCellValue(curRow, i+1, team.getBelong());
+                            break;
                         case 3 : // coach
-                                curRow.createCell(i+1).setCellValue(team.getCoach());
-                                break;
+                            //curRow.createCell(i+1).setCellValue(team.getCoach());
+                            setCellValue(curRow, i+1, team.getCoach());
+                            break;
                         case 4 : // coach email
-                                curRow.createCell(i+1).setCellValue(team.getCoachEmail());
-                                break;
+                            //curRow.createCell(i+1).setCellValue(team.getCoachEmail());
+                            setCellValue(curRow, i+1, team.getCoachEmail());
+                            break;
                         case 5 : // coach phone
-                                curRow.createCell(i+1).setCellValue(team.getCoachPhone());
-                                break;
+                            //curRow.createCell(i+1).setCellValue(team.getCoachPhone());
+                            setCellValue(curRow, i+1, team.getCoachPhone());
+                            break;
                         default : // members
-                                curRow.createCell(i+1).setCellValue(team.getMembers().get(j));
-                                break;
+                            //curRow.createCell(i+1).setCellValue(team.getMembers().get(j));
+                            setCellValue(curRow, i+1, team.getMembers().get(j));
+                            break;
                     }
                 }
 
