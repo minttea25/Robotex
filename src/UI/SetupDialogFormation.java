@@ -14,8 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Objects;
 
-public class SetupDialog extends JDialog{
-    ProgramFunctions fun;
+public class SetupDialogFormation extends JDialog{
     Setup setup;
     Component parent;
 
@@ -43,8 +42,7 @@ public class SetupDialog extends JDialog{
     JButton btnExcelLoad;
     JButton btnOK;
 
-    public SetupDialog(ProgramFunctions fun, Component parent, Setup setup) {
-        this.fun = fun;
+    public SetupDialogFormation(Component parent, Setup setup) {
         this.parent = parent;
         this.setup = setup;
 
@@ -117,9 +115,7 @@ public class SetupDialog extends JDialog{
         buttonFile = new JButton(GUIString.CHOOSE_FILE);
 
         valuePanel = new JPanel();
-        labelNumberOfEntries = new JLabel(
-                fun == ProgramFunctions.Formation ? GUIString.ENTRY_NUMBER : GUIString.TICKETS_NUMBER
-        );
+        labelNumberOfEntries = new JLabel(GUIString.ENTRY_NUMBER);
         labelLegoSumo1kg = new JLabel(Sections.LegoSumo1kg.toString());
         labelLegoSumo3kg = new JLabel(Sections.LegoSumo3kg.toString());
         labelLineFollowingE = new JLabel(Sections.LineFollowingE.toString());
@@ -256,10 +252,7 @@ public class SetupDialog extends JDialog{
     }
 
     private void initDialog() {
-        if (fun == ProgramFunctions.Formation)
-            setTitle(GUIString.FORMATION_SETUP_TITLE);
-        else
-            setTitle(GUIString.TICKET_SETUP_TITLE);
+        setTitle(GUIString.FORMATION_SETUP_TITLE);
 
         setAlwaysOnTop(true);
         setLayout(new BorderLayout(GUIValue.SETUP_MARGIN, GUIValue.SETUP_MARGIN));
@@ -267,7 +260,7 @@ public class SetupDialog extends JDialog{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
-    private SetupDialog getSetupDialog() {
+    private SetupDialogFormation getSetupDialog() {
         return this;
     }
 
@@ -318,8 +311,8 @@ public class SetupDialog extends JDialog{
             else if (obj == btnOK) {
                 if (saveValues()) {
                     if (!setup.checkSetupValues()) {
-                        String msg = (fun==ProgramFunctions.Formation) ? ErrorMsg.e011Msg : ErrorMsg.e021Msg;
-                        String err = (fun==ProgramFunctions.Formation) ? ErrorMsg.error011 : ErrorMsg.error021;
+                        String msg = ErrorMsg.e011Msg;
+                        String err = ErrorMsg.error011;
                         int res = JOptionPane.showConfirmDialog(
                                 getSetupDialog(),
                                 msg + "\n" + setup.getCheckNumErrorList(),
@@ -327,7 +320,7 @@ public class SetupDialog extends JDialog{
                                 JOptionPane.DEFAULT_OPTION
                         );
                     }
-                    setup.saveFiles(fun);
+                    setup.saveFiles(ProgramFunctions.Formation);
 
                     boolean atLeast = false;
                     String txt = "These sections are processed successfully: ";

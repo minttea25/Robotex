@@ -44,14 +44,28 @@ public class MenuPanel extends JPanel {
     private BufferedImage legoFolkraceJHImage;
     private BufferedImage homeBtnImage;
 
+    // for only ticket
+    protected JButton roboLeagueBtn1;
+    protected JButton roboLeagueBtn2;
+    private ImageIcon roboLeagueIcon1;
+    private ImageIcon roboLeagueIcon2;
+    private BufferedImage roboLeagueImage1;
+    private BufferedImage roboLeagueImage2;
+
     Set<String> loadFailSet = new HashSet<>();
 
     public MenuPanel(ProgramFunctions fun) {
         this.fun = fun;
-        
+
         initPanel();
         initComponents();
-        attachComponents();
+        if (fun == ProgramFunctions.Formation) {
+            attachComponents();
+        }
+        else {
+            attachComponentsForTicket();
+        }
+
 
         OptionPaneUtil.showUnloadedImages(loadFailSet, null);
     }
@@ -185,6 +199,153 @@ public class MenuPanel extends JPanel {
         }
     }
 
+    private void attachComponentsForTicket() {
+        add(legoSumo1kgBtn);
+        if (legoSumo1kgImage != null) {
+            legoSumo1kgBtn.setBounds(
+                    GUIValue.TICKET_BTN_1_X, GUIValue.TICKET_BTN_Y,
+                    legoSumo1kgIcon.getIconWidth(), legoSumo1kgIcon.getIconHeight()
+            );
+        }
+        else {
+            legoSumo1kgBtn.setBounds(
+                    GUIValue.TICKET_BTN_1_X, GUIValue.TICKET_BTN_Y,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            legoSumo1kgBtn.setText(Sections.LegoSumo1kg.toString());
+        }
+
+        add(legoSumo3kgBtn);
+        if (legoSumo3kgImage != null) {
+            legoSumo3kgBtn.setBounds(
+                    GUIValue.TICKET_BTN_1_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    legoSumo3kgIcon.getIconWidth(), legoSumo3kgIcon.getIconHeight()
+            );
+        }
+        else {
+            legoSumo3kgBtn.setBounds(
+                    GUIValue.TICKET_BTN_1_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            legoSumo3kgBtn.setText(Sections.LegoSumo3kg.toString());
+        }
+
+        add(lineFollowingEBtn);
+        if (lineFollowingEImage != null) {
+            lineFollowingEBtn.setBounds(
+                    GUIValue.TICKET_BTN_2_X, GUIValue.TICKET_BTN_Y,
+                    lineFollowingEIcon.getIconWidth(), lineFollowingEIcon.getIconHeight()
+            );
+        }
+        else {
+            lineFollowingEBtn.setBounds(
+                    GUIValue.TICKET_BTN_2_X, GUIValue.TICKET_BTN_Y,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            lineFollowingEBtn.setText(Sections.LineFollowingE.toString());
+        }
+
+        add(lineFollowingJHBtn);
+        if (lineFollowingJHImage != null) {
+            lineFollowingJHBtn.setBounds(
+                    GUIValue.TICKET_BTN_2_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    lineFollowingJHIcon.getIconWidth(), lineFollowingJHIcon.getIconHeight()
+            );
+        }
+        else {
+            lineFollowingJHBtn.setBounds(
+                    GUIValue.TICKET_BTN_2_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            lineFollowingJHBtn.setText(Sections.LineFollowingJH.toString());
+        }
+
+        add(legoFolkraceEBtn);
+        if (legoFolkraceEImage != null) {
+            legoFolkraceEBtn.setBounds(
+                    GUIValue.TICKET_BTN_3_X, GUIValue.TICKET_BTN_Y,
+                    legoFolkraceEIcon.getIconWidth(), legoFolkraceJHIcon.getIconHeight()
+            );
+        }
+        else {
+            legoFolkraceEBtn.setBounds(
+                    GUIValue.TICKET_BTN_3_X, GUIValue.TICKET_BTN_Y,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            legoFolkraceEBtn.setText(Sections.LegoFolkraceE.toString());
+        }
+
+        add(legoFolkraceJHBtn);
+        if (legoFolkraceJHImage != null) {
+            legoFolkraceJHBtn.setBounds(
+                    GUIValue.TICKET_BTN_3_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    legoFolkraceJHIcon.getIconWidth(), legoFolkraceJHIcon.getIconHeight()
+            );
+        }
+        else {
+            legoFolkraceJHBtn.setBounds(
+                    GUIValue.TICKET_BTN_3_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            legoFolkraceJHBtn.setText(Sections.LegoFolkraceJH.toString());
+        }
+
+        add(roboLeagueBtn1);
+        if (roboLeagueImage1 != null) {
+            roboLeagueBtn1.setBounds(
+                    GUIValue.TICKET_BTN_4_X, GUIValue.TICKET_BTN_Y,
+                    roboLeagueIcon1.getIconWidth(), roboLeagueIcon1.getIconHeight()
+            );
+        }
+        else {
+            roboLeagueBtn1.setBounds(
+                    GUIValue.TICKET_BTN_4_X, GUIValue.TICKET_BTN_Y,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            roboLeagueBtn1.setText(Sections.RoboLeague.toString());
+        }
+
+        add(roboLeagueBtn2);
+        if (roboLeagueImage2 != null) {
+            roboLeagueBtn2.setBounds(
+                    GUIValue.TICKET_BTN_4_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    roboLeagueIcon2.getIconWidth(), roboLeagueIcon2.getIconHeight()
+            );
+        }
+        else {
+            roboLeagueBtn2.setBounds(
+                    GUIValue.TICKET_BTN_4_X, GUIValue.TICKET_BTN_Y + GUIValue.TICKET_SECTION_BTN_HEIGHT + GUIValue.TICKET_BTN_INTERVAL,
+                    GUIValue.TICKET_SECTION_BTN_WIDTH, GUIValue.TICKET_SECTION_BTN_HEIGHT
+            );
+            roboLeagueBtn2.setText(Sections.RoboLeague.toString());
+        }
+
+        add(backBtn);
+        if (homeBtnImage != null) {
+            backBtn.setBounds(
+                    GUIValue.HOME_BTN_X, GUIValue.HOME_BTN_Y,
+                    homeBtnIcon.getIconWidth(), homeBtnIcon.getIconHeight()
+            );
+        }
+        else {
+            backBtn.setBounds(
+                    GUIValue.HOME_BTN_X, GUIValue.HOME_BTN_Y,
+                    GUIValue.HOME_BTN_WIDTH, GUIValue.HOME_BTN_HEIGHT
+            );
+            backBtn.setText(GUIString.BACK);
+        }
+
+
+        // it should be attached last.
+        add(backImageLabel);
+        if (backgroundImage != null) {
+            backImageLabel.setBounds(
+                    0, 0,
+                    backgroundImage.getWidth(), backgroundImage.getHeight()
+            );
+        }
+    }
+
     private void initComponents() {
         backImageLabel = new JLabel();
         legoSumo1kgBtn = new JButton();
@@ -259,6 +420,27 @@ public class MenuPanel extends JPanel {
         backBtn.setBackground(new Color(255, 255, 255, 0));
         backBtn.setBorder(null);
         backBtn.setOpaque(false);
+
+        if (fun == ProgramFunctions.Ticket) {
+            roboLeagueBtn1 = new JButton();
+            roboLeagueBtn2 = new JButton();
+
+            if (roboLeagueImage1 != null) {
+                roboLeagueBtn1.setIcon(roboLeagueIcon1 = new ImageIcon(roboLeagueImage1));
+            }
+            if (roboLeagueImage2 != null) {
+                roboLeagueBtn2.setIcon(roboLeagueIcon2 = new ImageIcon(roboLeagueImage2));
+            }
+
+            roboLeagueBtn1.setBorderPainted(false);
+            roboLeagueBtn2.setBorderPainted(false);
+            roboLeagueBtn1.setBorder(null);
+            roboLeagueBtn2.setBorder(null);
+            roboLeagueBtn1.setBackground(new Color(255, 255, 255, 0));
+            roboLeagueBtn2.setBackground(new Color(255, 255, 255, 0));
+            roboLeagueBtn1.setOpaque(false);
+            roboLeagueBtn2.setOpaque(false);
+        }
     }
 
     private void initPanel() {
@@ -295,6 +477,8 @@ public class MenuPanel extends JPanel {
             lineFollowingJHImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_BTN_PATH);
             legoFolkraceEImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_BTN_PATH);
             legoFolkraceJHImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BTN_PATH);
+            roboLeagueImage1 = ImageLoader.loadImage(Constants.TICKET_ROBO_LEAGUE_BTN_1_PATH);
+            roboLeagueImage2 = ImageLoader.loadImage(Constants.TICKET_ROBO_LEAGUE_BTN_2_PATH);
 
             homeBtnImage = ImageLoader.loadImage(Constants.HOME_WHITE_PATH);
 
@@ -305,6 +489,8 @@ public class MenuPanel extends JPanel {
             if(lineFollowingJHImage == null) loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_JH_BTN_PATH);
             if(legoFolkraceEImage == null) loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_E_BTN_PATH);
             if(legoFolkraceJHImage == null) loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_JH_BTN_PATH);
+            if(roboLeagueImage1 == null) loadFailSet.add(Constants.TICKET_ROBO_LEAGUE_BTN_1_PATH);
+            if(roboLeagueImage2 == null) loadFailSet.add(Constants.TICKET_ROBO_LEAGUE_BTN_2_PATH);
             if (homeBtnImage == null) loadFailSet.add(Constants.HOME_WHITE_PATH);
         }
         else {
@@ -322,5 +508,10 @@ public class MenuPanel extends JPanel {
         legoFolkraceEBtn.addActionListener(listener);
         legoFolkraceJHBtn.addActionListener(listener);
         backBtn.addActionListener(listener);
+
+        if (fun == ProgramFunctions.Ticket) {
+            roboLeagueBtn1.addActionListener(listener);
+            roboLeagueBtn2.addActionListener(listener);
+        }
     }
 }

@@ -83,6 +83,16 @@ public class GUIValue {
     public static final int COUNTDOWN_LABEL_WIDTH = 400;
     public static final int COUNTDOWN_LABEL_HEIGHT = 400;
 
+    // for ticket panel (added)
+    public static final int TICKET_SECTION_BTN_WIDTH = 372;
+    public static final int TICKET_SECTION_BTN_HEIGHT = 178;
+    public static final int TICKET_BTN_1_X = 134;
+    public static final int TICKET_BTN_Y = 645;
+    public static final int TICKET_BTN_2_X = 579;
+    public static final int TICKET_BTN_3_X = 1013;
+    public static final int TICKET_BTN_4_X = 1437;
+    public static final int TICKET_BTN_INTERVAL = 5;
+
     // font
     private static final int TITLE_FONT_SIZE = 38;
     private static final int TEXT_FONT_SIZE = 30; //23

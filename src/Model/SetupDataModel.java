@@ -10,6 +10,7 @@ public class SetupDataModel {
     int LineFollowingJH;
     int LegoFolkraceE;
     int LegoFolkraceJH;
+    int RoboLeague;
 
     public int getValueBySection(Sections s) {
         switch (s) {
@@ -19,6 +20,7 @@ public class SetupDataModel {
             case LineFollowingJH : return this.LineFollowingJH;
             case LegoFolkraceE : return this.LegoFolkraceE;
             case LegoFolkraceJH : return this.LegoFolkraceJH;
+            case RoboLeague : return this.RoboLeague;
             default: return -1;
         }
 
@@ -29,6 +31,7 @@ public class SetupDataModel {
             case LineFollowingJH -> this.LineFollowingJH;
             case LegoFolkraceE -> this.LegoFolkraceE;
             case LegoFolkraceJH -> this.LegoFolkraceJH;
+            case RoboLeague -> this.RoboLeague;
         };*/
     }
 
@@ -56,6 +59,10 @@ public class SetupDataModel {
         LegoFolkraceJH = legoFolkraceJH;
     }
 
+    public void setRoboLeague(int roboLeague) {
+        RoboLeague = roboLeague;
+    }
+
     public int getLegoSumo1kg() {
         return LegoSumo1kg;
     }
@@ -80,6 +87,10 @@ public class SetupDataModel {
         return LineFollowingJH;
     }
 
+    public int getRoboLeague() {
+        return RoboLeague;
+    }
+
     @Override
     public String toString() {
         String sb = "[ LegoSumo1kg: " +
@@ -94,6 +105,7 @@ public class SetupDataModel {
                 LegoFolkraceE +
                 ", LegoFolkraceJH: " +
                 LegoFolkraceJH +
+                ", RoboLeague: " +
                 " ]";
         return sb;
     }

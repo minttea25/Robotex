@@ -70,6 +70,7 @@ public class Setup {
             setupDataModel = gson.fromJson(jSonReader, SetupDataModel.class);
 
             for(Sections s : Sections.values()) {
+                if (s == Sections.RoboLeague) continue;
                 if (setupDataModel.getValueBySection(s) <= 0) {
                     setupFileLoaded = false;
                     return;
@@ -129,6 +130,7 @@ public class Setup {
                 case LineFollowingJH : num = setupDataModel.getLineFollowingJH(); break;
                 case LegoFolkraceE : num = setupDataModel.getLegoFolkraceE(); break;
                 case LegoFolkraceJH : num = setupDataModel.getLegoFolkraceJH(); break;
+                case RoboLeague : num = setupDataModel.getRoboLeague(); break;
                 default: num = -1; break;
             }
 
@@ -140,6 +142,7 @@ public class Setup {
                 case LineFollowingJH -> setupDataModel.getLineFollowingJH();
                 case LegoFolkraceE -> setupDataModel.getLegoFolkraceE();
                 case LegoFolkraceJH -> setupDataModel.getLegoFolkraceJH();
+                case RoboLeague -> setupDataModel.getRoboLeague();
             };*/
 
             if(teamData.get(s).size() < num) {
@@ -169,7 +172,8 @@ public class Setup {
        if (fun == ProgramFunctions.Formation) {
             // make entreis
             for (Sections s : teamData.keySet()) {
-                if (!status.get(s)) {
+                // Formation 은 roboleague 없음!
+                if (!status.get(s) || s == Sections.RoboLeague) {
                     continue;
                 }
                 entryMaps.put(s, new HashMap<>());

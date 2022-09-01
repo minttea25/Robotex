@@ -99,7 +99,7 @@ public class MainFrame extends JFrame {
             }
             else if (obj == mainPanel.formationSetupBtn) {
                 formationSetup = new Setup(ProgramFunctions.Formation);
-                SetupDialog dialog = new SetupDialog(ProgramFunctions.Formation, getMainFrame(), formationSetup);
+                SetupDialogFormation dialog = new SetupDialogFormation(getMainFrame(), formationSetup);
                 dialog.showDialog();
             }
             else if (obj == mainPanel.ticketBtn) {
@@ -118,7 +118,7 @@ public class MainFrame extends JFrame {
             }
             else if (obj == mainPanel.ticketSetupBtn) {
                 ticketSetup = new Setup(ProgramFunctions.Ticket);
-                SetupDialog dialog = new SetupDialog(ProgramFunctions.Ticket, getMainFrame(), ticketSetup);
+                SetupDialogTicket dialog = new SetupDialogTicket(getMainFrame(), ticketSetup);
                 dialog.showDialog();
             }
         }
@@ -205,6 +205,9 @@ public class MainFrame extends JFrame {
             else if (obj == formationPanel.backBtn) {
                 card.show(getContentPane(), GUIValue.MAIN_CARD_NAME);
             }
+            else {
+                System.out.println("Wrong Btn Input");
+            }
         }
     }
 
@@ -260,6 +263,15 @@ public class MainFrame extends JFrame {
             }
             else if (obj == ticketPanel.legoFolkraceJHBtn) {
                 Sections s = Sections.LegoFolkraceJH;
+                TicketFrame frame = new TicketFrame(
+                        s,
+                        ticketSetup.getTeamDataBySection(s),
+                        ticketSetup.getSetupDataModel().getValueBySection(s)
+                );
+                frame.showFrame();
+            }
+            else if (obj == ticketPanel.roboLeagueBtn1 || obj == ticketPanel.roboLeagueBtn2) {
+                Sections s = Sections.RoboLeague;
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),

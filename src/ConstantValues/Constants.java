@@ -38,6 +38,8 @@ public class Constants {
     public final static String TICKET_LINE_FOLLOWING_JH_BTN_PATH = Paths.get("Images", "ticket", "Ticket_LineFollowingJH_Btn.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_E_BTN_PATH = Paths.get("Images", "ticket", "Ticket_LegoFolkraceE_Btn.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_JH_BTN_PATH = Paths.get("Images", "ticket", "Ticket_LegoFolkraceJH_Btn.png").toString();
+    public final static String TICKET_ROBO_LEAGUE_BTN_1_PATH = Paths.get("Images", "ticket", "Ticket_RoboLeague_Btn_1.png").toString();
+    public final static String TICKET_ROBO_LEAGUE_BTN_2_PATH = Paths.get("Images", "ticket", "Ticket_RoboLeague_Btn_2.png").toString();
 
     public final static String TICKET_LEGO_SUMO_1KG_BG_PATH = Paths.get("Images", "ticket", "Ticket_LegoSumo1kg_Bg.png").toString();
     public final static String TICKET_LEGO_SUMO_3KG_BG_PATH = Paths.get("Images", "ticket", "Ticket_LegoSumo3kg_Bg.png").toString();
@@ -45,6 +47,9 @@ public class Constants {
     public final static String TICKET_LINE_FOLLOWING_JH_BG_PATH = Paths.get("Images", "ticket", "Ticket_LineFollowingJH_Bg.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_E_BG_PATH = Paths.get("Images", "ticket", "Ticket_FolkraceE_Bg.png").toString();
     public final static String TICKET_LEGO_FOLKRACE_JH_BG_PATH = Paths.get("Images", "ticket", "Ticket_FolkraceJH_Bg.png").toString();
+    public final static String TICKET_ROBO_LEAGUE_BG_PATH = Paths.get("Images", "ticket", "Ticket_Robo_League_Bg.png").toString();
+
+
 
     public final static String TICKET_COUNTDOWN_BG_PATH = Paths.get("Images", "ticket", "CountDown_BG.png").toString();
 
