@@ -199,6 +199,7 @@ public class TicketFrame extends JFrame {
             case LineFollowingJH : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH); break;
             case LegoFolkraceE : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH); break;
             case LegoFolkraceJH : backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH); break;
+            case RoboLeague : backgroundImage = ImageLoader.loadImage(Constants.TICKET_ROBO_LEAGUE_BG_PATH); break;
         }
 
         /*switch (section) {
@@ -208,6 +209,7 @@ public class TicketFrame extends JFrame {
             case LineFollowingJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH);
             case LegoFolkraceE -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH);
             case LegoFolkraceJH -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH);
+            case RoboLeague -> backgroundImage = ImageLoader.loadImage(Constants.TICKET_ROBO_LEAGUE_BG_PATH);
         }*/
 
         if (backgroundImage == null) {
@@ -218,7 +220,7 @@ public class TicketFrame extends JFrame {
                 case LineFollowingJH : loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH); break;
                 case LegoFolkraceE : loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH); break;
                 case LegoFolkraceJH : loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH); break;
-
+                case RoboLeague : loadFailSet.add(Constants.TICKET_ROBO_LEAGUE_BG_PATH); break;
             }
         }
 
@@ -230,7 +232,7 @@ public class TicketFrame extends JFrame {
                 case LineFollowingJH -> loadFailSet.add(Constants.TICKET_LINE_FOLLOWING_JH_BG_PATH);
                 case LegoFolkraceE -> loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_E_BG_PATH);
                 case LegoFolkraceJH -> loadFailSet.add(Constants.TICKET_LEGO_FOLKRACE_JH_BG_PATH);
-
+                case RoboLeague -> loadFailSet.add(constants.TICKET_ROBO_LEAGUE_BG_PATH);
             }
         }*/
     }

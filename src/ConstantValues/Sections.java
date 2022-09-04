@@ -6,5 +6,6 @@ public enum Sections {
     LineFollowingE,
     LineFollowingJH,
     LegoFolkraceE,
-    LegoFolkraceJH
+    LegoFolkraceJH,
+    RoboLeague
 }
