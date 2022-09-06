@@ -218,6 +218,9 @@ public class MainFrame extends JFrame {
 
             if (obj == ticketPanel.legoSumo1kgBtn) {
                 Sections s = Sections.LegoSumo1kg;
+                if (!checkStatus(ProgramFunctions.Ticket, s)) {
+                    return;
+                }
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -227,6 +230,9 @@ public class MainFrame extends JFrame {
             }
             else if (obj == ticketPanel.legoSumo3kgBtn) {
                 Sections s = Sections.LegoSumo3kg;
+                if (!checkStatus(ProgramFunctions.Ticket, s)) {
+                    return;
+                }
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -236,6 +242,9 @@ public class MainFrame extends JFrame {
             }
             else if (obj == ticketPanel.lineFollowingEBtn) {
                 Sections s = Sections.LineFollowingE;
+                if (!checkStatus(ProgramFunctions.Ticket, s)) {
+                    return;
+                }
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -245,6 +254,9 @@ public class MainFrame extends JFrame {
             }
             else if (obj == ticketPanel.lineFollowingJHBtn) {
                 Sections s = Sections.LineFollowingJH;
+                if (!checkStatus(ProgramFunctions.Ticket, s)) {
+                    return;
+                }
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -254,6 +266,9 @@ public class MainFrame extends JFrame {
             }
             else if (obj == ticketPanel.legoFolkraceEBtn) {
                 Sections s = Sections.LegoFolkraceE;
+                if (!checkStatus(ProgramFunctions.Ticket, s)) {
+                    return;
+                }
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -263,6 +278,9 @@ public class MainFrame extends JFrame {
             }
             else if (obj == ticketPanel.legoFolkraceJHBtn) {
                 Sections s = Sections.LegoFolkraceJH;
+                if (!checkStatus(ProgramFunctions.Ticket, s)) {
+                    return;
+                }
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -272,6 +290,9 @@ public class MainFrame extends JFrame {
             }
             else if (obj == ticketPanel.roboLeagueBtn1 || obj == ticketPanel.roboLeagueBtn2) {
                 Sections s = Sections.RoboLeague;
+                if (!checkStatus(ProgramFunctions.Ticket, s)) {
+                    return;
+                }
                 TicketFrame frame = new TicketFrame(
                         s,
                         ticketSetup.getTeamDataBySection(s),
@@ -286,9 +307,17 @@ public class MainFrame extends JFrame {
     }
 
     private boolean checkStatus(ProgramFunctions fun, Sections s) {
+        String message = fun.toString() + " - " + s.toString() + ErrorMsg.e051Msg;
+
         if(fun == ProgramFunctions.Formation) {
             // not load data
             if (!formationSetup.getStatus().containsKey(s)) {
+                JOptionPane.showConfirmDialog(
+                        getMainFrame(),
+                        message,
+                        ErrorMsg.error051,
+                        JOptionPane.DEFAULT_OPTION
+                );
                 return false;
             }
             // wrong num
@@ -306,6 +335,12 @@ public class MainFrame extends JFrame {
         else {
             // not load data
             if (!ticketSetup.getStatus().containsKey(s)) {
+                JOptionPane.showConfirmDialog(
+                        getMainFrame(),
+                        message,
+                        ErrorMsg.error051,
+                        JOptionPane.DEFAULT_OPTION
+                );
                 return false;
             }
             // wrong num

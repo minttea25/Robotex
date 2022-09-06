@@ -22,6 +22,9 @@ public class ErrorMsg {
     // common
     public static final String error041 = "E041";
 
+    // not loaded
+    public static final String error051 = "E051";
+
 
     public static final String e001Msg = "Enter only numbers";
     public static final String e002Msg = "Enter a number greater than 1";
@@ -34,4 +37,5 @@ public class ErrorMsg {
     public static final String e022Msg = "The sheet does not exist or is not loaded\nCheck the sheet: Ticket - ";
     public static final String e031Msg = "A excel file did not load.\nLoad a file at Setup, first";
     public static final String e041Msg = "Can not find image: \n";
+    public static final String e051Msg = " sheet is not loaded.";
 }
